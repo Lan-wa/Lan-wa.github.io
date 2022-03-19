@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>Hello World | </title>
+  <title>spring注解学习-day01 | </title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,19 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="Spring注解驱动" />
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 喵呼呼o(">
+  <meta name="description" content="一、@Configuration@Configuration是类级别的注解，指示对象是 Bean 定义的源。        实体类              1234567891011121314&#x2F;&#x2F; peoson.javapublic class Person &amp;#123;    private String name;    private Integer age;        public">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://lan-wa.github.io/2022/03/09/hello-world/index.html">
+<meta property="og:title" content="spring注解学习-day01">
+<meta property="og:url" content="https://lan-wa.github.io/2022/03/19/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0-01/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 喵呼呼o(">
+<meta property="og:description" content="一、@Configuration@Configuration是类级别的注解，指示对象是 Bean 定义的源。        实体类              1234567891011121314&#x2F;&#x2F; peoson.javapublic class Person &amp;#123;    private String name;    private Integer age;        public">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-03-09T04:55:52.786Z">
-<meta property="article:modified_time" content="2022-03-18T14:49:09.862Z">
+<meta property="article:published_time" content="2022-03-19T02:15:35.000Z">
+<meta property="article:modified_time" content="2022-03-19T04:25:59.118Z">
 <meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="Spring注解驱动">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -160,17 +161,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">Hello World</h1>
+                <h1 class="kratos-entry-title text-center">spring注解学习-day01</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-03-09</li>
+                <li><i class="fa fa-calendar"></i> 2022-03-19</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        521
+                        ~2.26K
                     
                     字
                 </li>
@@ -180,36 +181,78 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1647614949862"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1647663959118"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81-Configuration"><span class="toc-number">1.</span> <span class="toc-text">一、@Configuration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.0.1.</span> <span class="toc-text"></span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%87%92%E5%8A%A0%E8%BD%BD-Lazy%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">二、懒加载@Lazy：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">2.0.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-number">2.0.2.</span> <span class="toc-text">测试结果：</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
             <hr />
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<div class="alert alert-primary"><div class="icon"><i class="fa fa-refresh"></i></div><div class="text"><p>喵呼呼o(&#x3D;•ェ•&#x3D;)m</p>
-</div></div>
-<div class="alert alert-success"><div class="icon"><i class="fa fa-check"></i></div><div class="text"><p>成功啦o(<em>￣▽￣</em>)ブ</p>
-</div></div>
-<div class="alert alert-danger"><div class="icon"><i class="fa fa-exclamation"></i></div><div class="text"><p>有危险Σ(っ °Д °;)っ</p>
-</div></div>
-<div class="alert alert-info"><div class="icon"><i class="fa fa-info"></i></div><div class="text"><p>有消息(・∀・(・∀・(・∀・*)</p>
-</div></div>
-<div class="alert alert-warning"><div class="icon"><i class="fa fa-warning"></i></div><div class="text"><p>当心哦≧ ﹏ ≦</p>
+            <h1 id="一、-Configuration"><a href="#一、-Configuration" class="headerlink" title="一、@Configuration"></a>一、@Configuration</h1><div class="alert alert-success"><div class="icon"><i class="fa fa-check"></i></div><div class="text"><p>@Configuration是类级别的注解，指示对象是 Bean 定义的源。</p>
 </div></div>
 
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>实体类</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// peoson.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">()</span> &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">(String name, Integer age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    set/get/toString...</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
 
 
-<h2 id="开始测试"><a href="#开始测试" class="headerlink" title="开始测试"></a>开始测试</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+  <div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>配置类</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lan.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lan.pojo.Person;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.FilterType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> @ComponentScan 指定要扫描的包</span></span><br><span class="line"><span class="comment"> 加上排除规则 @ComponentScan.Filter</span></span><br><span class="line"><span class="comment"> excludeFilters = Filter[], 指定扫描的时候按照什么规则排除哪些组件</span></span><br><span class="line"><span class="comment"> includeFilters = Filter[]， 指定扫描的时候只需要包含哪些组件</span></span><br><span class="line"><span class="comment"> type = FilterType.ANNOTATION : 按照注解</span></span><br><span class="line"><span class="comment"> type = FilterType.ASSIGNABLE_TYPE : 按照给定的类型</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ComponentScan(value = &quot;com.lan&quot;, excludeFilters = &#123;</span></span><br><span class="line"><span class="meta">        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = &#123;Controller.class&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 给容器中注册一个bean，类型为返回值的类型，id默认是方法名作为id</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Person <span class="title function_">person</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;给容器中添加Person...&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;zhangsan&quot;</span>, <span class="number">20</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>  
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+  <div class="xControl active">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>测试</span></div>
+    <div class="xContent pre-open"><div class="inner">
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AnnotationConfigApplicationContext</span> <span class="variable">app</span> <span class="operator">=</span> <span class="keyword">new</span> 			<span class="title class_">AnnotationConfigApplicationContext</span>(MainConfig.class);</span><br><span class="line">System.out.println(<span class="string">&quot;ioc容器创建完成...&quot;</span>);</span><br><span class="line">	<span class="comment">// 获取Spring 容器中所有 JavaBean 的名称，返回类型是一个字符串数组。</span></span><br><span class="line">      String[] definitionNames = app.getBeanDefinitionNames();</span><br><span class="line">       <span class="keyword">for</span> (String name : definitionNames) &#123;</span><br><span class="line">           System.out.println(name);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+ 
+    </div></div>
+    </div>  
+
+
+
+  <div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>测试结果</span></div>
+    <div class="xContent"><div class="inner">
+        <p><img src="/../images/run/a1.png"></p>
+ 
+    </div></div>
+    </div>  
+
+<p>注：可根据过滤规则，过滤指定的组件（这里指定的是Controller组件）</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h1 id="二、懒加载-Lazy："><a href="#二、懒加载-Lazy：" class="headerlink" title="二、懒加载@Lazy："></a>二、懒加载@Lazy：</h1><div class="alert alert-success"><div class="icon"><i class="fa fa-check"></i></div><div class="text"><p>如果我们想要 Spring 在启动的时候延迟加载 bean，即在调用某个 bean 的时候再去初始化，那么就可以使用 @Lazy 注解。</p>
+</div></div>
+
+
+
+<ul>
+<li><p>单实例bean，默认在容器启动的时候创建对象</p>
+</li>
+<li><p>懒加载：容器启动不创建对象，第一次使用才获取Bean创建对象，并初始化</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3></li>
+</ul>
+<h3 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h3><p>没加懒加载的运行结果： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">给容器中添加Person...</span><br><span class="line">ioc容器创建完成... </span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span>   </span><br></pre></td></tr></table></figure>
+
+
+
+<p>加了懒加载的运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ioc容器创建完成...</span><br><span class="line">	</span><br><span class="line">Process finished with exit code 0  </span><br></pre></td></tr></table></figure>
+
+<p>​        </p>
 
         </div>
         
@@ -261,7 +304,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://lan-wa.github.io/2022/03/09/hello-world/",
+                text: "https://lan-wa.github.io/2022/03/19/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0-01/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -273,9 +316,15 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://lan-wa.github.io/2022/03/09/hello-world/";
-            const title         = "「Hello World」";
-            const excerpt       = `Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using ...`;
+            const hostUrl       = "https://lan-wa.github.io/2022/03/19/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0-01/";
+            const title         = "「spring注解学习-day01」";
+            const excerpt       = `一、@Configuration@Configuration是类级别的注解，指示对象是 Bean 定义的源。
+
+
+
+    实体类
+    
+        1234567891011121314// peoson.javapubli...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -294,10 +343,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    
+                    <a class="tag-none-link" href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" rel="tag">Spring注解驱动</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-03-18</span>
+                <span>最后编辑：2022-03-19</span>
                 </div>
             </div>
         </footer>
@@ -305,10 +354,10 @@
     
         <nav class="navigation post-navigation clearfix" role="navigation">
             
-            
-            <div class="nav-next clearfix">
-                <a title=" 客户端表单提交及接收后台json格式数据content-type问题" href="/2022/03/18/客户端表单提交及接收后台json格式数据content-type问题/">下一篇 &gt;</a>
+            <div class="nav-previous clearfix">
+                <a title=" 客户端表单提交及接收后台json格式数据content-type问题" href="/2022/03/18/客户端表单提交及接收后台json格式数据content-type问题/">&lt; 上一篇</a>
             </div>
+            
             
         </nav>
     
@@ -320,8 +369,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/03/09/hello-world/',
-                path: '/2022/03/09/hello-world/'
+                id: '/2022/03/19/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0-01/',
+                path: '/2022/03/19/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0-01/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -390,6 +439,18 @@
 </aside>
             
                     <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81-Configuration"><span class="toc-text">一、@Configuration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%87%92%E5%8A%A0%E8%BD%BD-Lazy%EF%BC%9A"><span class="toc-text">二、懒加载@Lazy：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-text">测试结果：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
