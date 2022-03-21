@@ -24,7 +24,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-03-20T10:39:05.000Z">
-<meta property="article:modified_time" content="2022-03-20T16:29:16.227Z">
+<meta property="article:modified_time" content="2022-03-21T03:12:54.342Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="Spring注解">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~6.80K
+                        ~7.40K
                     
                     字
                 </li>
@@ -181,7 +181,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1647793756227"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1647832374342"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -202,7 +202,13 @@
 
 
 
-
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>JdbcConfig.java配置类</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.config;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.EnableAspectJAutoProxy;</span><br><span class="line">import org.springframework.context.annotation.Import;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 指定该类是一个spring配置类，相当于一个配置文件</span><br><span class="line">* ComponentScan：组件扫描</span><br><span class="line">* Import：引入JdbcConfig.class文件</span><br><span class="line">*/</span><br><span class="line">@Configuration</span><br><span class="line">@EnableAspectJAutoProxy(proxyTargetClass = false)</span><br><span class="line">@ComponentScan(basePackages = &quot;com.xxxx&quot;)</span><br><span class="line">@Import(JdbcConfig.class)</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
 
 
 
@@ -211,15 +217,18 @@
 <div class="xControl">
     <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>JdbcConfig.java配置类</span></div>
     <div class="xContent"><div class="inner">
-        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.config;</span><br><span class="line"></span><br><span class="line">import com.mchange.v2.c3p0.ComboPooledDataSource;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.PropertySource;</span><br><span class="line">import org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import java.beans.PropertyVetoException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* jdbc配置类</span><br><span class="line">* PropertySource:引入jdbc属性资源文件</span><br><span class="line">* classpath: 在resource资源包里面</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">@EnableTransactionManagement // 它是来开启基于注解的事务管理功能的 </span><br><span class="line">@ComponentScan(&quot;com.xxxx.tx&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:jdbc.properties&quot;)</span><br><span class="line">public class JdbcConfig &#123;</span><br><span class="line">    @Value(&quot;$&#123;jdbc.driver&#125;&quot;)</span><br><span class="line">    private String driver;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.url&#125;&quot;)</span><br><span class="line">    private String url;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.user&#125;&quot;)</span><br><span class="line">    private String user;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.password&#125;&quot;)</span><br><span class="line">    private String password;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Bean注解：该注解只能写在方法上，表面该方法创建了一个对象，并放入spring容器</span><br><span class="line">     */</span><br><span class="line">    @Bean(&quot;dataSource&quot;)</span><br><span class="line">    public DataSource createDataSource() throws PropertyVetoException &#123;</span><br><span class="line">        // 创建数据源</span><br><span class="line">        ComboPooledDataSource dataSource = new ComboPooledDataSource();</span><br><span class="line">        dataSource.setDriverClass(driver);</span><br><span class="line">        dataSource.setJdbcUrl(url);</span><br><span class="line">        dataSource.setUser(user);</span><br><span class="line">        dataSource.setPassword(password);</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	....</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.config;</span><br><span class="line"></span><br><span class="line">import com.mchange.v2.c3p0.ComboPooledDataSource;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.PropertySource;</span><br><span class="line">import org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import java.beans.PropertyVetoException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* jdbc配置类</span><br><span class="line">* PropertySource:引入jdbc属性资源文件</span><br><span class="line">* classpath: 在resource资源包里面</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">@EnableTransactionManagement // 它是来开启基于注解的事务管理功能的 </span><br><span class="line">// @ComponentScan(&quot;com.xxxx.tx&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:jdbc.properties&quot;)</span><br><span class="line">public class JdbcConfig &#123;</span><br><span class="line">    @Value(&quot;$&#123;jdbc.driver&#125;&quot;)</span><br><span class="line">    private String driver;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.url&#125;&quot;)</span><br><span class="line">    private String url;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.user&#125;&quot;)</span><br><span class="line">    private String user;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;jdbc.password&#125;&quot;)</span><br><span class="line">    private String password;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Bean注解：该注解只能写在方法上，表面该方法创建了一个对象，并放入spring容器</span><br><span class="line">     */</span><br><span class="line">    @Bean(&quot;dataSource&quot;)</span><br><span class="line">    public DataSource createDataSource() throws PropertyVetoException &#123;</span><br><span class="line">        // 创建数据源</span><br><span class="line">        ComboPooledDataSource dataSource = new ComboPooledDataSource();</span><br><span class="line">        dataSource.setDriverClass(driver);</span><br><span class="line">        dataSource.setJdbcUrl(url);</span><br><span class="line">        dataSource.setUser(user);</span><br><span class="line">        dataSource.setPassword(password);</span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	....</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  
     </div></div>
     </div>
 
 
 
-<pre><code>    2. 然后，再向IOC容器中注册一个JdbcTemplate组件，它是Spring提供的一个简化数据库操作的工具，它能简化对数据库的增删改查操作。
-</code></pre>
+
+
+<ol start="2">
+<li>然后，再向IOC容器中注册一个JdbcTemplate组件，它是Spring提供的一个简化数据库操作的工具，它能简化对数据库的增删改查操作。</li>
+</ol>
 <div class="xControl">
     <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>注册一个JdbcTemplate组件</span></div>
     <div class="xContent"><div class="inner">
@@ -401,10 +410,6 @@
             </div>
             
             
-            <div class="nav-next clearfix">
-                <a title=" Spring声明式事务" href="/2022/03/20/Spring声明式事务/">下一篇 &gt;</a>
-            </div>
-            
         </nav>
     
     
@@ -462,7 +467,7 @@
                 文章
             </span>
             <span class="count">
-                12
+                11
             </span>
         </a>
         <a class="meta-item" href="/categories/">
@@ -524,12 +529,6 @@
         
           
           
-            <a class="list-group-item" href="/2022/03/20/Spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1/"><i class="fa  fa-book"></i> Spring声明式事务</a>
-            
-          
-        
-          
-          
             <a class="list-group-item" href="/2022/03/20/%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/"><i class="fa  fa-book"></i> 声明式事务控制</a>
             
           
@@ -553,7 +552,11 @@
           
         
           
+          
+            <a class="list-group-item" href="/2022/03/19/%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa  fa-book"></i> 加载配置文件</a>
             
+          
+        
           
             
           
