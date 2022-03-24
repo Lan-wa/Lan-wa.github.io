@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>对IoC(控制反转)和DI(依赖注入)的理解 | </title>
+  <title>SpringMVC拦截器 | </title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="Spring" />
+    <meta name="keywords" content="Spring MVC" />
   
-  <meta name="description" content="一、IoC是什么​    IOC的作用：降低程序之间的耦合（依赖关系）         概念：依赖关系的管理交给spring维护，在当前类需要用到其他类的对象，由spring为我们提供，只需在配置文件中说明关系的维护；　 　Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。 ​    在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是">
+  <meta name="description" content="​        早期MVC框架将一些通用操作写死在核心控制器中，致使框架灵活性不足、可扩展性降低。 Spring将预处理与后处理功能放到多个拦截器中实现，拦截器可自由选择和组合，增强了灵活性，有利于系统的解耦。SpringMVC的拦截器类似于Servlet中的过滤器Filter，用于对处理器进行预处理和后处理。 1、创建SpringMVC拦截器创建 SpringMVC 拦截器，只需要实现 Han">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对IoC(控制反转)和DI(依赖注入)的理解">
-<meta property="og:url" content="https://lan-wa.github.io/2022/03/19/%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:title" content="SpringMVC拦截器">
+<meta property="og:url" content="https://lan-wa.github.io/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="一、IoC是什么​    IOC的作用：降低程序之间的耦合（依赖关系）         概念：依赖关系的管理交给spring维护，在当前类需要用到其他类的对象，由spring为我们提供，只需在配置文件中说明关系的维护；　 　Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。 ​    在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是">
+<meta property="og:description" content="​        早期MVC框架将一些通用操作写死在核心控制器中，致使框架灵活性不足、可扩展性降低。 Spring将预处理与后处理功能放到多个拦截器中实现，拦截器可自由选择和组合，增强了灵活性，有利于系统的解耦。SpringMVC的拦截器类似于Servlet中的过滤器Filter，用于对处理器进行预处理和后处理。 1、创建SpringMVC拦截器创建 SpringMVC 拦截器，只需要实现 Han">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-03-19T13:34:39.000Z">
-<meta property="article:modified_time" content="2022-03-19T13:43:20.055Z">
+<meta property="article:published_time" content="2022-03-24T14:18:46.000Z">
+<meta property="article:modified_time" content="2022-03-24T14:53:21.953Z">
 <meta property="article:author" content="我爱小小蝶">
-<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Spring MVC">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -161,17 +161,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">对IoC(控制反转)和DI(依赖注入)的理解</h1>
+                <h1 class="kratos-entry-title text-center">SpringMVC拦截器</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-03-19</li>
+                <li><i class="fa fa-calendar"></i> 2022-03-24</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~2.19K
+                        ~2.53K
                     
                     字
                 </li>
@@ -181,31 +181,38 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1647697400055"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1648133601953"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81IoC%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、IoC是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81DI%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">二、DI依赖注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%91%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">三、我对IoC(控制反转)和DI(依赖注入)的理解</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BASpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">1、创建SpringMVC拦截器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AESpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">2、配置SpringMVC拦截器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E6%B5%8B%E8%AF%95"><span class="toc-number">3.</span> <span class="toc-text">3、测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">测试结果：</span></a></li></ol></li></ol>
                 </div>
             
             <hr />
-            <h1 id="一、IoC是什么"><a href="#一、IoC是什么" class="headerlink" title="一、IoC是什么"></a>一、IoC是什么</h1><p>​    <strong>IOC的作用：降低程序之间的耦合（依赖关系）</strong>       </p>
-<p> <strong>概念：依赖关系的管理交给spring维护，在当前类需要用到其他类的对象，由spring为我们提供，只需在配置文件中说明关系的维护；</strong>　</p>
-<p>　<strong>Ioc—Inversion of Control，即“控制反转”，不是什么技术，而是一种设计思想。</strong></p>
-<p>​    在Java开发中，<strong>Ioc意味着将你设计好的对象交给容器控制，而不是传统的在你的对象内部直接控制。</strong>如何理解好Ioc呢？理解好Ioc的关键是要明确“谁控制谁，控制什么，为何是反转（有反转就应该有正转了），哪些方面反转了”，那我们来深入分析一下：　</p>
-<p>　● 谁控制谁，控制什么：传统Java SE程序设计，我们直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象；而IoC是有专门一个容器来创建这些对象，即由Ioc容器来控制对 象的创建；**谁控制谁？当然是IoC 容器控制了对象；控制什么？那就是主要控制了外部资源获取（不只是对象包括比如文件等）。</p>
-<p>​    ● 为何是反转，哪些方面反转了：有反转就有正转，传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象；为何是反转？<strong>因为由容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转；哪些方面反转了？依赖对象的获取被反转了。</strong></p>
-<h1 id="二、DI依赖注入"><a href="#二、DI依赖注入" class="headerlink" title="二、DI依赖注入"></a>二、DI依赖注入</h1><p>　<strong>DI—Dependency Injection，即“依赖注入”</strong>：<strong>组件之间依赖关系</strong>由容器在运行期决定，形象的说，即<strong>由容器动态的将某个依赖关系注入到组件之中</strong>。<strong>依赖注入的目的并非为软件系统带来更多功能，而是为了提升组件重用的频率，并为系统搭建一个灵活、可扩展的平台。</strong>通过依赖注入机制，我们只需要通过简单的配置，而无需任何代码就可指定目标需要的资源，完成自身的业务逻辑，而不需要关心具体的资源来自何处，由谁实现。</p>
-<p>　　理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”，那我们来深入分析一下：</p>
-<p>　　●谁依赖于谁：当然是<strong>应用程序依赖于IoC容器</strong>；</p>
-<p>　　●为什么需要依赖：<strong>应用程序需要IoC容器来提供对象需要的外部资源</strong>；</p>
-<p>　　●谁注入谁：很明显是<strong>IoC容器注入应用程序某个对象，应用程序依赖的对象</strong>；</p>
-<p>　　●注入了什么：就是<strong>注入某个对象所需要的外部资源（包括对象、资源、常量数据）</strong>。</p>
-<p>　　<strong>IoC和DI</strong>由什么<strong>关系</strong>呢？其实它们<strong>是同一个概念的不同角度描述</strong>，由于控制反转概念比较含糊（可能只是理解为容器控制对象这一个层面，很难让人想到谁来维护对象关系），所以2004年大师级人物Martin Fowler又给出了一个新的名字：“依赖注入”，相对IoC 而言，“依赖注入”明确描述了“被注入对象依赖IoC容器配置依赖对象”。</p>
-<p>　　看过很多对Spring的Ioc理解的文章，好多人对Ioc和DI的解释都晦涩难懂，反正就是一种说不清，道不明的感觉，读完之后依然是一头雾水，感觉就是开涛这位技术牛人写得特别通俗易懂，他清楚地解释了IoC(控制反转) 和DI(依赖注入)中的每一个字，读完之后给人一种豁然开朗的感觉。我相信对于初学Spring框架的人对Ioc的理解应该是有很大帮助的。</p>
-<h1 id="三、我对IoC-控制反转-和DI-依赖注入-的理解"><a href="#三、我对IoC-控制反转-和DI-依赖注入-的理解" class="headerlink" title="三、我对IoC(控制反转)和DI(依赖注入)的理解"></a>三、我对IoC(控制反转)和DI(依赖注入)的理解</h1><p>　　在平时的java应用开发中，我们要实现某一个功能或者说是完成某个业务逻辑时至少需要两个或以上的对象来协作完成，在没有使用Spring的时候，每个对象在需要使用他的合作对象时，自己均要使用像new object() 这样的语法来将合作对象创建出来，这个合作对象是由自己主动创建出来的，创建合作对象的主动权在自己手上，自己需要哪个合作对象，就主动去创建，创建合作对象的主动权和创建时机是由自己把控的，而这样就会使得对象间的耦合度高了，A对象需要使用合作对象B来共同完成一件事，A要使用B，那么A就对B产生了依赖，也就是A和B之间存在一种耦合关系，并且是紧密耦合在一起，而使用了Spring之后就不一样了，创建合作对象B的工作是由Spring来做的，Spring创建好B对象，然后存储到一个容器里面，当A对象需要使用B对象时，Spring就从存放对象的那个容器里面取出A要使用的那个B对象，然后交给A对象使用，至于Spring是如何创建那个对象，以及什么时候创建好对象的，A对象不需要关心这些细节问题(你是什么时候生的，怎么生出来的我可不关心，能帮我干活就行)，A得到Spring给我们的对象之后，两个人一起协作完成要完成的工作即可。</p>
-<p>　　所以<strong>控制反转IoC(Inversion of Control)是说创建对象的控制权进行转移，以前创建对象的主动权和创建时机是由自己把控的，而现在这种权力转移到第三方</strong>，比如转移交给了IoC容器，它就是一个专门用来创建对象的工厂，你要什么对象，它就给你什么对象，有了 IoC容器，依赖关系就变了，原先的依赖关系就没了，它们都依赖IoC容器了，通过IoC容器来建立它们之间的关系。</p>
-<p>　　这是我对Spring的IoC**(控制反转)<strong>的理解。DI</strong>(依赖注入)<strong>其实就是IOC的另外一种说法，DI是由Martin Fowler 在2004年初的一篇论文中首次提出的。他总结：</strong>控制的什么被反转了？就是：获得依赖对象的方式反转了。**</p>
+            <p>​        早期MVC框架将一些通用操作写死在核心控制器中，致使框架灵活性不足、可扩展性降低。</p>
+<p>Spring将预处理与后处理功能放到多个拦截器中实现，拦截器可自由选择和组合，增强了灵活性，有利于系统的解耦。SpringMVC的拦截器类似于Servlet中的过滤器Filter，用于对处理器进行预处理和后处理。</p>
+<h1 id="1、创建SpringMVC拦截器"><a href="#1、创建SpringMVC拦截器" class="headerlink" title="1、创建SpringMVC拦截器"></a>1、创建SpringMVC拦截器</h1><p>创建 SpringMVC 拦截器，只需要实现 HandlerInterceptor 接口即可。 接口中有三个方法需要实现：</p>
+<ol>
+<li>preHandle：该方法在 controller 执行前执行，可以实现对数据的预处理。 如果方法返回 true ，则继续调用下一个资源。否则不在继续调用。</li>
+<li>postHandle：该方法在处理器执行后，生成视图前执行。这里有机会修改视图层数据。</li>
+<li>afterCompletion：最后执行，通常用于记录日志，释放资源，处理异常。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.lan.interceptor;</span><br><span class="line"></span><br><span class="line">import org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">public class MyHandlerInterceptor1 implements HandlerInterceptor&#123;</span><br><span class="line">    public boolean preHandle(HttpServletRequest request, HttpServletResponse</span><br><span class="line">            response, Object handler) &#123;</span><br><span class="line">        System.out.println(&quot;preHandle running...&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    public void postHandle(HttpServletRequest request, HttpServletResponse</span><br><span class="line">            response, Object handler, ModelAndView modelAndView) &#123;</span><br><span class="line">        System.out.println(&quot;postHandle running...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void afterCompletion(HttpServletRequest request, HttpServletResponse</span><br><span class="line">            response, Object handler, Exception ex) &#123;</span><br><span class="line">        System.out.println(&quot;afterCompletion running...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2、配置SpringMVC拦截器"><a href="#2、配置SpringMVC拦截器" class="headerlink" title="2、配置SpringMVC拦截器"></a>2、配置SpringMVC拦截器</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 可以配置多个拦截器 --&gt;  </span><br><span class="line">&lt;mvc:interceptors&gt;</span><br><span class="line">    &lt;mvc:interceptor&gt;</span><br><span class="line">        &lt;mvc:mapping path=&quot;/**&quot; /&gt;</span><br><span class="line">        &lt;bean class=&quot;com.neusoft.springmvc.interceptor.CorsInterceptor&quot; /&gt;</span><br><span class="line">    &lt;/mvc:interceptor&gt;</span><br><span class="line">&lt;/mvc:interceptors&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/../images/p01_07.png"></p>
+<h1 id="3、测试"><a href="#3、测试" class="headerlink" title="3、测试"></a>3、测试</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.lan.controller;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">public class TestController &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;/quick23&quot;)</span><br><span class="line">    @ResponseBody</span><br><span class="line">    public ModelAndView quickMethod23()  &#123;</span><br><span class="line">        System.out.println(&quot;目标方法执行....&quot;);</span><br><span class="line">        ModelAndView modelAndView = new ModelAndView();</span><br><span class="line">        modelAndView.addObject(&quot;name&quot;,&quot;9999999999&quot;);</span><br><span class="line">        modelAndView.setViewName(&quot;index.jsp&quot;);</span><br><span class="line">        return modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">preHandle running...</span><br><span class="line">目标方法执行....</span><br><span class="line">postHandle running...</span><br><span class="line">afterCompletion running...</span><br></pre></td></tr></table></figure>
+
+<p>(如果preHandle方法返回值为false，则目标方法不会再执行)</p>
 
         </div>
         
@@ -257,7 +264,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://lan-wa.github.io/2022/03/19/%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3/",
+                text: "https://lan-wa.github.io/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -269,11 +276,10 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://lan-wa.github.io/2022/03/19/%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3/";
-            const title         = "「对IoC(控制反转)和DI(依赖注入)的理解」";
-            const excerpt       = `一、IoC是什么​    IOC的作用：降低程序之间的耦合（依赖关系）       
- 概念：依赖关系的管理交给spring维护，在当前类需要用到其他类的对象，由spring为我们提供，只需在配置文件中说明关系的维护；　
-　Ioc—I...`;
+            const hostUrl       = "https://lan-wa.github.io/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/";
+            const title         = "「SpringMVC拦截器」";
+            const excerpt       = `​        早期MVC框架将一些通用操作写死在核心控制器中，致使框架灵活性不足、可扩展性降低。
+Spring将预处理与后处理功能放到多个拦截器中实现，拦截器可自由选择和组合，增强了灵活性，有利于系统的解耦。SpringMVC的拦...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -292,10 +298,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/Spring/" rel="tag">Spring</a>
+                    <a class="tag-none-link" href="/tags/Spring-MVC/" rel="tag">Spring MVC</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-03-19</span>
+                <span>最后编辑：2022-03-24</span>
                 </div>
             </div>
         </footer>
@@ -304,13 +310,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" 使用@Bean注解" href="/2022/03/19/使用-Bean-注解/">&lt; 上一篇</a>
+                <a title=" 项目统一异常处理(未完待续...)" href="/2022/03/24/项目统一异常处理/">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" 加载配置文件" href="/2022/03/19/加载配置文件/">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
@@ -322,8 +324,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/03/19/%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3/',
-                path: '/2022/03/19/%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3/'
+                id: '/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/',
+                path: '/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -401,7 +403,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81IoC%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">一、IoC是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81DI%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">二、DI依赖注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%91%E5%AF%B9IoC-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC-%E5%92%8CDI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">三、我对IoC(控制反转)和DI(依赖注入)的理解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BASpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-text">1、创建SpringMVC拦截器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AESpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-text">2、配置SpringMVC拦截器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E6%B5%8B%E8%AF%95"><span class="toc-text">3、测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-text">测试结果：</span></a></li></ol></li></ol>
     </div>
 </aside>
                 

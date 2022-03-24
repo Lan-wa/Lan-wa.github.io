@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>项目统一异常处理(未完待续...) | </title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Spring MVC" />
+  
+  <meta name="description" content="​        在J2EE项目的开发中，不管是对底层的数据库操作过程，还是业务层的处理过程，还是控制层的处理过程，都不可避免会遇到各种可预知的、不可预知的异常需要处理。每个过程都单独处理异常，系统的代码耦合度高，工作量大且不好统一，维护的工作量也很大。 ​        任何程序都会有异常。无论你是做什么项目，对异常的处理都是非常有必要的，尤其是web项目，因为它一般直接面向用户，所以良好的异常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目统一异常处理(未完待续...)">
+<meta property="og:url" content="https://lan-wa.github.io/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="​        在J2EE项目的开发中，不管是对底层的数据库操作过程，还是业务层的处理过程，还是控制层的处理过程，都不可避免会遇到各种可预知的、不可预知的异常需要处理。每个过程都单独处理异常，系统的代码耦合度高，工作量大且不好统一，维护的工作量也很大。 ​        任何程序都会有异常。无论你是做什么项目，对异常的处理都是非常有必要的，尤其是web项目，因为它一般直接面向用户，所以良好的异常">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-03-24T05:35:55.000Z">
+<meta property="article:modified_time" content="2022-03-24T14:21:01.926Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="Spring MVC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://unpkg.com/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/aa.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a href="/null">关于我</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a href="/null">项目链接</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/"></a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2></h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">项目统一异常处理(未完待续...)</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-03-24</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.43K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1648131661926"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8web%E6%8A%80%E6%9C%AF"><span class="toc-number">1.</span> <span class="toc-text">1、使用web技术</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81HandlerExceptionResolver%E5%BC%82%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">2、HandlerExceptionResolver异常解析器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">2.1.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">方法一：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">方法二：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E3%80%81%E5%BC%82%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%99%A8%E9%93%BE"><span class="toc-number">3.</span> <span class="toc-text">3 、异常解析器链</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81-ExceptionHandler%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">4、@ExceptionHandler统一异常处理</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <p>​        在J2EE项目的开发中，不管是对底层的数据库操作过程，还是业务层的处理过程，还是控制层的处理过程，都不可避免会遇到各种可预知的、不可预知的异常需要处理。每个过程都单独处理异常，系统的代码耦合度高，工作量大且不好统一，维护的工作量也很大。</p>
+<p>​        任何程序都会有异常。<strong>无论你是做什么项目，对异常的处理都是非常有必要的</strong>，尤其是web项目，因为它一般直接面向用户，所以良好的异常处理就显得格外的重要。</p>
+<p>​    <strong>Java异常体系简介</strong></p>
+<p>​        Java相较于其它大多数语言提供了一套非常完善的异常体系Throwable：分为Error和Exception两大分支：</p>
+<ol>
+<li><p>Error：错误，对于所有的编译时期的错误以及系统错误都是通过Error抛出的，比如NoClassDefFoundError、硬件问题等等。</p>
+</li>
+<li><p>Exception：异常，是更为重要的一个分支，是程序员经常打交道的。异常定义为是程序的问题，程序本身是可以处理的。异常Exception它本身还分为两大重要的分支：Checked Exception（可检查异常，如IOException）和Unchecked Exception（不可检查异常，如RuntimeException）。</p>
+<p>Error和Exception最大的区别是：异常是可以被程序处理的，而错误是没法处理的。</p>
+<p>​        错误是不可查的，因为它们在应用程序的控制和处理能力之外，而且绝大多数是程序运行时不允许出现的状况（比如类找不到NoClassDefFoundError）</p>
+<p>​    对于与数据库相关的 Spring MVC 项目，我们通常会把 事务 配置在 Service层，当数据库操作失败时让 Service 层抛出运行时异常，Spring 事物管理器就会进行回滚。</p>
+<p>​        如此一来，我们的 Controller 层就不得不进行 try-catch Service 层的异常，否则会返回一些不友好的错误信息到客户端。但是，Controller 层每个方法体都写一些模板化的 try-catch 的代码，很难看也难维护，特别是还需要对 Service 层的不同异常进行不同处理的时候。</p>
+<p>只要设计得当，就再也不用在 Controller 层进行 try-catch 了！</p>
+</li>
+</ol>
+<p>​    <strong>HTTP status codes：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">异常类型</th>
+<th align="left">状态码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">MissingPathVariableException</td>
+<td align="left">500</td>
+</tr>
+<tr>
+<td align="left">ConversionNotSupportedException</td>
+<td align="left">500</td>
+</tr>
+<tr>
+<td align="left">HttpMessageNotWritableException</td>
+<td align="left">500</td>
+</tr>
+<tr>
+<td align="left">AsyncRequestTimeoutException</td>
+<td align="left">503</td>
+</tr>
+<tr>
+<td align="left">MissingServletRequestParameterException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">ServletRequestBindingException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">TypeMismatchException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">HttpMessageNotReadableException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">MethodArgumentNotValidException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">MissingServletRequestPartException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">BindException</td>
+<td align="left">400</td>
+</tr>
+<tr>
+<td align="left">NoHandlerFoundException</td>
+<td align="left">404</td>
+</tr>
+<tr>
+<td align="left">HttpRequestMethodNotSupportedException</td>
+<td align="left">405</td>
+</tr>
+<tr>
+<td align="left">HttpMediaTypeNotAcceptableException</td>
+<td align="left">406</td>
+</tr>
+<tr>
+<td align="left">HttpMediaTypeNotSupportedException</td>
+<td align="left">415</td>
+</tr>
+</tbody></table>
+<h1 id="1、使用web技术"><a href="#1、使用web技术" class="headerlink" title="1、使用web技术"></a>1、使用web技术</h1><p>​        在还没有Spring，更无Spring Boot时，开发使用的是源生的Servlet + tomcat容器。其实它也是提供了通用的异常的处理配置方式的。</p>
+<p>​        使用web技术，需要在web.xml进行配置异常代码和异常跳转页面，然后程序中出现异常时，就会自动跳转到指定的异常页面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;error-page&gt;</span><br><span class="line">    &lt;error-code&gt;500&lt;/error-code&gt;</span><br><span class="line">    &lt;location&gt;/500.jsp&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 根据异常类型 --&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">	&lt;exception-type&gt;java.lang.RuntimeException&lt;/exception-type&gt;</span><br><span class="line">	&lt;!- &lt;error-code&gt;500&lt;/error-code&gt; --&gt;</span><br><span class="line">	&lt;location&gt;/500.jsp&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="2、HandlerExceptionResolver异常解析器"><a href="#2、HandlerExceptionResolver异常解析器" class="headerlink" title="2、HandlerExceptionResolver异常解析器"></a>2、HandlerExceptionResolver异常解析器</h1><p><strong>HandlerExceptionResolver接口仅有一个resolveException方法用于处理异常</strong></p>
+<p>resolveException方法将返回ModelAndView类型的结果，返回值有如下约定：</p>
+<p>​        ModelAndView对象中可以包含包含响应的错误的数据和一个要转发到的错误视图。<br>如果异常在解析器中已被处理，并且不需要返回异常视图，则可以返回一个空的ModelAndView。<br>​        如果异常仍未解决，则返回null，以便后面的异常解析器继续尝试解决，如果解析器链执行完毕异常仍未解决，则该异常将直接向上抛出到 Servlet 容器。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>​                    <strong>（适合前后端不分离的情况）</strong></p>
+<h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>自定义异常类</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.lan.pojo;</span><br><span class="line"></span><br><span class="line">// 自定义异常类</span><br><span class="line">public class SysException extends Exception&#123;</span><br><span class="line">    private String message;</span><br><span class="line"></span><br><span class="line">    public SysException() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public SysException(String message) &#123;</span><br><span class="line">        this.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setMessage(String message) &#123;</span><br><span class="line">        this.message = message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>异常视图页面</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;异常页面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;出问题啦！&lt;/h1&gt;</span><br><span class="line">&lt;br/&gt;</span><br><span class="line">    &lt;span style=&quot;color: #dc143c; &quot;&gt;$&#123;errorMsg&#125;&lt;/span&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<p><strong>我们自定义一个异常解析器，用于将异常信息转发到error.jsp异常视图！</strong></p>
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>自定义异常处理器</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">package com.lan.exception;</span><br><span class="line"></span><br><span class="line">import com.lan.pojo.SysException;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.servlet.HandlerExceptionResolver;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 我们直接将异常解析器通过注解或者XML交接Spring管理即可，</span><br><span class="line"> * DispatcherServlet中会自动查找所有HandlerExceptionResolver的bean。</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">public class SysExceptionResolver implements HandlerExceptionResolver &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 处理异常业务逻辑</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) &#123;</span><br><span class="line">        // 获取到异常对象</span><br><span class="line">        SysException e;</span><br><span class="line">        //异常类型区分 、若是自定义的业务异常，那就返回到单页面异常页面</span><br><span class="line">        if (ex instanceof SysException) &#123;</span><br><span class="line">            e = (SysException) ex;</span><br><span class="line">        &#125; else &#123; // 否则统一到统一的错误页面</span><br><span class="line">            e = new SysException(&quot;系统正在维护....&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        /*</span><br><span class="line">         * 创建ModelAndView对象</span><br><span class="line">         * 设置模型信息，即异常提示，以及需要跳转的异常视图名</span><br><span class="line">         *</span><br><span class="line">         */</span><br><span class="line">        ModelAndView mv = new ModelAndView();</span><br><span class="line">        mv.addObject(&quot;errorMsg&quot;, e.getMessage());</span><br><span class="line">        mv.setViewName(&quot;error.jsp&quot;);</span><br><span class="line">        return mv;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+ 
+    </div></div>
+    </div>
+
+
+
+<p><strong>我们准备一个Controller，分别模拟抛出SysException和其他异常！</strong></p>
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>测试异常</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package com.lan.controller;</span><br><span class="line"></span><br><span class="line">import com.lan.pojo.SysException;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">public class HandlerExceptionResolverController &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 模拟抛出SysException</span><br><span class="line">     */</span><br><span class="line">    @RequestMapping(&quot;/err1&quot;)</span><br><span class="line">    public void handlerExceptionResolver() throws SysException &#123;</span><br><span class="line"></span><br><span class="line">            throw new SysException(&quot;你的网络不好，请稍等…………&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 模拟抛出其他异常</span><br><span class="line">     */</span><br><span class="line">    @RequestMapping(&quot;/err2&quot;)</span><br><span class="line">    public void handlerExceptionResolver2() &#123;</span><br><span class="line">        throw new RuntimeException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;/err3&quot;)</span><br><span class="line">    public void handlerExceptionResolve3r() throws SysException &#123;</span><br><span class="line"></span><br><span class="line">        throw new SysException(&quot;输入错误…………&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<p><strong>结果如下：</strong></p>
+<p><img src="/../images/run/err1.png"></p>
+<p><img src="/../images/run/err2.png"></p>
+<p><img src="/../images/run/err3.png"></p>
+<h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>MyExceptionResolver.java</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.smvc.resolver;</span><br><span class="line"></span><br><span class="line">import com.xxxx.smvc.exception.Exception01;</span><br><span class="line">import com.xxxx.smvc.exception.Exception02;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.servlet.HandlerExceptionResolver;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class MyExceptionResolver implements HandlerExceptionResolver &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) &#123;</span><br><span class="line"></span><br><span class="line">        ModelAndView mv = new ModelAndView();</span><br><span class="line">        // 获取异常信息</span><br><span class="line">        mv.addObject(&quot;msg&quot;, ex.getMessage());</span><br><span class="line">        if (ex instanceof Exception01) &#123;</span><br><span class="line">            mv.setViewName(&quot;error.jsp&quot;);</span><br><span class="line">        &#125; else if (ex instanceof Exception02) &#123;</span><br><span class="line">            mv.setViewName(&quot;error2.jsp&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            mv.setViewName(&quot;error3.jsp&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return mv;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>ExceptionController.java</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.smvc.controller;</span><br><span class="line"></span><br><span class="line">import com.xxxx.smvc.exception.Exception01;</span><br><span class="line">import com.xxxx.smvc.exception.Exception02;</span><br><span class="line">import com.xxxx.smvc.exception.Exception03;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"></span><br><span class="line">//@RequestMapping(&quot;/ex&quot;)</span><br><span class="line">@Controller</span><br><span class="line">public class ExceptionController &#123;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/test1&quot;)</span><br><span class="line">    public String test1(@RequestParam(&quot;id&quot;) Integer id) &#123;</span><br><span class="line">        if (id==1) &#123;</span><br><span class="line">            throw new Exception01(&quot;1号异常....&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;success.jsp&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/test2&quot;)</span><br><span class="line">    public String test2(@RequestParam(&quot;id&quot;) Integer id) &#123;</span><br><span class="line">        if (id==2) &#123;</span><br><span class="line">            throw new Exception02(&quot;2号异常....&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;success.jsp&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/test3&quot;)</span><br><span class="line">    public String test3(@RequestParam(&quot;id&quot;) Integer id) &#123;</span><br><span class="line">        if (id==3) &#123;</span><br><span class="line">            throw new Exception03(&quot;3号异常....&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;success.jsp&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>Exception01.java</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.smvc.exception;</span><br><span class="line"></span><br><span class="line">// 运行时异常</span><br><span class="line">public class Exception01 extends RuntimeException &#123;</span><br><span class="line"></span><br><span class="line">    public Exception01() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Exception01(String message) &#123;</span><br><span class="line">        super(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+<p>Exception02、Exception03同上….</p>
+<p><strong>测试结果：</strong></p>
+<p><img src="/../images/run/a11.png"></p>
+<p><img src="/../images/run/a12.png"></p>
+<p><img src="/../images/run/a13.png"></p>
+<hr>
+<h1 id="3-、异常解析器链"><a href="#3-、异常解析器链" class="headerlink" title="3 、异常解析器链"></a>3 、异常解析器链</h1><p>​        我们可以通过在 Spring 配置中声明<strong>多个HandlerExceptionResolver的 bean</strong>，并根据需要设置其顺序属性来形成异常解析器链。并且支持order排序，order值越大，异常解析器的在链中的位置越靠后（解析器链实际上是一个List集合）。我们通过实现Ordered接口或者使用@Order注解来确定order值，如果不配置order值，那么默认为最大值，即Integer.MAX_VALUE，也就是说在链尾部！</p>
+<p>​        当抛出异常时，DispatcherServlet将会依次调用异常解析器链的每一个析器的resolveException方法，如果当前异常解析器的resolveException方法返回null，那么表示未能成功处理该异常，那么继续调用下一个异常解析器，否则，表示异常处理器成功，不会继续调用后续的解析器！</p>
+<p>​    如：新建另一个异常解析器SysExceptionResolver2，它的order值为0，小于2，因此它将会被先于SysExceptionResolver调用！    </p>
+<p>​        如果将SysExceptionResolver2的@Order注解值改为大于2，或者去掉该注解，那么SysExceptionResolver将会先被调用：</p>
+<h1 id="4、-ExceptionHandler统一异常处理"><a href="#4、-ExceptionHandler统一异常处理" class="headerlink" title="4、@ExceptionHandler统一异常处理"></a>4、@ExceptionHandler统一异常处理</h1><p>​        Spring提供了HandlerExceptionResolver的几个默认实现，它们具有自己的可扩展的解决异常的方式，我们完全可以直接利用这些默认实现，只需要配置对应的异常处理的方案，而无需再自定义HandlerExceptionResolver，无需自己编写完整的异常处理逻辑！</p>
+<p>​        ExceptionHandlerExceptionResolver通过调用在@Controller类或者@ControllerAdvice类中的具有@ExceptionHandler注解的方法来解决来自Controller方法的异常，这实际上就是一种非常常用并且简单的处理异常的方式，在目前的项目中，大多使用该方式！</p>
+<pre><code>## 4.1 @ExceptionHandler测试
+</code></pre>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                    <a class="donate" href="javascript:;"><i class="fa fa-bitcoin"></i> 打赏</a>
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://lan-wa.github.io/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://lan-wa.github.io/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/";
+            const title         = "「项目统一异常处理(未完待续...)」";
+            const excerpt       = `​        在J2EE项目的开发中，不管是对底层的数据库操作过程，还是业务层的处理过程，还是控制层的处理过程，都不可避免会遇到各种可预知的、不可预知的异常需要处理。每个过程都单独处理异常，系统的代码耦合度高，工作量大且不好统一，...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Spring-MVC/" rel="tag">Spring MVC</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-03-24</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" bootstrap-table分页" href="/2022/03/21/bootstrap-table分页/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" SpringMVC拦截器" href="/2022/03/24/SpringMVC拦截器/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/',
+                path: '/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">当你的才华还撑不起你的野心时，那你就应该静下心来学习。</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                14
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                9
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8web%E6%8A%80%E6%9C%AF"><span class="toc-text">1、使用web技术</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81HandlerExceptionResolver%E5%BC%82%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="toc-text">2、HandlerExceptionResolver异常解析器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-text">方法一：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="toc-text">方法二：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E3%80%81%E5%BC%82%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%99%A8%E9%93%BE"><span class="toc-text">3 、异常解析器链</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81-ExceptionHandler%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">4、@ExceptionHandler统一异常处理</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC-Spring-Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC - [Spring, Spring MVC学习]</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">2</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.8em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.67em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.73em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/bootstrap-table/" style="font-size: 0.6em;">bootstrap-table</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/"><i class="fa  fa-book"></i> SpringMVC拦截器</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><i class="fa  fa-book"></i> 项目统一异常处理(未完待续...)</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/21/bootstrap-table%E5%88%86%E9%A1%B5/"><i class="fa  fa-book"></i> bootstrap-table分页</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/20/%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/"><i class="fa  fa-book"></i> 声明式事务控制</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/19/AOP%E7%9A%84%E7%BB%8F%E5%85%B8%E7%94%A8%E6%B3%95/"><i class="fa  fa-book"></i> AOP的经典用法</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 我爱小小蝶
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+    <script defer src="https://unpkg.com/layui-src@2.5.5/dist/layui.all.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

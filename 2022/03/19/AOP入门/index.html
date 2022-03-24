@@ -24,7 +24,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-03-19T14:39:22.000Z">
-<meta property="article:modified_time" content="2022-03-20T09:38:25.668Z">
+<meta property="article:modified_time" content="2022-03-21T04:22:32.405Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="Spring注解">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~9.62K
+                        ~11.26K
                     
                     字
                 </li>
@@ -181,7 +181,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1647769105668"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1647836552405"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -198,10 +198,30 @@
 <li>优势：减少重复代码，提高开发效率，并且便于维护</li>
 </ol>
 <h2 id="1-3-AOP-的底层实现"><a href="#1-3-AOP-的底层实现" class="headerlink" title="1.3 AOP 的底层实现"></a>1.3 AOP 的底层实现</h2><p>​        实际上，AOP 的底层是通过 Spring 提供的的动态代理技术实现的。在运行期间，Spring通过动态代理技术动态的生成代理对象，代理对象方法执行时进行增强功能的介入，在去调用目标对象的方法，从而完成功能的增强。</p>
-<h2 id="1-4-AOP-的动态代理技术"><a href="#1-4-AOP-的动态代理技术" class="headerlink" title="1.4 AOP 的动态代理技术"></a>1.4 AOP 的动态代理技术</h2><p>常用的动态代理技术</p>
+<h2 id="1-4-AOP-的动态代理技术"><a href="#1-4-AOP-的动态代理技术" class="headerlink" title="1.4 AOP 的动态代理技术"></a>1.4 AOP 的动态代理技术</h2><p>动态代理是一种常用的设计模式，广泛应用于框架中，Spring框架的AOP特性就是应用动态代理实现的。</p>
+<p>常用的动态代理技术</p>
 <ol>
-<li>JDK 代理 : 基于接口的动态代理技术</li>
-<li>cglib 代理：基于父类的动态代理技术</li>
+<li><p>实现动态代理有两种形式：</p>
+<ol>
+<li>jdk动态代理：根据目标类接口获取代理类实现规则，生成代理对象。这个代理对象，也是目标类接口的一个实现类。</li>
+<li>cglib动态代理：根据目标类本身获取代理类实现规则，生成代理对象。这个代理对象，也是目标类的一个子类。 （如果目标类为final，则不能使用CGLib实现动态代理）</li>
+</ol>
+<p>SpringAOP可以自动在jdk动态代理和CGLib动态代理之间进行切换，规则如下：</p>
+<ol>
+<li><p>如果目标对象实现了接口，采用jdk动态代理实现aop。</p>
+</li>
+<li><p>如果目标对象没有实现接口，采用CGLib动态代理实现aop。</p>
+</li>
+<li><p>如果目标对象实现了接口，但仍然想要使用CGLIB实现aop，可以手动进行配置。</p>
+<p>cglib动态代理：</p>
+<p>注意：</p>
+<ol>
+<li>dao层不能再实现接口。</li>
+<li>service层不能再实现接口。</li>
+</ol>
+</li>
+</ol>
+</li>
 </ol>
 <h2 id="1-5-AOP-相关概念"><a href="#1-5-AOP-相关概念" class="headerlink" title="1.5 AOP 相关概念"></a>1.5 AOP 相关概念</h2><ul>
 <li>Target（目标对象）：代理的目标对象。</li>
@@ -220,7 +240,7 @@
 <h2 id="1-7-知识要点"><a href="#1-7-知识要点" class="headerlink" title="1.7 知识要点"></a>1.7 知识要点</h2><ol>
 <li>aop：面向切面编程</li>
 <li>aop底层实现：基于JDK的动态代理 和 基于Cglib的动态代理</li>
-<li>aop的重点概念：<br>* Pointcut（切入点）：被增强的方法<br>* Advice（通知&#x2F; 增强）：封装增强业务逻辑的方法<br>* Aspect（切面）：切点+通知<br>* Weaving（织入）：将切点与通知结合的过程</li>
+<li>aop的重点概念：<br>* Pointcut（切入点）：被增强的方法<br>   * Advice（通知&#x2F; 增强）：封装增强业务逻辑的方法<br>      * Aspect（切面）：切点+通知<br>         * Weaving（织入）：将切点与通知结合的过程</li>
 <li>开发明确事项：<ol>
 <li>谁是切点（切点表达式配置）</li>
 <li>谁是通知（切面类中的增强方法）</li>
@@ -230,8 +250,7 @@
 </ol>
 <h1 id="2-导入依赖"><a href="#2-导入依赖" class="headerlink" title="2.  导入依赖"></a>2.  导入依赖</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--导入spring的context坐标，context依赖aop--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.3.14&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 添加aspectj依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.8.7&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-
-
+<p>​        Aspectj是一个基于java的、面向切面的AOP框架。Spring2.0之后增加了对Aspectj切点表达式的支持。而实际开发中一般都使用Aspectj方式来实现AOP。所以还要导入Aspectj相关jar包。</p>
 <h1 id="3-切点表达式的写法"><a href="#3-切点表达式的写法" class="headerlink" title="3. 切点表达式的写法"></a>3. 切点表达式的写法</h1><h2 id="3-1-表达式语法："><a href="#3-1-表达式语法：" class="headerlink" title="3.1 表达式语法："></a>3.1 表达式语法：</h2><p>​    <div class="alert alert-success"><div class="icon"><i class="fa fa-check"></i></div><div class="text"><p>execution([修饰符] 返回值类型 包名.类名.方法名(参数))</p>
 </div></div></p>
 <ol>
@@ -242,6 +261,12 @@
 </ol>
 <p>例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">execution(public void com.itheima.aop.Target.method())</span><br><span class="line">execution(void com.itheima.aop.Target.*(..))</span><br><span class="line">execution(* com.itheima.aop.*.*(..))</span><br><span class="line">execution(* com.itheima.aop..*.*(..))</span><br><span class="line">execution(* *..*.*(..))</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * 例如：execution(* com.xxxx.service.impl.*.*(..))</span><br><span class="line"> * 第一个 *：所有的返回值类型</span><br><span class="line"> * 第二个 *：所有的类</span><br><span class="line"> * 第三个 *：所有的方法</span><br><span class="line"> * 第四个 .. ：所有的参数</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+
 
 
 
@@ -297,6 +322,16 @@
 <td align="center">用于配置最终通知。无论增强方式执行是否有异常都会执行</td>
 </tr>
 </tbody></table>
+<p>​        注： 连接点（JoinPoint 就是要织入的业务方法）</p>
+<p>​        在实际开发中，除了业务逻辑这个主要功能之外，还需要处理许多辅助功能。 比如：日志、异常处理、事务、输入验证、安全等等，我们将这些代码称为：<strong>方面代码</strong>。而方面代码，就是我们要抽取出来的。</p>
+<p>下面抽取日志方面代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.xxxx.advice;</span><br><span class="line">import org.aspectj.lang.JoinPoint;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Before;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">@Component</span><br><span class="line">@Aspect     //@Aspect定义此类为方面代码，即是一个通知。</span><br><span class="line">public class MyAdvice &#123;</span><br><span class="line">    @Before(&quot;execution(* com.neusoft.service.impl.*.*(..))&quot;)</span><br><span class="line">    public void beforeMethod(JoinPoint joinpoint)&#123;</span><br><span class="line">        System.out.println(&quot;【前置通知日志】&quot; + joinpoint.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>@Aspect注解：定义此类为方面代码，即是一个通知。</li>
+<li>@Before注解：定义一个前置通知。即在目标方法执行前切入此注解标注的方法。</li>
+<li>execution() 是一个Aspect表达式，语法为：execution(返回值类型 包名.类名.方法名 (参数) 异常)</li>
+</ol>
 <h2 id="4-3-AOP底层实现"><a href="#4-3-AOP底层实现" class="headerlink" title="4.3 AOP底层实现"></a>4.3 AOP底层实现</h2><p><strong>Jdk代理：基于接口的代理，一定是基于接口，会生成目标对象的接口的子对象。</strong></p>
 <p><strong>Cglib代理：基于类的代理，不需要基于接口，会生成目标对象的子对象。</strong></p>
 <ol>
@@ -323,6 +358,12 @@
 
 
 
+<p>注意：</p>
+<ol>
+<li>如果配置了环绕通知，那么业务方法的执行将在环绕通知中的obj &#x3D; pjp.proceed();这段代码时开始执行。此时要注意：如果环绕通知方法不写返回值，或者obj &#x3D; pjp.proceed()这段代码如果不取得返回值，那么返回通知也不能取得返回值。</li>
+<li>有了环绕通知，异常通知也将失去作用。</li>
+<li>实际上，如果要配置环绕通知，那么其他通知就失去意义了。因为在环绕通知中，也可以在方法执行前、执行后做方面代码，包括获取返回值、做异常处理等。</li>
+</ol>
 <div class="xControl">
     <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>UserService.java</span></div>
     <div class="xContent"><div class="inner">
@@ -478,7 +519,7 @@
                     <a class="tag-none-link" href="/tags/Spring%E6%B3%A8%E8%A7%A3/" rel="tag">Spring注解</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-03-20</span>
+                <span>最后编辑：2022-03-21</span>
                 </div>
             </div>
         </footer>
@@ -552,7 +593,7 @@
                 文章
             </span>
             <span class="count">
-                11
+                14
             </span>
         </a>
         <a class="meta-item" href="/categories/">
@@ -560,7 +601,7 @@
                 分类
             </span>
             <span class="count">
-                5
+                9
             </span>
         </a>
         <a class="meta-item" href="/tags/">
@@ -568,7 +609,7 @@
                 标签
             </span>
             <span class="count">
-                5
+                7
             </span>
         </a>
     </div>
@@ -591,7 +632,7 @@
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC-Spring-Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC - [Spring, Spring MVC学习]</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">2</span></li></ul>
   </aside>
 
 
@@ -600,7 +641,7 @@
   <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
     <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
       <div class="tag-clouds">
-        <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.8em;">Spring</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.7em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+        <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.8em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.67em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.73em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/bootstrap-table/" style="font-size: 0.6em;">bootstrap-table</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
       </div>
   </aside>
 
@@ -611,6 +652,24 @@
   <div class="tab-content">
       <ul class="list-group">
         
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/"><i class="fa  fa-book"></i> SpringMVC拦截器</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/24/%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><i class="fa  fa-book"></i> 项目统一异常处理(未完待续...)</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/03/21/bootstrap-table%E5%88%86%E9%A1%B5/"><i class="fa  fa-book"></i> bootstrap-table分页</a>
+            
+          
         
           
           
@@ -625,23 +684,11 @@
           
         
           
-          
-            <a class="list-group-item" href="/2022/03/19/AOP%E5%85%A5%E9%97%A8/"><i class="fa  fa-book"></i> AOP入门</a>
             
           
-        
-          
-          
-            <a class="list-group-item" href="/2022/03/19/%E6%95%B0%E6%8D%AE%E8%BF%9E%E6%8E%A5%E6%B1%A0%E6%B3%A8%E8%A7%A3%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"><i class="fa  fa-book"></i> 数据连接池注解学习入门</a>
             
           
-        
-          
-          
-            <a class="list-group-item" href="/2022/03/19/%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa  fa-book"></i> 加载配置文件</a>
             
-          
-        
           
             
           
