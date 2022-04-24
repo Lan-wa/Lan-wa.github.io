@@ -24,7 +24,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-04-21T13:14:25.000Z">
-<meta property="article:modified_time" content="2022-04-21T14:25:16.912Z">
+<meta property="article:modified_time" content="2022-04-22T17:42:25.442Z">
 <meta property="article:author" content="蓝天白云">
 <meta property="article:tag" content="springboot2">
 <meta name="twitter:card" content="summary">
@@ -171,7 +171,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~4.10K
+                        ~4.79K
                     
                     字
                 </li>
@@ -181,11 +181,11 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1650551116912"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1650649345442"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81springboot2%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">一、springboot2的核心模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81springboot%E7%9A%84%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%85%A5%E5%8F%A3%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">二、springboot的启动类入口分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%B4%A2-SpringApplication-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">三、深入探索 SpringApplication 执行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IDEA%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">四、IDEA创建项目之后的目录结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">五、项目属性配置</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81springboot2%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">一、springboot2的核心模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81springboot%E7%9A%84%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%85%A5%E5%8F%A3%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">二、springboot的启动类入口分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%B4%A2-SpringApplication-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">三、深入探索 SpringApplication 执行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IDEA%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">四、IDEA创建项目之后的目录结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">五、项目属性配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">六、注解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81The-%E2%80%9Cmain%E2%80%9D-Method"><span class="toc-number">7.</span> <span class="toc-text">七、The “main” Method</span></a></li></ol>
                 </div>
             
             <hr />
@@ -230,6 +230,15 @@
 <p>​        2. 这两种文件的格式不同，但内容对应、作用相同。</p>
 <p>​        3. <strong>配置文件的默认执行顺序是：</strong></p>
 <p>​                项目根目录下的config子目录 -&gt; 项目根目录 -&gt; 项目classpath子目录下的config子目录 -&gt; 项目classpath子目录。</p>
+<h1 id="六、注解"><a href="#六、注解" class="headerlink" title="六、注解"></a>六、注解</h1><ol>
+<li><strong>@EnableAutoConfiguration Annotation：</strong>这个注解告诉 Spring Boot 根据你添加的 jar 依赖来“猜测”你想如何配置 Spring。由于 spring-boot-starter-web 添加了 Tomcat 和 Spring MVC，因此自动配置，假定您正在开发 Web 应用程序并会相应地设置 Spring。</li>
+<li></li>
+</ol>
+<h1 id="七、The-“main”-Method"><a href="#七、The-“main”-Method" class="headerlink" title="七、The “main” Method"></a>七、The “main” Method</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class HelloSpringbootApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(HelloSpringbootApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        我们应用程序的最后一部分是main 方法。这只是遵循应用程序入口点的 Java 约定的标准方法。        我们的 main 方法通过调用 run 委托给 Spring Boot 的SpringApplication 类。SpringApplication 引导我们的应用程序，启动 Spring，然后启动自动配置的 Tomcat Web 服务器。我们需要将 Example.class 作为参数传递给 run 方法来告诉 SpringApplication 哪个是主要的 Spring 组件。 args 数组也被传递以公开任何命令行参数。</p>
 
         </div>
         
@@ -320,7 +329,7 @@
                     <a class="tag-none-link" href="/tags/springboot2/" rel="tag">springboot2</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-04-21</span>
+                <span>最后编辑：2022-04-23</span>
                 </div>
             </div>
         </footer>
@@ -394,7 +403,7 @@
                 文章
             </span>
             <span class="count">
-                18
+                23
             </span>
         </a>
         <a class="meta-item" href="/categories/">
@@ -426,14 +435,14 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81springboot2%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-text">一、springboot2的核心模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81springboot%E7%9A%84%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%85%A5%E5%8F%A3%E5%88%86%E6%9E%90"><span class="toc-text">二、springboot的启动类入口分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%B4%A2-SpringApplication-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">三、深入探索 SpringApplication 执行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IDEA%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%9C"><span class="toc-text">四、IDEA创建项目之后的目录结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="toc-text">五、项目属性配置</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81springboot2%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-text">一、springboot2的核心模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81springboot%E7%9A%84%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%85%A5%E5%8F%A3%E5%88%86%E6%9E%90"><span class="toc-text">二、springboot的启动类入口分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%B4%A2-SpringApplication-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">三、深入探索 SpringApplication 执行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IDEA%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E4%B9%8B%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%9C"><span class="toc-text">四、IDEA创建项目之后的目录结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="toc-text">五、项目属性配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-text">六、注解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81The-%E2%80%9Cmain%E2%80%9D-Method"><span class="toc-text">七、The “main” Method</span></a></li></ol>
     </div>
 </aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">2</span></li></ul>
   </aside>
 
 
@@ -442,7 +451,7 @@
   <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
     <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
       <div class="tag-clouds">
-        <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.8em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.67em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.73em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/bootstrap-table/" style="font-size: 0.6em;">bootstrap-table</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/springboot2/" style="font-size: 0.67em;">springboot2</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+        <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.73em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.67em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.73em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/bootstrap-table/" style="font-size: 0.6em;">bootstrap-table</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
       </div>
   </aside>
 
@@ -456,34 +465,44 @@
         
           
           
-            <a class="list-group-item" href="/2022/04/21/springboot%E7%9B%B8%E5%85%B3%E6%B3%A8%E8%A7%A3/"><i class="fa  fa-book"></i> springboot的相关注解</a>
+            <a class="list-group-item" href="/2022/04/24/AOP%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"><i class="fa  fa-book"></i> AOP实现操作日志记录</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2022/04/21/Springboot%E5%85%A5%E9%97%A8/"><i class="fa  fa-book"></i> Springboot简介</a>
+            <a class="list-group-item" href="/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Slf4j+logback日志使用（未完待续）</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2022/04/09/jsp%E5%8A%A8%E6%80%81%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E5%B9%B6%E7%94%9F%E6%88%90%E7%BC%A9%E7%95%A5%E5%9B%BE/"><i class="fa  fa-book"></i> jsp动态获取数据库数据并生成缩略图</a>
+            <a class="list-group-item" href="/2022/04/24/springboot%E7%83%AD%E9%83%A8%E7%BD%B2/"><i class="fa  fa-book"></i> springboot热部署</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2022/04/07/ajax%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9B%BE%E7%89%87%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%98%BE/"><i class="fa  fa-book"></i> ajax请求数据库图片数据回显</a>
+            <a class="list-group-item" href="/2022/04/24/private-static-final-long-serialVersionUID-1L%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/"><i class="fa  fa-book"></i> private static final long serialVersionUID=1L什么意思</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2022/03/24/SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8/"><i class="fa  fa-book"></i> SpringMVC拦截器</a>
+            <a class="list-group-item" href="/2022/04/24/%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/"><i class="fa  fa-book"></i> 数据校验（未完待续）</a>
             
           
         
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
           
             
           
