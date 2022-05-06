@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>mybatis入门 | 一入编程深似海，从此萧郎为卷王</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="mybatis" />
+  
+  <meta name="description" content="注：基于Mysql8版本    目录结构  jdbc.properties 1234jdbc.driver&#x3D;com.mysql.cj.jdbc.Driverjdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;library?useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;Asia&#x2F;Shanghai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis入门">
+<meta property="og:url" content="https://lan-wa.github.io/2022/05/06/mybatis%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="一入编程深似海，从此萧郎为卷王">
+<meta property="og:description" content="注：基于Mysql8版本    目录结构  jdbc.properties 1234jdbc.driver&#x3D;com.mysql.cj.jdbc.Driverjdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;library?useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;Asia&#x2F;Shanghai">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-05-06T06:38:49.000Z">
+<meta property="article:modified_time" content="2022-05-06T07:11:34.964Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="mybatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://unpkg.com/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/aa.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a href="/null">关于我</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a href="/null">项目链接</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">一入编程深似海，从此萧郎为卷王</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>一入编程深似海，从此萧郎为卷王</h2> <br />
+                        <span>记录生活，书写记忆</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">mybatis入门</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-05-06</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~12.78K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1651821094964"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xml%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">xml方式实现：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">注解方式实现：</span></a></li></ol>
+                </div>
+            
+            <hr />
+             <div class="alert alert-success"><div class="icon"><i class="fa fa-check"></i></div><div class="text"><p>注：基于Mysql8版本</p>
+</div></div>
+
+<hr>
+<p><strong>目录结构</strong></p>
+<p><img src="/../images/mybatis/a1.png"></p>
+<p><strong>jdbc.properties</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jdbc.driver</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">jdbc.url</span>=<span class="string">jdbc:mysql://localhost:3306/library?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span></span><br><span class="line"><span class="attr">jdbc.user</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">jdbc.password</span>=<span class="string">111</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>log4j日志配置 log4j.properties</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### direct log messages to stdout ###</span></span><br><span class="line"><span class="attr">log4j.appender.stdout</span>=<span class="string">org.apache.log4j.ConsoleAppender</span></span><br><span class="line"><span class="attr">log4j.appender.stdout.Target</span>=<span class="string">System.out</span></span><br><span class="line"><span class="attr">log4j.appender.stdout.layout</span>=<span class="string">org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="attr">log4j.appender.stdout.layout.ConversionPattern</span>=<span class="string">%d&#123;yyyy-MM-dd HH:mm:ss&#125; %m%n</span></span><br><span class="line"><span class="comment">### direct messages to file mylog.log ###</span></span><br><span class="line"><span class="comment">### log4j.appender.file=org.apache.log4j.FileAppender</span></span><br><span class="line"><span class="comment">### log4j.appender.file.File=d:mylog.log</span></span><br><span class="line"><span class="comment">### log4j.appender.file.layout=org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="comment">### log4j.appender.file.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH:mm:ss&#125; %m%n</span></span><br><span class="line"><span class="comment">### set log levels - for more verbose logging change &#x27;debug?info?warn?error&#x27; ###</span></span><br><span class="line"><span class="comment">### log4j.rootLogger=debug,stdout,file</span></span><br><span class="line"><span class="attr">log4j.rootLogger</span>=<span class="string">debug,stdout</span></span><br></pre></td></tr></table></figure>
+
+<p>注：以上是控制台输出日志，注释的为文件日志</p>
+<p><strong>mybatis-config.xml</strong></p>
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>mybatis配置文件</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span> <span class="comment">&lt;!-- 约束声明 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- mybatis的全局配置文件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 引入jdbc.properties文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;jdbc.properties&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 定义类别名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.xxxx.pojo&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 配置数据源相关属性和事务  配置mybatis的开发环境 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 可以配置多个数据源环境，默认使用default中的值 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- transactionManager标签的type属性有两种取值：</span></span><br><span class="line"><span class="comment">                JDBC：全部使用jdbc的事务管理</span></span><br><span class="line"><span class="comment">                MANAGED：不使用事务管理，也从不提交--&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">&lt;!-- 使用jdbc的事务管理 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">&lt;!-- 配置数据源即连接池：dataSource标签的type属性有三种取值：</span></span><br><span class="line"><span class="comment">                POOLED：使用Mybatis自带的数据库连接池</span></span><br><span class="line"><span class="comment">                UNPOOLED：不使用任何数据库连接池</span></span><br><span class="line"><span class="comment">                JNDI：jndi形式使用数据库连接 已过时 --&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">&lt;!-- 配置数据源，并使用自带数据库连接池 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.user&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 导入mapper.xml映射文件，可配置多个 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 自动加载com.xxxx.dao包下，所有与接口名称一致的映射文件。（package标签可写多个）--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.xxxx.dao&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<p><strong>工具类 MybatisUtils.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xxxx.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.io.Resources;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSession;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MybatisUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SqlSessionFactory sqlSessionFactory;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">resource</span> <span class="operator">=</span> <span class="string">&quot;mybatis-config.xml&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 1.使用mybatis的第一步 --- 获取SqlSessionFactory实例对象</span></span><br><span class="line">            <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Resources.getResourceAsStream(resource);</span><br><span class="line">            sqlSessionFactory = <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(inputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 既然有了 SqlSessionFactory，顾名思义，我们可以从中获得 SqlSession 的实例</span></span><br><span class="line"><span class="comment">     * SqlSession 提供了在数据库执行 SQL 命令所需的所有方法</span></span><br><span class="line"><span class="comment">     * 你可以通过 SqlSession 实例来直接执行已映射的 SQL 语句。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title function_">getSqlSession</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//通过SqlSessionFactory打开数据库会话</span></span><br><span class="line">        <span class="keyword">return</span> sqlSessionFactory.openSession();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>创建实体类 Book.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xxxx.pojo;</span><br><span class="line"><span class="keyword">import</span> java.sql.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Book</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer book_id; <span class="comment">// 图书编号</span></span><br><span class="line">    <span class="keyword">private</span> String name;   <span class="comment">//书名</span></span><br><span class="line">    <span class="keyword">private</span> String author; <span class="comment">//作者</span></span><br><span class="line">    <span class="keyword">private</span> String  publish; <span class="comment">//出版社</span></span><br><span class="line">    <span class="keyword">private</span> String introduction; <span class="comment">//简介</span></span><br><span class="line">    <span class="keyword">private</span> String language; <span class="comment">//语言</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> price; <span class="comment">//价钱</span></span><br><span class="line">    <span class="keyword">private</span> Date pub_date; <span class="comment">//出版日期</span></span><br><span class="line">    <span class="keyword">private</span> Integer class_id; <span class="comment">//书籍类别</span></span><br><span class="line">    <span class="keyword">private</span> Integer number; <span class="comment">//书籍数量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Book</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Book</span><span class="params">(Integer book_id, String name, String author, String publish, String introduction, String language, <span class="type">double</span> price, Date pub_date, Integer class_id, Integer number)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.book_id = book_id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.author = author;</span><br><span class="line">        <span class="built_in">this</span>.publish = publish;</span><br><span class="line">        <span class="built_in">this</span>.introduction = introduction;</span><br><span class="line">        <span class="built_in">this</span>.language = language;</span><br><span class="line">        <span class="built_in">this</span>.price = price;</span><br><span class="line">        <span class="built_in">this</span>.pub_date = pub_date;</span><br><span class="line">        <span class="built_in">this</span>.class_id = class_id;</span><br><span class="line">        <span class="built_in">this</span>.number = number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">      get/set、toString()  方法 </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>数据库表 book_info</strong></p>
+<p><img src="/../images/mybatis/a2.png"></p>
+<p><strong>插入数据sql语句</strong>：</p>
+<div class="xControl">
+    <div class="xHeading"><div class="xIcon"><i class="fa fa-plus"></i></div><span>sql语句展开</span></div>
+    <div class="xContent"><div class="inner">
+        <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;大雪中的山庄&#x27;</span>, <span class="string">&#x27;东野圭吾 &#x27;</span>, <span class="string">&#x27;北京十月文艺出版社&#x27;</span>, <span class="string">&#x27;东野圭吾长篇小说杰作，中文简体首次出版。 一出没有剧本的舞台剧，为什么能让七个演员赌上全部人生.东野圭吾就是有这样过人的本领，能从充满悬念的案子写出荡气回肠的情感，在极其周密曲折的同时写出人性的黑暗与美丽。 一家与外界隔绝的民宿里，七个演员被要求住满四天，接受导演的考验，但不断有人失踪。难道这并非正常排练，而是有人布下陷阱要杀他们。 那时候我开始喜欢上戏剧和音乐，《大雪中的山庄》一书的灵感就来源于此。我相信这次的诡计肯定会让人大吃一惊。——东野圭吾&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">35.00</span>, <span class="string">&#x27;2017-6-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;三生三世 十里桃花&#x27;</span>, <span class="string">&#x27;唐七公子 &#x27;</span>, <span class="string">&#x27;沈阳出版社&#x27;</span>, <span class="string">&#x27;三生三世，她和他，是否注定背负一段纠缠的姻缘？\r\n三生三世，她和他，是否终能互许一个生生世世的承诺？&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">26.80</span>, <span class="string">&#x27;2009-1-6&#x27;</span>, <span class="number">7</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;何以笙箫默&#x27;</span>, <span class="string">&#x27;顾漫 &#x27;</span>, <span class="string">&#x27;朝华出版社&#x27;</span>, <span class="string">&#x27;一段年少时的爱恋，牵出一生的纠缠。大学时代的赵默笙阳光灿烂，对法学系大才子何以琛一见倾心，开朗直率的她拔足倒追，终于使才气出众的他为她停留驻足。然而，不善表达的他终于使她在一次伤心之下远走他乡……&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">15.00</span>, <span class="string">&#x27;2007-4-3&#x27;</span>, <span class="number">7</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">4</span>, <span class="string">&#x27;11处特工皇妃&#x27;</span>, <span class="string">&#x27;潇湘冬儿&#x27;</span>, <span class="string">&#x27;江苏文艺出版社&#x27;</span>, <span class="string">&#x27;《11处特工皇妃(套装上中下册)》内容简介：她是国安局军情十一处惊才绝艳的王牌军师——收集情报、策划部署、进不友好国家布置暗杀任务……她运筹帷幄之中，决胜于千里之外，堪称军情局大厦的定海神针。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">74.80</span>, <span class="string">&#x27;2011-5-5&#x27;</span>, <span class="number">7</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">5</span>, <span class="string">&#x27;人类简史&#x27;</span>, <span class="string">&#x27;[以色列] 尤瓦尔·赫拉利 &#x27;</span>, <span class="string">&#x27;中信出版社&#x27;</span>, <span class="string">&#x27;十万年前，地球上至少有六种不同的人\r\n但今日，世界舞台为什么只剩下了我们自己？\r\n从只能啃食虎狼吃剩的残骨的猿人，到跃居食物链顶端的智人，\r\n从雪维洞穴壁上的原始人手印，到阿姆斯壮踩上月球的脚印，\r\n从认知革命、农业革命，到科学革命、生物科技革命，\r\n我们如何登上世界舞台成为万物之灵的？\r\n从公元前1776年的《汉摩拉比法典》，到1776年的美国独立宣言，\r\n从帝国主义、资本主义，到自由主义、消费主义，\r\n从兽欲，到物欲，从兽性、人性，到神性，\r\n我们了解自己吗？我们过得更快乐吗？\r\n我们究竟希望自己得到什么、变成什么？&#x27;</span>, <span class="string">&#x27;英文&#x27;</span>, <span class="number">68.00</span>, <span class="string">&#x27;2014-11-1&#x27;</span>, <span class="number">11</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">6</span>, <span class="string">&#x27;明朝那些事儿（1-9）&#x27;</span>, <span class="string">&#x27;当年明月 &#x27;</span>, <span class="string">&#x27;中国海关出版社&#x27;</span>, <span class="string">&#x27;《明朝那些事儿》讲述从1344年到1644年，明朝三百年间的历史。作品以史料为基础，以年代和具体人物为主线，运用小说的笔法，对明朝十七帝和其他王公权贵和小人物的命运进行全景展示，尤其对官场政治、战争、帝王心术着墨最多。作品也是一部明朝政治经济制度、人伦道德的演义。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">358.20</span>, <span class="string">&#x27;2009-4-6&#x27;</span>, <span class="number">11</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">7</span>, <span class="string">&#x27;经济学原理（上下）&#x27;</span>, <span class="string">&#x27;[美] 曼昆 &#x27;</span>, <span class="string">&#x27;机械工业出版社&#x27;</span>, <span class="string">&#x27;此《经济学原理》的第3版把较多篇幅用于应用与政策，较少篇幅用于正规的经济理论。书中主要从供给与需求、企业行为与消费者选择理论、长期经济增长与短期经济波动以及宏观经济政策等角度深入浅出地剖析了经济学家们的世界观。&#x27;</span>, <span class="string">&#x27;英文&#x27;</span>, <span class="number">88.00</span>, <span class="string">&#x27;2003-8-5&#x27;</span>, <span class="number">6</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">8</span>, <span class="string">&#x27;方向&#x27;</span>, <span class="string">&#x27;马克-安托万·马修 &#x27;</span>, <span class="string">&#x27;后浪丨北京联合出版公司&#x27;</span>, <span class="string">&#x27;《方向》即便在马修的作品中也算得最独特的：不着一字，尽得风流。原作本无一字，标题只是一个→，出版时才加了个书名Sens——既可以指“方向”，也可以指“意义”。 《方向》没有“字”，但有自己的语言——请读者在尽情释放想象力和独立思考之余，破解作者的密码，听听作者对荒诞的看法。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">99.80</span>, <span class="string">&#x27;2017-4-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">9</span>, <span class="string">&#x27;画的秘密&#x27;</span>, <span class="string">&#x27;马克-安托万·马修 &#x27;</span>, <span class="string">&#x27;北京联合出版公司·后浪出版公司&#x27;</span>, <span class="string">&#x27;一本关于友情的疗伤图像小说，直击人内心最为隐秘的情感。 一部追寻艺术的纸上悬疑电影，揭示命运宇宙中奇诡的真相。 ★ 《画的秘密》荣获欧洲第二大漫画节“瑞士谢尔漫画节最佳作品奖”。 作者曾两度夺得安古兰国际漫画节重要奖项。 ★ 《画的秘密》是一部罕见的、结合了拼贴、镜像、3D等叙事手法的实验型漫画作品。作者巧妙地调度光线、纬度、时间、记忆，在一个悬念重重又温情治愈的故事中，注入了一个有关命运的哲学议题。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">60.00</span>, <span class="string">&#x27;2016-1-1&#x27;</span>, <span class="number">9</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">10</span>, <span class="string">&#x27;造彩虹的人&#x27;</span>, <span class="string">&#x27;东野圭吾 &#x27;</span>, <span class="string">&#x27;北京十月文艺出版社&#x27;</span>, <span class="string">&#x27;其实每个人身上都会发光，但只有纯粹渴求光芒的人才能看到。 从那一刻起，人生会发生奇妙的转折。功一高中退学后无所事事，加入暴走族消极度日；政史备战高考却无法集中精神，几近崩溃；辉美因家庭不和对生活失去勇气，决定自杀。面对糟糕的人生，他们无所适从，直到一天夜里，一道如同彩虹的光闯进视野。 凝视着那道光，原本几乎要耗尽的气力，源源不断地涌了出来。一切又开始充满希望。打起精神来，不能输。到这儿来呀，快来呀——那道光低声呼唤着。 他们追逐着呼唤，到达一座楼顶，看到一个人正用七彩绚烂的光束演奏出奇妙的旋律。 他们没想到，这一晚看到的彩虹，会让自己的人生彻底转...&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">39.50</span>, <span class="string">&#x27;2017-6-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">11</span>, <span class="string">&#x27;控方证人&#x27;</span>, <span class="string">&#x27;阿加莎·克里斯蒂 &#x27;</span>, <span class="string">&#x27;新星出版社&#x27;</span>, <span class="string">&#x27;经典同名话剧六十年常演不衰； 比利•怀尔德执导同名电影，获奥斯卡金像奖六项提名！ 阿加莎对神秘事物的向往大约来自于一种女性祖先的遗传，在足不出户的生活里，生出对世界又好奇又恐惧的幻想。 ——王安忆 伦纳德•沃尔被控谋杀富婆艾米丽以图染指其巨额遗产，他却一再表明自己的无辜。伦纳德的妻子是唯一能够证明他无罪的证人，却以控方证人的身份出庭指证其确实犯有谋杀罪。伦纳德几乎陷入绝境，直到一个神秘女人的出现…… 墙上的犬形图案；召唤死亡的收音机；蓝色瓷罐的秘密；一只疯狂的灰猫……十一篇神秘的怪谈，最可怕的不是“幽灵”，而是你心中的魔鬼。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">35.00</span>, <span class="string">&#x27;2017-5-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">12</span>, <span class="string">&#x27;少有人走的路&#x27;</span>, <span class="string">&#x27;M·斯科特·派克 &#x27;</span>, <span class="string">&#x27;吉林文史出版社&#x27;</span>, <span class="string">&#x27;这本书处处透露出沟通与理解的意味，它跨越时代限制，帮助我们探索爱的本质，引导我们过上崭新，宁静而丰富的生活；它帮助我们学习爱，也学习独立；它教诲我们成为更称职的、更有理解心的父母。归根到底，它告诉我们怎样找到真正的自我。 正如开篇所言：人生苦难重重。M·斯科特·派克让我们更加清楚：人生是一场艰辛之旅，心智成熟的旅程相当漫长。但是，他没有让我们感到恐惧，相反，他带领我们去经历一系列艰难乃至痛苦的转变，最终达到自我认知的更高境界。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">26.00</span>, <span class="string">&#x27;2007-1-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">13</span>, <span class="string">&#x27;追寻生命的意义&#x27;</span>, <span class="string">&#x27;[奥] 维克多·弗兰克 &#x27;</span>, <span class="string">&#x27;新华出版社&#x27;</span>, <span class="string">&#x27;《追寻生命的意义》是一个人面对巨大的苦难时，用来拯救自己的内在世界，同时也是一个关于每个人存在的价值和能者多劳们生存的社会所应担负职责的思考。本书对于每一个想要了解我们这个时代的人来说，都是一部必不可少的读物。这是一部令人鼓舞的杰作……他是一个不可思议的人，任何人都可以从他无比痛苦的经历中，获得拯救自己的经验……高度推荐。&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">12.00</span>, <span class="string">&#x27;2003-1-1&#x27;</span>, <span class="number">9</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `book_info` <span class="keyword">VALUES</span> (<span class="number">14</span>, <span class="string">&#x27;秘密花园&#x27;</span>, <span class="string">&#x27;乔汉娜·贝斯福 &#x27;</span>, <span class="string">&#x27;北京联合出版公司&#x27;</span>, <span class="string">&#x27;欢迎来到秘密花园！ 在这个笔墨编织出的美丽世界中漫步吧 涂上你喜爱的颜色，为花园带来生机和活力 发现隐藏其中的各类小生物，与它们共舞 激活创造力，描绘那些未完成的仙踪秘境 各个年龄段的艺术家和“园丁”都可以来尝试喔！&#x27;</span>, <span class="string">&#x27;中文&#x27;</span>, <span class="number">42.00</span>, <span class="string">&#x27;2015-6-1&#x27;</span>, <span class="number">9</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+ 
+    </div></div>
+    </div>
+
+
+
+<p><strong>创建接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xxxx.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.xxxx.pojo.Book;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Select;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BookDao</span> &#123;</span><br><span class="line">    <span class="comment">// XML的语句映射方式</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Book&gt; <span class="title function_">getBooksAll</span><span class="params">()</span>; <span class="comment">//获取所有书籍信息</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 基于注解的语句映射方式</span></span><br><span class="line">    <span class="meta">@Select(&quot;select * from book_info where book_id=#&#123;book_id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Book <span class="title function_">getBookByID</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="xml方式实现："><a href="#xml方式实现：" class="headerlink" title="xml方式实现："></a>xml方式实现：</h2><p><strong>BookDao.xml映射文件（只示例了其中一个方法， 另一个使用了注解)</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.xxxx.dao.BookDao&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getBooksAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Book&quot;</span>&gt;</span></span><br><span class="line">        select * from book_info</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>测试：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xxxx.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.xxxx.pojo.Book;</span><br><span class="line"><span class="keyword">import</span> com.xxxx.utils.JsonModel;</span><br><span class="line"><span class="keyword">import</span> com.xxxx.utils.JsonUtil;</span><br><span class="line"><span class="keyword">import</span> com.xxxx.utils.MybatisUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSession;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BookDaoTest</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 获得SqlSession</span></span><br><span class="line">        <span class="type">SqlSession</span> <span class="variable">session</span> <span class="operator">=</span> MybatisUtils.getSqlSession();</span><br><span class="line">        <span class="comment">// 2. 获得mapper，执行sql</span></span><br><span class="line">        <span class="type">BookDao</span> <span class="variable">mapper</span> <span class="operator">=</span> session.getMapper(BookDao.class);</span><br><span class="line">        List&lt;Book&gt; list = mapper.getBooksAll();</span><br><span class="line">        JsonModel&lt;List&lt;Book&gt;&gt; book = <span class="keyword">new</span> <span class="title class_">JsonModel</span>&lt;&gt;();</span><br><span class="line">        book.setStatus(<span class="number">1</span>);</span><br><span class="line">        book.setMsg(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">        book.setData(list);</span><br><span class="line">        book.setTotal(list.size());</span><br><span class="line">        System.out.println(JsonUtil.toJsonString(book));</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">SqlSession</span> <span class="variable">session</span> <span class="operator">=</span> MybatisUtils.getSqlSession();</span><br><span class="line">        <span class="type">BookDao</span> <span class="variable">mapper</span> <span class="operator">=</span> session.getMapper(BookDao.class);</span><br><span class="line">        <span class="type">Book</span> <span class="variable">book</span> <span class="operator">=</span> mapper.getBookByID(<span class="number">1</span>);  <span class="comment">// 查询id为1的书籍信息</span></span><br><span class="line">        System.out.println(book);</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>运行结果：</strong></p>
+<p><img src="/../images/mybatis/a3.png"></p>
+<h2 id="注解方式实现："><a href="#注解方式实现：" class="headerlink" title="注解方式实现："></a>注解方式实现：</h2><p><strong>创建实体类 Emp.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xxxx.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.type.Alias;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Alias(&quot;emp&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Emp</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer empno;</span><br><span class="line">    <span class="keyword">private</span> String ename;</span><br><span class="line">    <span class="keyword">private</span> String job;</span><br><span class="line">    <span class="keyword">private</span> String hiredate;</span><br><span class="line">    <span class="keyword">private</span> Double sal;</span><br><span class="line">    <span class="keyword">private</span> Integer deptno;</span><br><span class="line"></span><br><span class="line">    get/set、toString()  方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>接口上通过注解编写sql</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Select(&quot;select * from test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Emp&gt; <span class="title function_">listEmpAll</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>测试</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">SqlSession</span> <span class="variable">session</span> <span class="operator">=</span> MybatisUtils.getSqlSession();</span><br><span class="line">    <span class="type">BookDao</span> <span class="variable">mapper</span> <span class="operator">=</span> session.getMapper(BookDao.class);</span><br><span class="line">    List&lt;Emp&gt; list = mapper.listEmpAll();</span><br><span class="line">    System.out.println(list);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>测试结果：</strong></p>
+<p><img src="/../images/mybatis/a4.png"></p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                    <a class="donate" href="javascript:;"><i class="fa fa-bitcoin"></i> 打赏</a>
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://lan-wa.github.io/2022/05/06/mybatis%E5%85%A5%E9%97%A8/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://lan-wa.github.io/2022/05/06/mybatis%E5%85%A5%E9%97%A8/";
+            const title         = "「mybatis入门」";
+            const excerpt       = ` 注：基于Mysql8版本
+
+
+
+目录结构
+
+jdbc.properties
+1234jdbc.driver=com.mysql.cj.jdbc.Driverjdbc.url=jdbc:mysql://localhost:3306/l...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/mybatis/" rel="tag">mybatis</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-05-06</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 数据层层获取数据id执行增删查改（踩坑）" href="/2022/05/06/controller层获取数据id执行增删查改踩坑/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" ES6.0学习" href="/2022/05/06/ES6-0学习/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/05/06/mybatis%E5%85%A5%E9%97%A8/',
+                path: '/2022/05/06/mybatis%E5%85%A5%E9%97%A8/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">向竞争挑战，向压力挑战，向自己挑战。</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                35
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                16
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                13
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xml%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">xml方式实现：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">注解方式实现：</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/Spring/" style="font-size: 0.73em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.73em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.73em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/bootstrap-table/" style="font-size: 0.73em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/javaweb/" style="font-size: 0.67em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/05/06/ES6-0%E5%AD%A6%E4%B9%A0/"><i class="fa  fa-book"></i> ES6.0学习</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/05/06/mybatis%E5%85%A5%E9%97%A8/"><i class="fa  fa-book"></i> mybatis入门</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/"><i class="fa  fa-book"></i> 数据层层获取数据id执行增删查改（踩坑）</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/05/06/json%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/"><i class="fa  fa-book"></i> json与字符串之间的转换</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/05/06/jdbc-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%9A%E7%94%A8%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9/"><i class="fa  fa-book"></i> jdbc - 可变参数的通用增删查改</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 一入编程深似海，从此萧郎为卷王
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+    <script defer src="https://unpkg.com/layui-src@2.5.5/dist/layui.all.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
