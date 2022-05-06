@@ -197,8 +197,7 @@
                     <div class="kratos-entry-content-new">
                         <p>
                             
-                                去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());
-
+                                去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题...
                             
                         </p>
                     </div>
