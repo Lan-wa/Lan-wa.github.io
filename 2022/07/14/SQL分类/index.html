@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>Slf4j+logback日志使用（未完待续） | 记录生活</title>
+  <title>SQL分类 | 记录生活</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="springboot2" />
+    <meta name="keywords" content="MySQL" />
   
-  <meta name="description" content="​        日志，通常不会在需求阶段作为一个功能单独提出来，也不会在产品方案中看到它的细节。但是，这丝毫不影响它在任何一个系统中的重要的地位。 ​        为了保证服务的高可用，发现问题一定要即使，解决问题一定要迅速，所以生产环境一旦出现问题，预警系统就会通过邮件、短信甚至电话的方式实施多维轰炸模式，确保相关负责人不错过每一个可能的bug。 ​        预警系统判断疑似bug大部">
+  <meta name="description" content="一、SQL分类　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。 　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括inse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Slf4j+logback日志使用（未完待续）">
-<meta property="og:url" content="https://lan-wa.github.io/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="SQL分类">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/14/SQL%E5%88%86%E7%B1%BB/index.html">
 <meta property="og:site_name" content="记录生活">
-<meta property="og:description" content="​        日志，通常不会在需求阶段作为一个功能单独提出来，也不会在产品方案中看到它的细节。但是，这丝毫不影响它在任何一个系统中的重要的地位。 ​        为了保证服务的高可用，发现问题一定要即使，解决问题一定要迅速，所以生产环境一旦出现问题，预警系统就会通过邮件、短信甚至电话的方式实施多维轰炸模式，确保相关负责人不错过每一个可能的bug。 ​        预警系统判断疑似bug大部">
+<meta property="og:description" content="一、SQL分类　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。 　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括inse">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-04-24T12:32:22.000Z">
-<meta property="article:modified_time" content="2022-06-16T13:00:57.465Z">
+<meta property="article:published_time" content="2022-07-14T01:33:59.000Z">
+<meta property="article:modified_time" content="2022-07-14T03:28:39.509Z">
 <meta property="article:author" content="我爱小小蝶">
-<meta property="article:tag" content="springboot2">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -150,17 +150,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">Slf4j+logback日志使用（未完待续）</h1>
+                <h1 class="kratos-entry-title text-center">SQL分类</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-04-24</li>
+                <li><i class="fa fa-calendar"></i> 2022-07-14</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~1.84K
+                        ~2.24K
                     
                     字
                 </li>
@@ -170,36 +170,156 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1655384457465"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1657769319509"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97Log%E9%BB%98%E8%AE%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">日志Log默认格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Boot%E9%BB%98%E8%AE%A4%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">Spring Boot默认日志系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%B0%86%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">如何将日志信息存储到文件</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81SQL%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">一、SQL分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DDL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 DDL语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DQL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 DQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 列别名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-2-%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E8%A1%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2  消除重复行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-3-%E6%AF%94%E8%BE%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 比较操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-4-%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 特殊比较运算符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-DML"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 DML</span></a></li></ol></li></ol>
                 </div>
             
             <hr />
-            <p>​        日志，通常不会在需求阶段作为一个功能单独提出来，也不会在产品方案中看到它的细节。但是，这丝毫不影响它在任何一个系统中的重要的地位。</p>
-<p>​        为了保证服务的高可用，发现问题一定要即使，解决问题一定要迅速，所以生产环境一旦出现问题，预警系统就会通过邮件、短信甚至电话的方式实施多维轰炸模式，确保相关负责人不错过每一个可能的bug。</p>
-<p>​        预警系统判断疑似bug大部分源于日志。比如某个微服务接口由于各种原因导致频繁调用出错，此时调用端会捕获这样的异常并打印ERROR级别的日志，当该错误日志达到一定次数出现的时候，就会触发报警。</p>
-<h2 id="日志Log默认格式"><a href="#日志Log默认格式" class="headerlink" title="日志Log默认格式"></a>日志Log默认格式</h2><p>Spring Boot 的默认日志输出类似于以下示例(springboot运行时控制台的输出)：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2022</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">20</span>:<span class="number">43</span>:<span class="number">06.350</span>  INFO <span class="number">1036</span> --- [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged</span><br><span class="line"><span class="number">2022</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">20</span>:<span class="number">43</span>:<span class="number">06.351</span>  INFO <span class="number">1036</span> --- [  restartedMain] c.e.t.TestSpringbootApplication          : 信息</span><br><span class="line"><span class="number">2022</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">20</span>:<span class="number">43</span>:<span class="number">06.351</span>  WARN <span class="number">1036</span> --- [  restartedMain] c.e.t.TestSpringbootApplication          : 警告</span><br><span class="line"><span class="number">2022</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">20</span>:<span class="number">43</span>:<span class="number">06.351</span> ERROR <span class="number">1036</span> --- [  restartedMain] c.e.t.TestSpringbootApplication          : 异常</span><br></pre></td></tr></table></figure>
+            <h3 id="一、SQL分类"><a href="#一、SQL分类" class="headerlink" title="一、SQL分类"></a>一、SQL分类</h3><p>　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。</p>
+<p>　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括insert、delete、update和select等。</p>
+<p>　    DCL（Data Control Language）语句：数据控制语句，用于控制不同数据段直接的许可和访问级别的语句，这些语句定义了数据库、表、字段、用户的访问权限和安全级别，主要的语句关键字包括grant、revoke等。</p>
+<p>​        DQL：数据查询语言。select……</p>
+<h4 id="1-1-DDL语句"><a href="#1-1-DDL语句" class="headerlink" title="1.1 DDL语句"></a>1.1 DDL语句</h4><p>　　DDL是数据定于语言的缩写，简单来说，就是对数据库内部的对象进行创建、删除、修改等操作的语言。它和DML语言的最大区别是DML只是对表内部数据操作，而不涉及表的定义，结构的修改，更不会涉及其他对象。DDL语句更多的由数据库管理员（DBA）使用，开发人员一般很少使用。</p>
+<h4 id="1-2-DQL语句"><a href="#1-2-DQL语句" class="headerlink" title="1.2 DQL语句"></a>1.2 DQL语句</h4><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  [<span class="keyword">DISTINCT</span>]&#123;<span class="operator">*</span><span class="operator">|</span> <span class="keyword">column</span><span class="operator">|</span> expression [alias],...&#125;</span><br><span class="line"><span class="keyword">FROM</span>    <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
 
 
 
-<p><strong>详细介绍：</strong></p>
-<ol>
-<li>日期和时间：毫秒精度，易于排序。</li>
-<li>日志级别：ERROR、WARN、INFO、DEBUG 或 TRACE。</li>
-<li>进程标识（动态分配）。</li>
-<li>A — 分隔符来区分实际日志消息的开始。</li>
-<li>线程名称：括在方括号中（可能会被截断以用于控制台输出）。</li>
-<li>记录器名称：这通常是源类名称（通常缩写）。</li>
-<li>日志消息。</li>
-</ol>
-<p>日志级别大小：TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR &lt; FATAL ，且级别是逐渐提供，如果日志级别设置为INFO，则意味TRACE和DEBUG级别的日志都看不到。如果这里设置为WARN，INFO级别的日志都不显示。</p>
-<h2 id="Spring-Boot默认日志系统"><a href="#Spring-Boot默认日志系统" class="headerlink" title="Spring Boot默认日志系统"></a>Spring Boot默认日志系统</h2><p>Spring Boot默认使用LogBack日志系统，如果不需要更改为其他日志系统如Log4j2等，则无需多余的配置，LogBack默认将日志打印到控制台上。</p>
-<h2 id="如何将日志信息存储到文件"><a href="#如何将日志信息存储到文件" class="headerlink" title="如何将日志信息存储到文件"></a>如何将日志信息存储到文件</h2><p>在本机环境，我们习惯在控制台看日志，但是线上我们还是要通过将日志信息保存到日志文件中，查询日志文件即可。</p>
-<p>摘抄记录：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bigdataZJ/p/springboot-log.html#:~:text=Spring%20Boot%E9%BB%98%E8%AE%A4%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F,Spring%20Boot%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8LogBack%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%9C%80%E8%A6%81%E6%9B%B4%E6%94%B9%E4%B8%BA%E5%85%B6%E4%BB%96%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%A6%82Log4j2%E7%AD%89%EF%BC%8C%E5%88%99%E6%97%A0%E9%9C%80%E5%A4%9A%E4%BD%99%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%8CLogBack%E9%BB%98%E8%AE%A4%E5%B0%86%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%B8%8A%E3%80%82">https://www.cnblogs.com/bigdataZJ/p/springboot-log.html#:~:text=Spring%20Boot%E9%BB%98%E8%AE%A4%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F,Spring%20Boot%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8LogBack%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%9C%80%E8%A6%81%E6%9B%B4%E6%94%B9%E4%B8%BA%E5%85%B6%E4%BB%96%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%A6%82Log4j2%E7%AD%89%EF%BC%8C%E5%88%99%E6%97%A0%E9%9C%80%E5%A4%9A%E4%BD%99%E7%9A%84%E9%85%8D%E7%BD%AE%EF%BC%8CLogBack%E9%BB%98%E8%AE%A4%E5%B0%86%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%B8%8A%E3%80%82</a></p>
+<h5 id="1-2-1-列别名"><a href="#1-2-1-列别名" class="headerlink" title="1.2.1 列别名"></a>1.2.1 列别名</h5><ul>
+<li><p>列别名 用来重新命名列的显示标题 如果SELECT语句中包含计算列，通常使用列别名来重新定义列标题。</p>
+</li>
+<li><p>使用列别名的方法</p>
+</li>
+<li><ul>
+<li>方式1：列名 列别名</li>
+<li>方式2：列名 AS 列别名</li>
+</ul>
+</li>
+<li><p>以下三种情况列别名两侧需要添加双引号<br>列别名中包含有空格<br>列别名中要求区分大小写(ORACLE中)<br>列别名中包含有特殊字符</p>
+</li>
+<li><p>列别名使用</p>
+</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename <span class="keyword">AS</span> name, sal salary</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查询员工年薪，并给新的列起别名yearSal（不会改变原来的表数据）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ename, <span class="number">12</span><span class="operator">*</span>sal<span class="operator">+</span>comm <span class="keyword">as</span> <span class="string">&#x27;yearSal&#x27;</span> <span class="keyword">from</span> emp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>(as 可以省略)</strong></p>
+<h5 id="1-2-2-消除重复行"><a href="#1-2-2-消除重复行" class="headerlink" title="1.2.2  消除重复行"></a>1.2.2  消除重复行</h5><ul>
+<li>重复行 以下查询的结果默认输出所有行，其中包含了重复行</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>消除重复行 在SELECT字句中使用关键字DISTINCT可消除重复行。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="1-2-3-比较操作符"><a href="#1-2-3-比较操作符" class="headerlink" title="1.2.3 比较操作符"></a>1.2.3 比较操作符</h5><p>​    （不等于符号是 ‘&lt;&gt;’）</p>
+<ul>
+<li><strong>比较字符型数据</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, job, deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp</span><br><span class="line"><span class="keyword">WHERE</span>  job<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>字符型数据作为被比较的值时，必须用单引号引起来</p>
+</li>
+<li><p>字符型数值区分大小写(MySQL不区分，Oracle区分)</p>
+</li>
+<li><p><strong>比较日期型数据</strong></p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, hiredate, deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp</span><br><span class="line"><span class="keyword">WHERE</span>  hiredate <span class="operator">&gt;</span> <span class="string">&#x27;1985-01-01&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>日期型数值作为被比较的值时，必须用单引号引起来。</li>
+</ul>
+<h5 id="1-2-4-特殊比较运算符"><a href="#1-2-4-特殊比较运算符" class="headerlink" title="1.2.4 特殊比较运算符"></a>1.2.4 特殊比较运算符</h5><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">BETWEEN…AND…</td>
+<td>判断要比较的值是否在某个范围内。</td>
+</tr>
+<tr>
+<td align="center">IN（ 集合列表）</td>
+<td>判断要比较的值是否和集合列表中的任何一个值相等。</td>
+</tr>
+<tr>
+<td align="center">LIKE</td>
+<td>判断要比较的值是否满足部分匹配</td>
+</tr>
+<tr>
+<td align="center">IS NUL</td>
+<td>判断要比较的值是否为空值NULL</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>BETWEEN..AND..</p>
+</li>
+<li><ul>
+<li>使用BETWEEN .. AND.. 运算符来判断要比较的值是否在某个范围内。</li>
+</ul>
+</li>
+</ul>
+<p>查询薪水在1000-1500<strong>（包含1000、1500）</strong>范围内的员工的姓名跟薪水</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename, sal</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    sal <span class="keyword">BETWEEN</span> <span class="number">1000</span> <span class="keyword">AND</span> <span class="number">1500</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>IN运算符</p>
+</li>
+<li><ul>
+<li>使用IN运算符判断要比较的值是否和集合列表中的任何一个值相等。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    empno, ename, sal, mgr</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    mgr <span class="keyword">IN</span> (<span class="number">7902</span>, <span class="number">7566</span>, <span class="number">7788</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>LIKE运算符</p>
+</li>
+<li><ul>
+<li>使用LIKE运算符判断要比较的值是否满足部分匹配，也叫<strong>模糊查询</strong>。模糊查询中两个通配符：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>% 代表零或任意更多的字符</li>
+<li>_ 代表一个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>查询S开头的名字：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    ename <span class="keyword">LIKE</span> <span class="string">&#x27;S%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>MySQL中ESCAPE关键字</strong>:</p>
+<div style="color:red">ESCAPE 关键字的主要作用就是指定一个字符替代“\”的作用。</div>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename,job</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    job <span class="keyword">LIKE</span> <span class="string">&#x27;MAN@_%&#x27;</span> <span class="keyword">ESCAPE</span> <span class="string">&#x27;@&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>转义</strong>即表示转义字符原来的语义，一个转义字符的目的是开始一个字符序列，使得转义字符开头的该字符序列具有不同于该字符序列单独出现时的语义。</p>
+<h4 id="1-3-DML"><a href="#1-3-DML" class="headerlink" title="1.3 DML"></a>1.3 DML</h4><p>一些基础操作在<a href="https://lan-wa.github.io/2022/07/13/Mysql%E7%BB%83%E4%B9%A0/">Mysql练习-01</a></p>
 
         </div>
         
@@ -249,7 +369,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://lan-wa.github.io/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/",
+                text: "https://lan-wa.github.io/2022/07/14/SQL%E5%88%86%E7%B1%BB/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -261,10 +381,10 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://lan-wa.github.io/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/";
-            const title         = "「Slf4j+logback日志使用（未完待续）」";
-            const excerpt       = `​        日志，通常不会在需求阶段作为一个功能单独提出来，也不会在产品方案中看到它的细节。但是，这丝毫不影响它在任何一个系统中的重要的地位。
-​        为了保证服务的高可用，发现问题一定要即使，解决问题一定要迅速，所以...`;
+            const hostUrl       = "https://lan-wa.github.io/2022/07/14/SQL%E5%88%86%E7%B1%BB/";
+            const title         = "「SQL分类」";
+            const excerpt       = `一、SQL分类　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。
+　　DML...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -283,10 +403,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/springboot2/" rel="tag">springboot2</a>
+                    <a class="tag-none-link" href="/tags/MySQL/" rel="tag">MySQL</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-06-16</span>
+                <span>最后编辑：2022-07-14</span>
                 </div>
             </div>
         </footer>
@@ -295,12 +415,12 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" springboot热部署" href="/2022/04/24/springboot热部署/">&lt; 上一篇</a>
+                <a title=" Data、Vue方法、计算属性及监听器" href="/2022/07/13/Data-Property-和方法/">&lt; 上一篇</a>
             </div>
             
             
             <div class="nav-next clearfix">
-                <a title=" AOP实现操作日志记录" href="/2022/04/24/AOP实现操作日志记录/">下一篇 &gt;</a>
+                <a title=" day-01" href="/2022/07/14/day-01/">下一篇 &gt;</a>
             </div>
             
         </nav>
@@ -313,8 +433,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/',
-                path: '/2022/04/24/springboot%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8/'
+                id: '/2022/07/14/SQL%E5%88%86%E7%B1%BB/',
+                path: '/2022/07/14/SQL%E5%88%86%E7%B1%BB/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -392,7 +512,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97Log%E9%BB%98%E8%AE%A4%E6%A0%BC%E5%BC%8F"><span class="toc-text">日志Log默认格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Boot%E9%BB%98%E8%AE%A4%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F"><span class="toc-text">Spring Boot默认日志系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%B0%86%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E5%88%B0%E6%96%87%E4%BB%B6"><span class="toc-text">如何将日志信息存储到文件</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81SQL%E5%88%86%E7%B1%BB"><span class="toc-text">一、SQL分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DDL%E8%AF%AD%E5%8F%A5"><span class="toc-text">1.1 DDL语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DQL%E8%AF%AD%E5%8F%A5"><span class="toc-text">1.2 DQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-text">1.2.1 列别名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-2-%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E8%A1%8C"><span class="toc-text">1.2.2  消除重复行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-3-%E6%AF%94%E8%BE%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-text">1.2.3 比较操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-4-%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">1.2.4 特殊比较运算符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-DML"><span class="toc-text">1.3 DML</span></a></li></ol></li></ol>
     </div>
 </aside>
                 
