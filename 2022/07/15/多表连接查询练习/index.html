@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>数据层层获取数据id执行增删查改（踩坑） | 记录生活</title>
+  <title>多表连接查询练习 | 记录生活</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="javaweb" />
+    <meta name="keywords" content="MySQL" />
   
-  <meta name="description" content="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “ int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());">
+  <meta name="description" content="多表连接1.查询每个员工的编号，姓名，工资，工资等级，所在工作城市，按照工资等级进行升序排序。 12345select e.empno,e.ename,e.sal,g.grade from emp e join salgrade g on e.sal between g.losal and hisal join dept d on e.deptno&#x3D;d.deptno order by g.grad">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据层层获取数据id执行增删查改（踩坑）">
-<meta property="og:url" content="https://lan-wa.github.io/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/index.html">
+<meta property="og:title" content="多表连接查询练习">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/15/%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2%E7%BB%83%E4%B9%A0/index.html">
 <meta property="og:site_name" content="记录生活">
-<meta property="og:description" content="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “ int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());">
+<meta property="og:description" content="多表连接1.查询每个员工的编号，姓名，工资，工资等级，所在工作城市，按照工资等级进行升序排序。 12345select e.empno,e.ename,e.sal,g.grade from emp e join salgrade g on e.sal between g.losal and hisal join dept d on e.deptno&#x3D;d.deptno order by g.grad">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-05-05T16:55:22.000Z">
-<meta property="article:modified_time" content="2022-05-06T06:36:05.024Z">
+<meta property="article:published_time" content="2022-07-15T14:40:16.000Z">
+<meta property="article:modified_time" content="2022-07-15T17:06:38.368Z">
 <meta property="article:author" content="我爱小小蝶">
-<meta property="article:tag" content="javaweb">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -150,17 +150,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">数据层层获取数据id执行增删查改（踩坑）</h1>
+                <h1 class="kratos-entry-title text-center">多表连接查询练习</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-05-06</li>
+                <li><i class="fa fa-calendar"></i> 2022-07-15</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        186
+                        ~2.32K
                     
                     字
                 </li>
@@ -170,17 +170,69 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1651818965024"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1657904798368"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E6%8E%89%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E4%BE%A7%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6%E6%88%96%E5%85%B6%E5%AE%83%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%86%8D%E8%BF%9B%E8%A1%8C%E6%95%B4%E5%9E%8B%E8%BD%AC%E5%8C%96%E5%8D%B3%E5%8F%AF%E6%88%90%E5%8A%9F%EF%BC%81%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.</span> <span class="toc-text">多表连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.</span> <span class="toc-text">内连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E8%BA%AB%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">自身连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.</span> <span class="toc-text">外部连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B7%A6%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.1.</span> <span class="toc-text">1. 左外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%B3%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.2.</span> <span class="toc-text">2.右外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%83%E4%B9%A0"><span class="toc-number">4.3.</span> <span class="toc-text">3.练习</span></a></li></ol></li></ol>
                 </div>
             
             <hr />
-            <h3 id="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！"><a href="#去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！" class="headerlink" title="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！"></a>去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</h3><p><strong>注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “</strong></p>
-<div class="alert alert-warning"><div class="icon"><i class="fa fa-warning"></i></div><div class="text"><p>int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());</p>
-</div></div>
+            <h2 id="多表连接"><a href="#多表连接" class="headerlink" title="多表连接"></a>多表连接</h2><p><strong>1.查询每个员工的编号，姓名，工资，工资等级，所在工作城市，按照工资等级进行升序排序。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.empno,e.ename,e.sal,g.grade </span><br><span class="line"><span class="keyword">from</span> emp e </span><br><span class="line"><span class="keyword">join</span> salgrade g <span class="keyword">on</span> e.sal <span class="keyword">between</span> g.losal <span class="keyword">and</span> hisal </span><br><span class="line"><span class="keyword">join</span> dept d <span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> g.grade;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> emp e <span class="keyword">inner</span> <span class="keyword">join</span> dept d </span><br><span class="line"><span class="keyword">on</span> e.deptno <span class="operator">=</span> d.deptno </span><br><span class="line"><span class="keyword">where</span> d.loc<span class="operator">=</span><span class="string">&#x27;NEW YORK&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>tip： inner可以省略。</p>
+<h2 id="自身连接"><a href="#自身连接" class="headerlink" title="自身连接"></a>自身连接</h2><p><strong>1.查询每个员工的姓名和直接上级姓名？</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.empno,e.ename,m.empno mno,m.ename mgrName</span><br><span class="line"><span class="keyword">from</span> emp e, emp m </span><br><span class="line"><span class="keyword">where</span> e.mgr<span class="operator">=</span>m.empno;</span><br></pre></td></tr></table></figure>
+
+<p>注：e为员工表，m为上级表；连接的条件是：员工表的上级字段&#x3D;上级表的员工字段</p>
+<p><strong>自身连接总结：</strong></p>
+<p>​        自连接 可能看起来有点晦涩难懂，但是实际上换个角度你就会豁然开朗，你可以把它这个过程想象成两张一样的表进行左连接或右连接，这样就会简单多了，其中一张表通过设别名的方式成为了虚表，但是共享原表中的信息。</p>
+<p>​         应用场景是这样的，就是<strong>表的一个字段和另一个字段是相同性质的东西</strong>，譬如员工与上司，他们本质也都是员工，在员工表中，员工的直接上司编号会以另一个字段的形式出现，但是他的上司的编号也是会出现在员工编号这个字段里。</p>
+<p>​        连接操作可以是一个表与自身进行的连接，这时候注意需要为表创建别名</p>
+<p><strong>2.查询所有工作在MAN_AGER和CLERK的员工姓名，员工编号，以及他们的经理姓名，经理编号。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.empno,e.ename,e.job,m.empno mno,m.ename mgrName</span><br><span class="line"><span class="keyword">from</span> emp e, emp m </span><br><span class="line"><span class="keyword">where</span> e.mgr<span class="operator">=</span>m.empno <span class="keyword">and</span> e.job <span class="keyword">in</span> (<span class="string">&#x27;MAN_AGER&#x27;</span>,<span class="string">&#x27;CLERK&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注：工作条件也可写成 and (e.job&#x3D;’MAN_AGER’ or e.job&#x3D;’CLERK’)</p>
+<h2 id="外部连接"><a href="#外部连接" class="headerlink" title="外部连接"></a>外部连接</h2><p>​        在多表连接时，可以使用外部连接来查看哪些行,按照连接条件没有被匹配上。</p>
+<h3 id="1-左外连接"><a href="#1-左外连接" class="headerlink" title="1. 左外连接"></a>1. 左外连接</h3><p>​        左外连接以FROM子句中的左边表为基表，该表所有行数据按照连接条件无论是否与右边表能匹配上，都会被显示出来。</p>
+<p><strong>1.查询所有雇员姓名，部门编号，部门名称，包括没有部门的员工也要显示出来</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> emp e <span class="keyword">left</span> <span class="keyword">join</span> dept d </span><br><span class="line"><span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno;  <span class="comment">-- 11条数据</span></span><br></pre></td></tr></table></figure>
+
+<p>​        tip：以左表为基表，左表的deptno要全部展示，不考虑右表有的，但左表没有的，</p>
+<p><strong>2.使用左连接，查询每个员工的姓名，经理姓名，没有经理的King也要显示出来。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename, m.ename</span><br><span class="line"><span class="keyword">from</span> emp e</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> emp m</span><br><span class="line"><span class="keyword">on</span> e.mgr <span class="operator">=</span> m.empno;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.使用右连接，查询每个员工的姓名，经理姓名，没有经理的King也要显示出来</strong></p>
+<h3 id="2-右外连接"><a href="#2-右外连接" class="headerlink" title="2.右外连接"></a>2.右外连接</h3><p>​        右外连接以FROM子句中的右边表为基表，该表所有行数据按照连接条件无论是否与左边表能匹配上，都会被显示出来。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> emp e <span class="keyword">right</span> <span class="keyword">join</span> dept d </span><br><span class="line"><span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno; <span class="comment">-- 14条数据</span></span><br></pre></td></tr></table></figure>
+
+<p>​        这里多了三条的原因是：dept部门表有三条数据，分别是deptno&#x3D;40、50、60，但是在emp员工表中并没有deptno的值等于这三个，因此，在进行右外连接的时候，会以右表（dept表为基表），连接左表（emp表），一共展示11+3&#x3D;14条数据。</p>
+<h3 id="3-练习"><a href="#3-练习" class="headerlink" title="3.练习"></a>3.练习</h3><p><strong>1.显示员工SMITH的姓名，部门名称，直接上级名称</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2.显示员工姓名，部门名称，工资，工资级别，要求工资级别大于4级。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ename,dname,sal,grade  </span><br><span class="line"><span class="keyword">from</span> emp,dept,salgrade  </span><br><span class="line"><span class="keyword">where</span> emp.deptno<span class="operator">=</span>dept.deptno <span class="keyword">and</span> sal <span class="keyword">between</span> losal <span class="keyword">and</span> hisal <span class="keyword">and</span> grade<span class="operator">&gt;</span><span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3.显示员工KING和FORD管理的员工姓名及其经理姓名。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> emp2.ename, emp1.ename</span><br><span class="line"><span class="keyword">from</span> emp emp1, emp emp2</span><br><span class="line"><span class="keyword">where</span> emp1.empno <span class="operator">=</span> emp2.mgr</span><br><span class="line"><span class="keyword">and</span> emp1.ename <span class="keyword">in</span> (<span class="string">&#x27;KING&#x27;</span>, <span class="string">&#x27;FORD&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4.显示员工姓名，参加工作时间，经理名，参加工作时间，要求参加时间比经理早。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> emp1.ename, emp1.hiredate, emp2.ename, emp2.hiredate</span><br><span class="line"><span class="keyword">from</span> emp emp1, emp emp2</span><br><span class="line"><span class="keyword">where</span> emp1.mgr <span class="operator">=</span> emp2.empno</span><br><span class="line"><span class="keyword">and</span> emp1.hiredate <span class="operator">&lt;</span> emp2.hiredate;</span><br></pre></td></tr></table></figure>
+
+
+
+
         </div>
         
         <footer class="kratos-entry-footer clearfix">
@@ -229,7 +281,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://lan-wa.github.io/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/",
+                text: "https://lan-wa.github.io/2022/07/15/%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2%E7%BB%83%E4%B9%A0/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -241,9 +293,10 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://lan-wa.github.io/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/";
-            const title         = "「数据层层获取数据id执行增删查改（踩坑）」";
-            const excerpt       = `去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题...`;
+            const hostUrl       = "https://lan-wa.github.io/2022/07/15/%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2%E7%BB%83%E4%B9%A0/";
+            const title         = "「多表连接查询练习」";
+            const excerpt       = `多表连接1.查询每个员工的编号，姓名，工资，工资等级，所在工作城市，按照工资等级进行升序排序。
+12345select e.empno,e.ename,e.sal,g.grade from emp e join salgrade g ...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -262,10 +315,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/javaweb/" rel="tag">javaweb</a>
+                    <a class="tag-none-link" href="/tags/MySQL/" rel="tag">MySQL</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-05-06</span>
+                <span>最后编辑：2022-07-16</span>
                 </div>
             </div>
         </footer>
@@ -274,12 +327,12 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" json与字符串之间的转换" href="/2022/05/06/json与字符串之间的转换/">&lt; 上一篇</a>
+                <a title=" 日期时间类型函数" href="/2022/07/15/日期时间类型操作/">&lt; 上一篇</a>
             </div>
             
             
             <div class="nav-next clearfix">
-                <a title=" mybatis入门" href="/2022/05/06/mybatis入门/">下一篇 &gt;</a>
+                <a title=" 分组函数（高级查询）" href="/2022/07/16/分组查询（高级查询）/">下一篇 &gt;</a>
             </div>
             
         </nav>
@@ -292,8 +345,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/',
-                path: '/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/'
+                id: '/2022/07/15/%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2%E7%BB%83%E4%B9%A0/',
+                path: '/2022/07/15/%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2%E7%BB%83%E4%B9%A0/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -371,7 +424,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E6%8E%89%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E4%BE%A7%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6%E6%88%96%E5%85%B6%E5%AE%83%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%86%8D%E8%BF%9B%E8%A1%8C%E6%95%B4%E5%9E%8B%E8%BD%AC%E5%8C%96%E5%8D%B3%E5%8F%AF%E6%88%90%E5%8A%9F%EF%BC%81%EF%BC%81"><span class="toc-text">去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5"><span class="toc-text">多表连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="toc-text">内连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E8%BA%AB%E8%BF%9E%E6%8E%A5"><span class="toc-text">自身连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%BF%9E%E6%8E%A5"><span class="toc-text">外部连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B7%A6%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-text">1. 左外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%B3%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="toc-text">2.右外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%83%E4%B9%A0"><span class="toc-text">3.练习</span></a></li></ol></li></ol>
     </div>
 </aside>
                 
