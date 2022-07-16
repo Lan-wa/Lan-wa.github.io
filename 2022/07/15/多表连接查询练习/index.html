@@ -24,7 +24,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-07-15T14:40:16.000Z">
-<meta property="article:modified_time" content="2022-07-15T17:06:38.368Z">
+<meta property="article:modified_time" content="2022-07-16T04:52:44.707Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -160,7 +160,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~2.32K
+                        ~2.42K
                     
                     字
                 </li>
@@ -170,7 +170,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1657904798368"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1657947164707"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -213,7 +213,7 @@
 
 <p>​        这里多了三条的原因是：dept部门表有三条数据，分别是deptno&#x3D;40、50、60，但是在emp员工表中并没有deptno的值等于这三个，因此，在进行右外连接的时候，会以右表（dept表为基表），连接左表（emp表），一共展示11+3&#x3D;14条数据。</p>
 <h3 id="3-练习"><a href="#3-练习" class="headerlink" title="3.练习"></a>3.练习</h3><p><strong>1.显示员工SMITH的姓名，部门名称，直接上级名称</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,d.dname,e.mgr</span><br><span class="line"><span class="keyword">from</span> emp e,dept d </span><br><span class="line"><span class="keyword">where</span> e.ename<span class="operator">=</span><span class="string">&#x27;SMITH&#x27;</span> <span class="keyword">and</span> e.deptno<span class="operator">=</span>d.deptno;</span><br></pre></td></tr></table></figure>
 
 
 
