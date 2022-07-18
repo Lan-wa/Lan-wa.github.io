@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>day02 | 随笔记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="MySQL" />
+  
+  <meta name="description" content="数据类型示意图  数值型   类型 空间大小[字节] 范围（有符号） 范围（无符号） 用途    TINYINT 1 (-128，127) (0，255) 小整数值   SMALLINT 2 (-32 768，32 767) (0，65 535) 大整数值   MEDIUMINT 3 (-8 388 608，8 388 607) (0，16 777 215) 大整数值   INT或INTEGER">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day02">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/18/day02/index.html">
+<meta property="og:site_name" content="随笔记录">
+<meta property="og:description" content="数据类型示意图  数值型   类型 空间大小[字节] 范围（有符号） 范围（无符号） 用途    TINYINT 1 (-128，127) (0，255) 小整数值   SMALLINT 2 (-32 768，32 767) (0，65 535) 大整数值   MEDIUMINT 3 (-8 388 608，8 388 607) (0，16 777 215) 大整数值   INT或INTEGER">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-07-18T11:34:14.000Z">
+<meta property="article:modified_time" content="2022-07-18T11:39:12.480Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/t2.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/project/"><i class="fa fa-link"></i>项目链接</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">随笔记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>随笔记录</h2> <br />
+                        <span>一入编程深似海，从此萧郎为卷王</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">day02</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-07-18</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~12.63K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1658144352480"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">数值型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.</span> <span class="toc-text">日期类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.5.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">1.5.1.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.</span> <span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">2.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL"><span class="toc-number">3.</span> <span class="toc-text">SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">3.2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A6%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-number">3.3.</span> <span class="toc-text">书写规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE"><span class="toc-number">4.</span> <span class="toc-text">准备数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQL"><span class="toc-number">5.</span> <span class="toc-text">DQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-number">5.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-number">5.3.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="toc-number">5.4.</span> <span class="toc-text">算术运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">5.4.1.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-number">5.4.2.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NULL"><span class="toc-number">5.5.</span> <span class="toc-text">NULL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">5.5.1.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-number">5.5.2.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-number">5.6.</span> <span class="toc-text">列别名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number">5.6.1.</span> <span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DISTINCT"><span class="toc-number">5.7.</span> <span class="toc-text">DISTINCT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-number">5.7.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WHERE-%E5%AD%97%E5%8F%A5"><span class="toc-number">5.8.</span> <span class="toc-text">WHERE 字句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-number">5.8.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-6"><span class="toc-number">5.8.2.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E7%AC%A6"><span class="toc-number">5.8.3.</span> <span class="toc-text">特殊比较符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-7"><span class="toc-number">5.8.4.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">5.9.</span> <span class="toc-text">逻辑运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7-1"><span class="toc-number">5.9.1.</span> <span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">5.9.2.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">5.9.3.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#order-by"><span class="toc-number">5.10.</span> <span class="toc-text">order by</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-number">5.10.1.</span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-number">5.10.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-8"><span class="toc-number">5.10.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#limit"><span class="toc-number">5.11.</span> <span class="toc-text">limit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-number">5.11.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-9"><span class="toc-number">5.11.2.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB-1"><span class="toc-number">6.1.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-number">6.2.</span> <span class="toc-text">单行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-5"><span class="toc-number">6.2.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">6.2.2.</span> <span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="toc-number">6.3.</span> <span class="toc-text">数学函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81"><span class="toc-number">6.3.1.</span> <span class="toc-text">常见</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-10"><span class="toc-number">6.3.2.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="toc-number">6.4.</span> <span class="toc-text">字符串函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81-1"><span class="toc-number">6.4.1.</span> <span class="toc-text">常见</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-11"><span class="toc-number">6.4.2.</span> <span class="toc-text">案例</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p> <img src="/./day02/01.png" alt="1657711095882"></p>
+<h2 id="数值型"><a href="#数值型" class="headerlink" title="数值型"></a>数值型</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">空间大小[字节]</th>
+<th align="left">范围（有符号）</th>
+<th align="left">范围（无符号）</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">TINYINT</td>
+<td align="left">1</td>
+<td align="left">(-128，127)</td>
+<td align="left">(0，255)</td>
+<td align="left">小整数值</td>
+</tr>
+<tr>
+<td align="left">SMALLINT</td>
+<td align="left">2</td>
+<td align="left">(-32 768，32 767)</td>
+<td align="left">(0，65 535)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">MEDIUMINT</td>
+<td align="left">3</td>
+<td align="left">(-8 388 608，8 388 607)</td>
+<td align="left">(0，16 777 215)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">INT或INTEGER</td>
+<td align="left">4</td>
+<td align="left">(-2 147 483 648，2 147 483 647)</td>
+<td align="left">(0，4 294 967 295)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">BIGINT</td>
+<td align="left">8</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">极大整数值</td>
+</tr>
+<tr>
+<td align="left">FLOAT</td>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">单精度 浮点数值</td>
+</tr>
+<tr>
+<td align="left">DOUBLE</td>
+<td align="left">8</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">双精度 浮点数值</td>
+</tr>
+<tr>
+<td align="left">DECIMAL</td>
+<td align="left">如果M&gt;D，为M+2否则为D+2</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">小数值</td>
+</tr>
+</tbody></table>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>空间大小[字节]</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>0-255</td>
+<td>定长字符串(需要指定长度)</td>
+</tr>
+<tr>
+<td>varchar</td>
+<td>0-65535</td>
+<td>变长字符串(需要指定长度)</td>
+</tr>
+<tr>
+<td>tinytext</td>
+<td>0-255</td>
+<td>短文本字符串</td>
+</tr>
+<tr>
+<td>text</td>
+<td>0-65535</td>
+<td>长文本数</td>
+</tr>
+<tr>
+<td>mediumtext</td>
+<td>0-16777215</td>
+<td>中等长度文本数据</td>
+</tr>
+<tr>
+<td>longtext</td>
+<td>0-4294967295</td>
+<td>极大文本数据</td>
+</tr>
+<tr>
+<td>tinyblob</td>
+<td>0-255</td>
+<td>不超过255个字符的二进制数据</td>
+</tr>
+<tr>
+<td>blob</td>
+<td>0-65535</td>
+<td>二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td>mediumblob</td>
+<td>0-16777215</td>
+<td>二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td>longblob</td>
+<td>0-4294967295</td>
+<td>二进制形式的极大文本数据</td>
+</tr>
+</tbody></table>
+<h2 id="日期类型"><a href="#日期类型" class="headerlink" title="日期类型"></a>日期类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>空间大小[字节]</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>time</td>
+<td>3</td>
+<td>时分秒</td>
+</tr>
+<tr>
+<td>date</td>
+<td>3</td>
+<td>年月日</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>8</td>
+<td>年月日时分秒</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>4</td>
+<td>时间戳类型，TIMESTAMP列用于INSERT或UPDATE操作时记录日期和时间</td>
+</tr>
+<tr>
+<td>year</td>
+<td>1</td>
+<td>不推荐使用</td>
+</tr>
+</tbody></table>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>enum</td>
+<td>枚举类型</td>
+</tr>
+<tr>
+<td>set</td>
+<td>集合类型</td>
+</tr>
+</tbody></table>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span>(</span><br><span class="line">  id <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  season enum(<span class="string">&#x27;春&#x27;</span>,<span class="string">&#x27;夏&#x27;</span>,<span class="string">&#x27;秋&#x27;</span>,<span class="string">&#x27;冬&#x27;</span>) <span class="keyword">NULL</span>,</span><br><span class="line">  hobby <span class="keyword">set</span>(<span class="string">&#x27;java&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;html&#x27;</span>) <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><p><img src="/./day02/02.png"></p>
+<h2 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span>(</span><br><span class="line">   id <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">   age tinyint unsigned <span class="keyword">check</span>(age <span class="operator">&lt;=</span> <span class="number">100</span>) <span class="comment">-- 此处限制了age 的值必须小于等于100</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><p>结构化查询语言(Structured Query Language)简称SQL, 是操作和检索关系型数据库的标准语言</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>DQL</li>
+<li>DML</li>
+<li>DCL</li>
+<li>DDL</li>
+<li>TPL</li>
+</ul>
+<h2 id="书写规则"><a href="#书写规则" class="headerlink" title="书写规则"></a>书写规则</h2><ul>
+<li>不区分大小写，也就是说SELECT，select，Select，执行时效果是一样的。</li>
+<li>可以单行来书写，也可以书写多行,通过Tab和缩进的使用可以提高程序的可读性。</li>
+<li>关键字不可以缩写、分开以及跨行书写，如SELECT不可以写成SEL或SELE CT等形式。</li>
+<li>关键字最好使用大写，其它语法元素（如列名、表名等）小写。</li>
+</ul>
+<h1 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">TABLE</span> emp;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">TABLE</span> dept;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">TABLE</span> salgrade;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dept</span><br><span class="line">(</span><br><span class="line">deptno <span class="type">integer</span>(<span class="number">4</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">dname <span class="type">varchar</span>(<span class="number">14</span>),</span><br><span class="line">loc <span class="type">varchar</span>(<span class="number">13</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> dept <span class="keyword">add</span> <span class="keyword">constraint</span> pk_dept <span class="keyword">primary</span> key (deptno);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> emp</span><br><span class="line">(</span><br><span class="line">empno <span class="type">integer</span>(<span class="number">4</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">ename <span class="type">varchar</span>(<span class="number">10</span>),</span><br><span class="line">job <span class="type">varchar</span>(<span class="number">9</span>),</span><br><span class="line">mgr <span class="type">integer</span>(<span class="number">4</span>),</span><br><span class="line">hiredate <span class="type">date</span>,</span><br><span class="line">sal <span class="type">decimal</span>(<span class="number">7</span>,<span class="number">2</span>),</span><br><span class="line">comm <span class="type">decimal</span>(<span class="number">7</span>,<span class="number">2</span>),</span><br><span class="line">deptno <span class="type">integer</span>(<span class="number">2</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp <span class="keyword">add</span> <span class="keyword">constraint</span> pk_emp <span class="keyword">primary</span> key (empno);</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp <span class="keyword">add</span> <span class="keyword">constraint</span> fk_deptno <span class="keyword">foreign</span> key (deptno) <span class="keyword">references</span> dept (deptno);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> salgrade</span><br><span class="line">(</span><br><span class="line">grade <span class="type">integer</span>(<span class="number">1</span>),</span><br><span class="line">losal <span class="type">decimal</span>(<span class="number">7</span>,<span class="number">2</span>),</span><br><span class="line">hisal <span class="type">decimal</span>(<span class="number">7</span>,<span class="number">2</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> DEPT (DEPTNO, DNAME, LOC) <span class="keyword">values</span> (<span class="number">10</span>, <span class="string">&#x27;ACCOUNTING&#x27;</span>, <span class="string">&#x27;NEW YORK&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> DEPT (DEPTNO, DNAME, LOC) <span class="keyword">values</span> (<span class="number">20</span>, <span class="string">&#x27;RESEARCH&#x27;</span>, <span class="string">&#x27;DALLAS&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> DEPT (DEPTNO, DNAME, LOC) <span class="keyword">values</span> (<span class="number">30</span>, <span class="string">&#x27;SALES&#x27;</span>, <span class="string">&#x27;CHICAGO&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> DEPT (DEPTNO, DNAME, LOC) <span class="keyword">values</span> (<span class="number">40</span>, <span class="string">&#x27;OPERATIONS&#x27;</span>, <span class="string">&#x27;BOSTON&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> SALGRADE (GRADE, LOSAL, HISAL) <span class="keyword">values</span> (<span class="number">1</span>, <span class="number">700</span>, <span class="number">1200</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> SALGRADE (GRADE, LOSAL, HISAL) <span class="keyword">values</span> (<span class="number">2</span>, <span class="number">1201</span>, <span class="number">1400</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> SALGRADE (GRADE, LOSAL, HISAL) <span class="keyword">values</span> (<span class="number">3</span>, <span class="number">1401</span>, <span class="number">2000</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> SALGRADE (GRADE, LOSAL, HISAL) <span class="keyword">values</span> (<span class="number">4</span>, <span class="number">2001</span>, <span class="number">3000</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> SALGRADE (GRADE, LOSAL, HISAL) <span class="keyword">values</span> (<span class="number">5</span>, <span class="number">3001</span>, <span class="number">9999</span>);</span><br><span class="line"><span class="comment">-- 下面要特别注意，%d-%m-%Y 里的 d 和 m 一定要小写</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7369</span>, <span class="string">&#x27;SMITH&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="number">7902</span>, STR_TO_DATE(<span class="string">&#x27;17-12-1980&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">800.00</span>, <span class="keyword">null</span>, <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7499</span>, <span class="string">&#x27;ALLEN&#x27;</span>, <span class="string">&#x27;SALESMAN&#x27;</span>, <span class="number">7698</span>, STR_TO_DATE(<span class="string">&#x27;20-02-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1600.00</span>, <span class="number">300.00</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7521</span>, <span class="string">&#x27;WARD&#x27;</span>, <span class="string">&#x27;SALESMAN&#x27;</span>, <span class="number">7698</span>, STR_TO_DATE(<span class="string">&#x27;22-02-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1250.00</span>, <span class="number">500.00</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7566</span>, <span class="string">&#x27;JONES&#x27;</span>, <span class="string">&#x27;MANAGER&#x27;</span>, <span class="number">7839</span>, STR_TO_DATE(<span class="string">&#x27;02-04-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">2975.00</span>, <span class="keyword">null</span>, <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7654</span>, <span class="string">&#x27;MARTIN&#x27;</span>, <span class="string">&#x27;SALESMAN&#x27;</span>, <span class="number">7698</span>, STR_TO_DATE(<span class="string">&#x27;28-09-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1250.00</span>, <span class="number">1400.00</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7698</span>, <span class="string">&#x27;BLAKE&#x27;</span>, <span class="string">&#x27;MANAGER&#x27;</span>, <span class="number">7839</span>, STR_TO_DATE(<span class="string">&#x27;01-05-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">2850.00</span>, <span class="keyword">null</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7782</span>, <span class="string">&#x27;CLARK&#x27;</span>, <span class="string">&#x27;MANAGER&#x27;</span>, <span class="number">7839</span>, STR_TO_DATE(<span class="string">&#x27;09-06-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">2450.00</span>, <span class="keyword">null</span>, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7788</span>, <span class="string">&#x27;SCOTT&#x27;</span>, <span class="string">&#x27;ANALYST&#x27;</span>, <span class="number">7566</span>, STR_TO_DATE(<span class="string">&#x27;19-04-1987&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">3000.00</span>, <span class="keyword">null</span>, <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7839</span>, <span class="string">&#x27;KING&#x27;</span>, <span class="string">&#x27;PRESIDENT&#x27;</span>, <span class="keyword">null</span>, STR_TO_DATE(<span class="string">&#x27;17-11-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">5000.00</span>, <span class="keyword">null</span>, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7844</span>, <span class="string">&#x27;TURNER&#x27;</span>, <span class="string">&#x27;SALESMAN&#x27;</span>, <span class="number">7698</span>, STR_TO_DATE(<span class="string">&#x27;08-09-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1500.00</span>, <span class="number">0.00</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7876</span>, <span class="string">&#x27;ADAMS&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="number">7788</span>, STR_TO_DATE(<span class="string">&#x27;23-05-1987&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1100.00</span>, <span class="keyword">null</span>, <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7900</span>, <span class="string">&#x27;JAMES&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="number">7698</span>, STR_TO_DATE(<span class="string">&#x27;03-12-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">950.00</span>, <span class="keyword">null</span>, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7902</span>, <span class="string">&#x27;FORD&#x27;</span>, <span class="string">&#x27;ANALYST&#x27;</span>, <span class="number">7566</span>, STR_TO_DATE(<span class="string">&#x27;03-12-1981&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">3000.00</span>, <span class="keyword">null</span>, <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> EMP (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)</span><br><span class="line"><span class="keyword">values</span> (<span class="number">7934</span>, <span class="string">&#x27;MILLER&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="number">7782</span>, STR_TO_DATE(<span class="string">&#x27;23-01-1982&#x27;</span>, <span class="string">&#x27;%d-%m-%Y&#x27;</span>), <span class="number">1300.00</span>, <span class="keyword">null</span>, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h1><h2 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h2><p>数据查询语言</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> [<span class="keyword">distinct</span>] &#123;<span class="operator">*</span> <span class="operator">|</span> 列名 <span class="operator">|</span> 表达式 [别名]&#125; <span class="keyword">from</span> 表名;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询所有的列</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> dept;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询指定的列,请问为什么该效率高于上面的</span></span><br><span class="line"><span class="keyword">SELECT</span> deptno,dname,loc <span class="keyword">FROM</span> dept;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询指定的列</span></span><br><span class="line"><span class="keyword">SELECT</span> deptno, loc <span class="keyword">FROM</span>   dept;</span><br></pre></td></tr></table></figure>
+
+<h2 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h2><p>可以在SELECT语句中使用算术运算符，改变输出结果</p>
+<p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day02/%E7%AC%94%E8%AE%B0/assets/1657782991010.png" alt="1657782991010"></p>
+<h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><ul>
+<li>乘除优先于加减</li>
+<li>相同优先权的表达式按照从左至右的顺序依次计算</li>
+<li>括弧可以提高优先权，并使表达式的描述更为清晰</li>
+</ul>
+<h3 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看每个员工的名字和年薪(包括奖金)</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,<span class="number">12</span><span class="operator">*</span>sal<span class="operator">+</span>ifnull(comm,<span class="number">0</span>) <span class="keyword">FROM</span> emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用()号改变优先级</span></span><br><span class="line"><span class="keyword">SELECT</span> ename, sal, <span class="number">12</span><span class="operator">*</span>(sal<span class="operator">+</span><span class="number">100</span>) <span class="keyword">FROM</span> emp;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="NULL"><a href="#NULL" class="headerlink" title="NULL"></a>NULL</h2><p>空值是指一种无效的、未赋值、未知的或不可用的值。空值不同于零或者空格</p>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li>任何包含空值的算术表达式运算后的结果都为空值NULL</li>
+<li>ifnull(列名,代替值)函数来处理空值</li>
+</ul>
+<h3 id="案例-4"><a href="#案例-4" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看每个员工的名字和年薪(包括奖金)</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,<span class="number">12</span><span class="operator">*</span>sal<span class="operator">+</span>ifnull(comm,<span class="number">0</span>) <span class="keyword">FROM</span> emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看没有奖金的员工</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span><span class="keyword">FROM</span> emp <span class="keyword">where</span> comm <span class="keyword">is</span> <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="列别名"><a href="#列别名" class="headerlink" title="列别名"></a>列别名</h2><p>用来重新命名列的显示标题,如果SELECT语句中包含计算列，通常使用列别名来重新定义列标题。</p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>列名 列别名</li>
+<li>列名 AS 列别名</li>
+</ul>
+<h2 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h2><p>在SELECT字句中使用关键字DISTINCT可消除重复行</p>
+<h3 id="案例-5"><a href="#案例-5" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看有员工的部门编号</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> deptno <span class="keyword">FROM</span>   emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询员工表中一共有哪几种岗位类型</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> job <span class="keyword">from</span> emp;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WHERE-字句"><a href="#WHERE-字句" class="headerlink" title="WHERE 字句"></a>WHERE 字句</h2><h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>] &#123;<span class="operator">*</span><span class="operator">|</span> <span class="keyword">column</span> <span class="operator">|</span> expression [alias], ...&#125;</span><br><span class="line"><span class="keyword">FROM</span>   <span class="keyword">table</span></span><br><span class="line">[<span class="keyword">WHERE</span> <span class="keyword">condition</span>(s)];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通常格式为：列名 比较操作符 要比较的值</p>
+</blockquote>
+<h3 id="案例-6"><a href="#案例-6" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查找职位是CLERK的员工信息,注意了字符串需要添加引号</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,job,deptno <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> job<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查找入职时间晚于1985-01-01,注意了日期需要添加引号</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,hiredate,deptno  <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span>  hiredate <span class="operator">&gt;</span> <span class="string">&#x27;1985-01-01&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊比较符"><a href="#特殊比较符" class="headerlink" title="特殊比较符"></a>特殊比较符</h3><p> <img src="/./day02/03.png"></p>
+<h3 id="案例-7"><a href="#案例-7" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询薪水在1000和1500之间的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span>	ename, sal <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span>	sal <span class="keyword">BETWEEN</span> <span class="number">1000</span> <span class="keyword">AND</span> <span class="number">1500</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询员工的经理编号在7902,7566,7788里的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span>	empno,ename,sal,mgr <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> mgr <span class="keyword">IN</span> (<span class="number">7902</span>,<span class="number">7566</span>,<span class="number">7788</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询姓名以S开头的员工</span></span><br><span class="line"><span class="keyword">SELECT</span> ename <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> ename <span class="keyword">LIKE</span> <span class="string">&#x27;S%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- %与_组合使用,此处代表查询员工名字至少一位的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span>	ename <span class="keyword">FROM</span> 	emp <span class="keyword">WHERE</span>	ename <span class="keyword">LIKE</span> <span class="string">&#x27;_L%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询岗位以MAN@_开头的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span>	ename,job <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> job <span class="keyword">LIKE</span> <span class="string">&#x27;MAN@_%&#x27;</span> <span class="keyword">ESCAPE</span> <span class="string">&#x27;@&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查找没有经理的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,mgr <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> mgr <span class="keyword">IS</span> <span class="keyword">NULL</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><p><img src="/./day02/04.png"></p>
+<ul>
+<li>AND</li>
+<li>OR</li>
+<li>NOT<ul>
+<li>NOT IN</li>
+<li>NOT BETWEEN 开始 AND 结束</li>
+<li>NOT LIKE</li>
+<li>IS NOT NULL</li>
+</ul>
+</li>
+</ul>
+<h3 id="优先级-1"><a href="#优先级-1" class="headerlink" title="优先级"></a>优先级</h3><ul>
+<li><p>默认优先级</p>
+<blockquote>
+<p>NOT &gt; AND &gt; OR</p>
+</blockquote>
+</li>
+<li><p>改变优先级</p>
+<blockquote>
+<p>适当添加()可以改变优先级同时也可以提高代码可读性</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询薪水大于等于1100 并且岗位是CLERK的员工</span></span><br><span class="line"><span class="keyword">SELECT</span> empno,ename,job,sal <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> sal<span class="operator">&gt;=</span><span class="number">1100</span> <span class="keyword">AND</span> job<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询薪水大于等于1100 或岗位是CLERK的员工</span></span><br><span class="line"><span class="keyword">SELECT</span> empno,ename,job,sal <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> sal<span class="operator">&gt;=</span><span class="number">1100</span> <span class="keyword">OR</span> job<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询岗位不在&#x27;CLERK&#x27;,&#x27;MANAGER&#x27;,&#x27;ANALYST&#x27;中的员工</span></span><br><span class="line"><span class="keyword">SELECT</span> ename, job <span class="keyword">FROM</span> emp <span class="keyword">WHERE</span> job <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;CLERK&#x27;</span>,<span class="string">&#x27;MANAGER&#x27;</span>,<span class="string">&#x27;ANALYST&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查找岗位是SALESMAN 或 工资大于1500并且岗位是PRESIDENT 的与员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,job,sal <span class="keyword">FROM</span>   emp  <span class="keyword">WHERE</span>  job<span class="operator">=</span><span class="string">&#x27;SALESMAN&#x27;</span> <span class="keyword">OR</span> job<span class="operator">=</span><span class="string">&#x27;PRESIDENT&#x27;</span> <span class="keyword">AND</span> sal<span class="operator">&gt;</span><span class="number">1500</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查找岗位是SALESMAN或PRESIDENT的员工并且他们的薪水要大于1500</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,job,salFROM emp <span class="keyword">WHERE</span> (job<span class="operator">=</span><span class="string">&#x27;SALESMAN&#x27;</span> <span class="keyword">OR</span> job<span class="operator">=</span><span class="string">&#x27;PRESIDENT&#x27;</span>) <span class="keyword">AND</span> sal<span class="operator">&gt;</span><span class="number">1500</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h2><p>排序</p>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><ul>
+<li>即按照数字大小顺序由小到大排列。</li>
+<li>日期升序排列相对较早的日期在前，较晚的日期在后。</li>
+<li>字符升序排列按照字母由小到大的顺序排列。即由A-Z排列,中文升序按照字典顺序排列。</li>
+<li>空值在升序排列中排在最前面，在降序排列中排在最后。</li>
+</ul>
+<h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  [<span class="keyword">DISTINCT</span>] &#123; <span class="operator">*</span> <span class="operator">|</span> 列名 <span class="operator">|</span>表达式 [别名][,...]&#125;</span><br><span class="line"><span class="keyword">FROM</span> 表名</span><br><span class="line">[<span class="keyword">WHERE</span>  条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span>  &#123;列名<span class="operator">|</span>表达式<span class="operator">|</span>列别名<span class="operator">|</span>列序号&#125; [<span class="keyword">ASC</span><span class="operator">|</span><span class="keyword">DESC</span>],…];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以按照列名、表达式、列别名、结果集的列序号排序</li>
+<li>ORDER BY 子句必须写在SELECT语句的最后</li>
+<li>ASC 为升序,DESC为降序</li>
+</ul>
+<h3 id="案例-8"><a href="#案例-8" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查找员工信息并且按照入职日期升序</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,job,deptno,hiredate <span class="keyword">FROM</span> emp <span class="keyword">ORDER</span> <span class="keyword">BY</span> hiredate;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 根据列别名排序【根据年薪升序,不考虑奖金】</span></span><br><span class="line"><span class="keyword">SELECT</span> empno,ename,sal<span class="operator">*</span><span class="number">12</span> annsal <span class="keyword">FROM</span> emp <span class="keyword">ORDER</span> <span class="keyword">BY</span> annsal;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 根据部门编号升序，薪水降序</span></span><br><span class="line"><span class="keyword">SELECT</span> ename,deptno,sal <span class="keyword">FROM</span> emp <span class="keyword">ORDER</span> <span class="keyword">BY</span> deptno,sal <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a>limit</h2><p>分页</p>
+<h3 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.... limit 跳过多少条,最大取多少条</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例-9"><a href="#案例-9" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询入职日期最早的前5名员工姓名，入职日期</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp  <span class="keyword">order</span> <span class="keyword">by</span> sal <span class="keyword">desc</span> limit <span class="number">5</span>,<span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询工作在CHICAGO并且入职日期最早的前2名员工姓名，入职日期</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp <span class="keyword">order</span> <span class="keyword">by</span> hiredate <span class="keyword">desc</span> LIMIT <span class="number">0</span>,<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>mySQL提供了很多功能强大、方便易用的函数，在进行数据库管理以及数据的查询和操作时，帮助我们提高对数据库的管理效率。</p>
+<p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day02/%E7%AC%94%E8%AE%B0/assets/1657787243356.png" alt="1657787243356"></p>
+<h2 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h2><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day02/%E7%AC%94%E8%AE%B0/assets/1657787277789.png" alt="1657787277789"></p>
+<h2 id="单行函数"><a href="#单行函数" class="headerlink" title="单行函数"></a>单行函数</h2><h3 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h3><p>函数名[(参数1，参数2,…)]</p>
+<blockquote>
+<p>其中的参数可以是以下之一：<br> 变量<br> 列名<br> 表达式</p>
+</blockquote>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>单行函数对单行操作</li>
+<li>每行返回一个结果</li>
+<li>有可能返回值与原参数数据类型不一致</li>
+<li>单行函数可以写在SELECT、WHERE、ORDER BY子句中</li>
+<li>有些函数没有参数，有些函数包括一个或多个参数</li>
+<li>函数可以嵌套</li>
+</ul>
+<h2 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h2><h3 id="常见"><a href="#常见" class="headerlink" title="常见"></a>常见</h3><ul>
+<li><p>abs()</p>
+<blockquote>
+<p>求绝对值</p>
+</blockquote>
+</li>
+<li><p>pi()</p>
+<blockquote>
+<p>返回pi</p>
+</blockquote>
+</li>
+<li><p>sqrt(x)</p>
+<blockquote>
+<p>开平方根</p>
+</blockquote>
+</li>
+<li><p>mod(x)</p>
+<blockquote>
+<p>求余数</p>
+</blockquote>
+</li>
+<li><p>ceil(x)\ceiling(x)</p>
+<blockquote>
+<p>向上取整</p>
+</blockquote>
+</li>
+<li><p>floor(x)</p>
+<blockquote>
+<p>向下取整</p>
+</blockquote>
+</li>
+<li><p>round()</p>
+<blockquote>
+<p>四舍五入取整</p>
+</blockquote>
+</li>
+<li><p>round(x,y)</p>
+<blockquote>
+<p>四舍五入保留小数点y位取整</p>
+</blockquote>
+</li>
+<li><p>truncate(x,y)</p>
+<blockquote>
+<p>截断</p>
+</blockquote>
+</li>
+<li><p>rand()</p>
+<blockquote>
+<p>返回随机数？</p>
+</blockquote>
+</li>
+<li><p>sign(x)</p>
+<blockquote>
+<p>返回符号为,整数返回1负数返回-1,0就返回0</p>
+</blockquote>
+</li>
+<li><p>pow(x,y)\power(x,y)</p>
+<blockquote>
+<p>返回x数据求y次方后的结果</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="案例-10"><a href="#案例-10" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">abs</span>(<span class="number">-1</span>),<span class="built_in">SQRT</span>(<span class="number">9</span>),pi(),<span class="built_in">MOD</span>(<span class="number">8</span>,<span class="number">3</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> <span class="built_in">ceil</span>(<span class="number">1.1</span>),<span class="built_in">ceil</span>(<span class="number">1.5</span>),<span class="built_in">FLOOR</span>(<span class="number">1.1</span>),<span class="built_in">FLOOR</span>(<span class="number">1.9</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> <span class="built_in">CEILING</span>(<span class="number">1.1</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="comment">-- round 返回整数,  +0.5 取下一个整数</span></span><br><span class="line"><span class="keyword">select</span> ROUND(<span class="number">1.1</span>),ROUND(<span class="number">1.5</span>), ROUND(<span class="number">-1.1</span>),ROUND(<span class="number">-1.5</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> round(<span class="number">1.1256</span>,<span class="number">2</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> <span class="keyword">TRUNCATE</span>(<span class="number">1.23456</span>,<span class="number">4</span>) <span class="keyword">from</span> dual; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- RAND() /[0.0,1.0)</span></span><br><span class="line"><span class="keyword">select</span> rand() <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- SIGN(x) 返回符号为  整数 1 负数-1 0 0</span></span><br><span class="line"><span class="keyword">select</span> sign(<span class="number">0</span>),sign(<span class="number">-10</span>),sign(<span class="number">10</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 求多少次方</span></span><br><span class="line"><span class="keyword">select</span> pow(<span class="number">3</span>,<span class="number">3</span>),<span class="built_in">POWER</span>(<span class="number">3</span>,<span class="number">3</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h2><h3 id="常见-1"><a href="#常见-1" class="headerlink" title="常见"></a>常见</h3><ul>
+<li><p>char_length(x)</p>
+<blockquote>
+<p>求字符的个数</p>
+</blockquote>
+</li>
+<li><p>length(x)</p>
+<blockquote>
+<p>返回字节个数</p>
+</blockquote>
+</li>
+<li><p>concat(str1,str2,…)</p>
+<blockquote>
+<p>字符串拼接,如果有一个参数是null那么全部返回都是null</p>
+</blockquote>
+</li>
+<li><p>concat_ws(sepe0rator,str1,str2,…)</p>
+<blockquote>
+<p>字符串拼接,拼接的分隔符使用seperator,如果被拼接的参数是null,则会忽略</p>
+</blockquote>
+</li>
+<li><p>insert(str,position,len,newStr)</p>
+<blockquote>
+<p>在str的指定位置开始取len个字符并用newStr来代替</p>
+</blockquote>
+</li>
+<li><p>lower(x)</p>
+<blockquote>
+<p>转成小写</p>
+</blockquote>
+</li>
+<li><p>upper(x)</p>
+<blockquote>
+<p>转成大写</p>
+</blockquote>
+</li>
+<li><p>left(str,len)</p>
+<blockquote>
+<p>返回字符串str的左边开始计算共返回len个字符</p>
+</blockquote>
+</li>
+<li><p>right(str,len)</p>
+<blockquote>
+<p>返回字符串str的右边开始计算共返回len个字符</p>
+</blockquote>
+</li>
+<li><p>lpad(str,len,newStr)</p>
+<blockquote>
+<p>对str的左边开始用newStr填充直到填充后的字符串长度为len为止</p>
+</blockquote>
+</li>
+<li><p>rpad(str,len,newStr)</p>
+<blockquote>
+<p>对str的右边开始用newStr填充直到填充后的字符串长度为len为止</p>
+</blockquote>
+</li>
+<li><p>ltrim(x) </p>
+<blockquote>
+<p>去除字符串x的左边空格</p>
+</blockquote>
+</li>
+<li><p>rtrim(x)</p>
+<blockquote>
+<p>去除字符串x的右边空格</p>
+</blockquote>
+</li>
+<li><p>trim(x)</p>
+<blockquote>
+<p>去除字符串x左右两边的隔空</p>
+</blockquote>
+</li>
+<li><p>trim( delStr from str)</p>
+<blockquote>
+<p>去除字符串str中左右两边的delStr字符串</p>
+</blockquote>
+</li>
+<li><p>repeat(str,times)</p>
+<blockquote>
+<p>返回一个新字符串,该字符串由于字符串str重复times次组成</p>
+</blockquote>
+</li>
+<li><p>space(n)</p>
+<blockquote>
+<p>返回n个由于空格组成的字符串</p>
+</blockquote>
+</li>
+<li><p>replace(str,source,target)</p>
+<blockquote>
+<p>返回str字符串中source子串被target字符串替换的结果</p>
+</blockquote>
+</li>
+<li><p>strcmp(x,y) </p>
+<blockquote>
+<p>返回字符串x和y的比较结果,如果是相等返回0,x大于y返回1,否则返回-1</p>
+</blockquote>
+</li>
+<li><p>substring(str,startPosition[,len])</p>
+<blockquote>
+<p>如果len没有写,返回的是字符串str中从startPosition开始截取到末尾字符串</p>
+<p>如果len有指定,返回的是字符串str中从stratPosition开始截取len个字符串</p>
+</blockquote>
+</li>
+<li><p>reverse(x)</p>
+<blockquote>
+<p>对字符串x逆序(倒序)</p>
+</blockquote>
+</li>
+<li><p>ELT(position,str1,str2,…)</p>
+<blockquote>
+<p>返回的是参数中str1,str2,…参数中第position个位置的字符串</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="案例-11"><a href="#案例-11" class="headerlink" title="案例"></a>案例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> LENGTH(<span class="string">&#x27;中A&#x27;</span>),<span class="keyword">CHAR_LENGTH</span>(<span class="string">&#x27;中A&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> CONCAT(<span class="string">&#x27;11&#x27;</span>,<span class="string">&#x27;22&#x27;</span>,<span class="string">&#x27;33&#x27;</span>),CONCAT_WS(<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;11&#x27;</span>,<span class="string">&#x27;22&#x27;</span>,<span class="string">&#x27;33&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">insert</span>(<span class="string">&#x27;abc&#x27;</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="string">&#x27;12&#x27;</span>) <span class="keyword">from</span> dual; </span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">insert</span>(<span class="string">&#x27;abc&#x27;</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="string">&#x27;12&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">LOWER</span>(<span class="string">&#x27;ABC&#x27;</span>),<span class="built_in">UPPER</span>(<span class="string">&#x27;abc&#x27;</span>),<span class="keyword">LEFT</span>(<span class="string">&#x27;abcdefg&#x27;</span>,<span class="number">1</span>),<span class="keyword">RIGHT</span>(<span class="string">&#x27;abcdefg&#x27;</span>,<span class="number">2</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> LPAD(<span class="string">&#x27;abc&#x27;</span>,<span class="number">5</span>,<span class="string">&#x27;*&#x27;</span>) <span class="keyword">from</span> dual;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> RPAD(<span class="string">&#x27;abc&#x27;</span>,<span class="number">5</span>,<span class="string">&#x27;*&#x27;</span>) <span class="keyword">from</span> dual;  </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 15915785369</span></span><br><span class="line"><span class="comment">-- *******85369</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> LPAD(<span class="keyword">RIGHT</span>(<span class="string">&#x27;15915785369&#x27;</span>,<span class="number">5</span>),<span class="number">11</span>,<span class="string">&#x27;*&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> ltrim(<span class="string">&#x27;    abc    &#x27;</span>),rtrim(<span class="string">&#x27;    abc    &#x27;</span>),<span class="built_in">trim</span>(<span class="string">&#x27;    abc    &#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ltrim rtrim TRIM([remstr FROM] str)</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">trim</span>(<span class="string">&#x27;i&#x27;</span> <span class="keyword">from</span> <span class="string">&#x27;i love java,is i&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> REPEAT(<span class="string">&#x27;hello&#x27;</span>,<span class="number">2</span>) <span class="keyword">from</span> dual;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">select</span> SPACE(<span class="number">10</span>) <span class="keyword">from</span> dual;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">select</span> REPLACE(<span class="string">&#x27;java,html&#x27;</span>,<span class="string">&#x27;java&#x27;</span>,<span class="string">&#x27;css&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">select</span> STRCMP(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>) <span class="keyword">from</span> dual; </span><br><span class="line">	</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">SUBSTRING</span>(<span class="string">&#x27;abcdefg&#x27;</span> <span class="keyword">FROM</span> <span class="number">2</span> <span class="keyword">FOR</span> <span class="number">2</span>) <span class="keyword">from</span> dual;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUBSTRING</span>(<span class="string">&#x27;abcdefg&#x27;</span>,<span class="number">2</span>)</span><br><span class="line">	</span><br><span class="line"><span class="keyword">select</span> REVERSE(<span class="string">&#x27;123&#x27;</span>) <span class="keyword">from</span> dual;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">select</span> ELT(<span class="number">2</span>,<span class="string">&#x27;11&#x27;</span>,<span class="string">&#x27;22&#x27;</span>,<span class="string">&#x27;33&#x27;</span>) <span class="keyword">FROM</span> DUAL;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/MySQL/" rel="tag">MySQL</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-07-18</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" day03" href="/2022/07/18/day03/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/07/18/day02/',
+                path: '/2022/07/18/day02/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                71
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                22
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                17
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B"><span class="toc-text">数值型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B"><span class="toc-text">日期类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F"><span class="toc-text">约束</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL"><span class="toc-text">SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A6%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-text">书写规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE"><span class="toc-text">准备数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQL"><span class="toc-text">DQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="toc-text">算术运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NULL"><span class="toc-text">NULL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-text">列别名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DISTINCT"><span class="toc-text">DISTINCT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WHERE-%E5%AD%97%E5%8F%A5"><span class="toc-text">WHERE 字句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-6"><span class="toc-text">案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E7%AC%A6"><span class="toc-text">特殊比较符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-7"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">逻辑运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7-1"><span class="toc-text">优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#order-by"><span class="toc-text">order by</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-text">规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-8"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#limit"><span class="toc-text">limit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-9"><span class="toc-text">案例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB-1"><span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-text">单行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-5"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="toc-text">数学函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81"><span class="toc-text">常见</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-10"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="toc-text">字符串函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81-1"><span class="toc-text">常见</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-11"><span class="toc-text">案例</span></a></li></ol></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">12</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/MySQL/" style="font-size: 0.76em;">MySQL</a> <a href="/tags/Spring/" style="font-size: 0.68em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.68em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.68em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.72em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.68em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/javaweb/" style="font-size: 0.64em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/vue3/" style="font-size: 0.6em;">vue3</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/day02/"><i class="fa  fa-book"></i> day02</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/day03/"><i class="fa  fa-book"></i> day03</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/MySQL%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/"><i class="fa  fa-book"></i> MySQL事务面试宝典</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/16/Props%E7%B1%BB%E5%9E%8B%E4%BC%A0%E5%80%BC/"><i class="fa  fa-book"></i> Props类型传值</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/16/%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%EF%BC%88%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2%EF%BC%89/"><i class="fa  fa-book"></i> 分组函数（高级查询）</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 随笔记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
