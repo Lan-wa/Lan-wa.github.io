@@ -24,7 +24,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-07-16T07:31:40.000Z">
-<meta property="article:modified_time" content="2022-07-18T01:52:13.638Z">
+<meta property="article:modified_time" content="2022-07-18T12:21:14.962Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="Vue3">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~2.51K
+                        ~2.72K
                     
                     字
                 </li>
@@ -174,7 +174,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1658109133638"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1658146874962"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -191,42 +191,12 @@
 
 <h3 id="2-2-复杂参数"><a href="#2-2-复杂参数" class="headerlink" title="2.2 复杂参数"></a>2.2 复杂参数</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inner</span> <span class="attr">:users</span>=<span class="string">&quot;users&quot;</span> <span class="attr">:num</span>=<span class="string">&quot;100&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">inner</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//创建vue的实例</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> inner = &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">props</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">users</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>:<span class="title class_">Array</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">default</span>:[]</span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">num</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>:<span class="title class_">Number</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">default</span>: <span class="number">0</span></span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">template</span>:<span class="string">`&lt;div&gt;</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">            我的num是:&#123;&#123;num&#125;&#125;</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">            &lt;p v-for=&quot;user in users&quot;&gt;&#123;&#123;user&#125;&#125;&lt;/p&gt;</span></span></span><br><span class="line"><span class="string"><span class="language-javascript">        &lt;/div&gt;`</span>,</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//父</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> param = &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">users</span>:[</span></span><br><span class="line"><span class="language-javascript">                    &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;zs&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">10</span>&#125;,</span></span><br><span class="line"><span class="language-javascript">                    &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;zs&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">10</span>&#125;,</span></span><br><span class="line"><span class="language-javascript">                    &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;zs&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">10</span>&#125;,</span></span><br><span class="line"><span class="language-javascript">                ],</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">xx</span>:<span class="number">10</span></span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="attr">components</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">            inner</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> app = <span class="title class_">Vue</span>.<span class="title function_">createApp</span>(param);</span></span><br><span class="line"><span class="language-javascript">    app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>注： </p>
+<ol>
+<li><code>&lt;inner :users=&quot;users&quot; :num=&quot;100&quot;&gt;&lt;/inner&gt;</code> 中，:users是组件中定义的属性，第二个users是父组件定义的值</li>
+<li>props 中的s是多个的意思。</li>
+<li><code> &lt;inner :users=&quot;users&quot; :num=&quot;100&quot;&gt;&lt;/inner&gt;</code>  可对props属性进行限制，如果num没有绑定事件，就是一个字符串数据。</li>
+</ol>
 
         </div>
         
