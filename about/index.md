@@ -1,9 +1,4 @@
 ---
 title: about
-date: 2022-05-06 19:43:34
-type: about
+date: 2022-07-18 10:30:48
 ---
-
-
-
-This is me..
