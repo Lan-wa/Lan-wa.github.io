@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>数据层层获取数据id执行增删查改（踩坑） | 随笔记录</title>
+  <title>随笔记录</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="javaweb" />
+    <meta name="keywords" content="" />
   
-  <meta name="description" content="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “ int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());">
-<meta property="og:type" content="article">
-<meta property="og:title" content="数据层层获取数据id执行增删查改（踩坑）">
-<meta property="og:url" content="https://lan-wa.github.io/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/index.html">
+  <meta name="description" content="-  蓝顺远">
+<meta property="og:type" content="website">
+<meta property="og:title" content="随笔记录">
+<meta property="og:url" content="https://lan-wa.github.io/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/index.html">
 <meta property="og:site_name" content="随笔记录">
-<meta property="og:description" content="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “ int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());">
+<meta property="og:description" content="-  蓝顺远">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-05-05T16:55:22.000Z">
-<meta property="article:modified_time" content="2022-05-06T06:36:05.024Z">
 <meta property="article:author" content="我爱小小蝶">
-<meta property="article:tag" content="javaweb">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -150,95 +147,104 @@
 
         
 
-            <article>
-    <div class="kratos-hentry kratos-post-inner clearfix">
-        <header class="kratos-entry-header">
-            
-                <h1 class="kratos-entry-title text-center">数据层层获取数据id执行增删查改（踩坑）</h1>
-            
-            
-            <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-05-06</li>
-                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
-                <li>
-                    <i class="fa fa-edit"></i> 
-                    
-                    
-                        186
-                    
-                    字
-                </li>
-                
-            </ul>
-        </header>
-        <div class="kratos-post-content">
-            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1651818965024"></time> 前，其中的内容可能需要更新。</p></div>
-            </div>
-            
-                <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E6%8E%89%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E4%BE%A7%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6%E6%88%96%E5%85%B6%E5%AE%83%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%86%8D%E8%BF%9B%E8%A1%8C%E6%95%B4%E5%9E%8B%E8%BD%AC%E5%8C%96%E5%8D%B3%E5%8F%AF%E6%88%90%E5%8A%9F%EF%BC%81%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</span></a></li></ol>
-                </div>
-            
-            <hr />
-            <h3 id="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！"><a href="#去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！" class="headerlink" title="去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！"></a>去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</h3><p><strong>注：单纯的写Integer.parseInt(request.getParameter(“id”)容易出错，总会面对String型数据转化 int 类型失败的问题 “</strong></p>
-<div class="alert alert-warning"><div class="icon"><i class="fa fa-warning"></i></div><div class="text"><p>int id &#x3D; Integer.parseInt(request.getParameter(id”).trim());</p>
-</div></div>
-        </div>
-        
-        <footer class="kratos-entry-footer clearfix">
-            
-            <div class="footer-tag clearfix">
-                <div class="pull-left">
-                <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/javaweb/" rel="tag">javaweb</a>
-                </div>
-                <div class="pull-date">
-                <span>最后编辑：2022-05-06</span>
-                </div>
-            </div>
-        </footer>
-    </div>
-    
-        <nav class="navigation post-navigation clearfix" role="navigation">
-            
-            <div class="nav-previous clearfix">
-                <a title=" json与字符串之间的转换" href="/2022/05/06/json与字符串之间的转换/">&lt; 上一篇</a>
-            </div>
-            
-            
-            <div class="nav-next clearfix">
-                <a title=" mybatis入门" href="/2022/05/06/mybatis入门/">下一篇 &gt;</a>
-            </div>
-            
-        </nav>
-    
-    
-        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
-<div id="gitalk-container" class="post-comments lazy-load"></div>
-<script>
-    var load_comm = () => {
-        const init = () => {
-            console.log('Gitalk loading...');
-            const gitalk = new Gitalk(Object.assign({
-                id: '/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/',
-                path: '/2022/05/06/controller%E5%B1%82%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AEid%E6%89%A7%E8%A1%8C%E5%A2%9E%E5%88%A0%E6%9F%A5%E6%94%B9%E8%B8%A9%E5%9D%91/'
-            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+            <!-- Breadcrumb for tag & category page -->
 
-            gitalk.render('gitalk-container');
-        }
-        if (typeof Gitalk === 'undefined') {
-            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
-            $.getScript(src, init);
-        } else {
-            init();
-        }
-    };
-</script>
-<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    <article class="kratos-hentry kratos-entry-border-new clearfix">
+        <div class="kratos-breadcrumb">
+            <a href="/">
+                <i class="fa fa-home"></i>
+            </a>
+            <i class="fa fa-angle-right"></i>
+            
+
+                <a href="/categories/">
+                    分类
+                </a>
+
+                
+                
+                    <i class="fa fa-angle-right"></i>
+                    <a href="/categories/springboot2/">
+                        springboot2
+                    </a>
+                
+                    <i class="fa fa-angle-right"></i>
+                    <a href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">
+                        面试宝典
+                    </a>
+                
+            
+            
+        </div>
+    </article>
+
+
+
     
-</article>
+    
+        <article class="kratos-hentry clearfix">
+            <div class="kratos-entry-border-new clearfix">
+                
+                <div class="kratos-entry-thumb-new">
+                    <a href="/2022/07/18/springboot2%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">
+                        
+                            <img class="kratos-entry-thumb-new-img">
+                        
+                    </a>
+                </div>
+                <div class="kratos-post-inner-new">
+                    <header class="kratos-entry-header-new">
+                            <a class="label-link" href="/categories/springboot2/">springboot2</a> <a class="label-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a>
+                        <h2 class="kratos-entry-title-new"><a href="/2022/07/18/springboot2%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">springboot2面试宝典</a>
+                    </header>
+                    <div class="kratos-entry-content-new">
+                        <p>
+                            
+                                1. 说说Spring Boot常用的注解解题思路
+得分点 Spring Boot常用注解的作用 标准回答 关于Spring Boot常用注解： @SpringBootApplication注解： 在Spring Boot入口类中,唯...
+                            
+                        </p>
+                    </div>
+                </div>
+                <footer class="kratos-post-meta-new">
+                    <span class="pull-left">
+                        <a>
+                            <i class="fa fa-calendar"></i>
+                            2022-07-18
+                        </a>
+                        <a>
+                            
+                                <i class="fa fa-tags"></i>
+                                <a class="tag-none-link" href="/tags/springboot2/" rel="tag">springboot2</a>
+                            
+                        </a>
+                        
+                            <!-- 当前仅支持valine/waline自带的统计功能 -->
+                            
+                        
+                        
+                            <!-- 当前仅支持waline自带的统计功能 -->
+                            
+                        
+                    </span>
+                    <span class="pull-right">
+                        <a class="read-more" href="/2022/07/18/springboot2%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                    </span>
+                </footer>
+            </div>
+        </article>
+    
+
+
+
+
+
+    <div class="hidden">
+        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
+        
+    </div>
+
+
 
         
 
@@ -251,6 +257,8 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -291,20 +299,6 @@
     </div>
 </aside>
             
-                    <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E6%8E%89%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E4%BE%A7%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6%E6%88%96%E5%85%B6%E5%AE%83%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%86%8D%E8%BF%9B%E8%A1%8C%E6%95%B4%E5%9E%8B%E8%BD%AC%E5%8C%96%E5%8D%B3%E5%8F%AF%E6%88%90%E5%8A%9F%EF%BC%81%EF%BC%81"><span class="toc-text">去掉获取的字符串参数的两侧空白字符或其它字符，再进行整型转化即可成功！！</span></a></li></ol>
-    </div>
-</aside>
-                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
