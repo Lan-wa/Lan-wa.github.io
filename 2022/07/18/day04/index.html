@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>day04 | 随笔记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="MySQL" />
+  
+  <meta name="description" content="ANY含义任意,也可以理解为只要满足一个就好了。 语法&#x3D; ANY   相当于in &lt;ANY    相当于小于最大值 &gt;ANY    相当于大于最小值 案例123456789101112131415-- 查询是经理的员工姓名，工资select ename,sal from emp where empno in (select mgr from emp);-- 查询部门编号不为1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day04">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/18/day04/index.html">
+<meta property="og:site_name" content="随笔记录">
+<meta property="og:description" content="ANY含义任意,也可以理解为只要满足一个就好了。 语法&#x3D; ANY   相当于in &lt;ANY    相当于小于最大值 &gt;ANY    相当于大于最小值 案例123456789101112131415-- 查询是经理的员工姓名，工资select ename,sal from emp where empno in (select mgr from emp);-- 查询部门编号不为1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-07-18T11:32:12.000Z">
+<meta property="article:modified_time" content="2022-07-18T11:43:28.172Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/t2.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/project/"><i class="fa fa-link"></i>项目链接</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">随笔记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>随笔记录</h2> <br />
+                        <span>一入编程深似海，从此萧郎为卷王</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">day04</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-07-18</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~15.10K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1658144608172"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ANY"><span class="toc-number">1.</span> <span class="toc-text">ANY</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ALL"><span class="toc-number">2.</span> <span class="toc-text">ALL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-number">2.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number">2.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">2.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#not-in"><span class="toc-number">3.</span> <span class="toc-text">not in</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88"><span class="toc-number">3.2.</span> <span class="toc-text">方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-number">3.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.</span> <span class="toc-text">表之间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB"><span class="toc-number">4.1.</span> <span class="toc-text">种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-number">4.2.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">5.</span> <span class="toc-text">嵌套子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE"><span class="toc-number">5.1.</span> <span class="toc-text">位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">执行过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.</span> <span class="toc-text">相关子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-number">6.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">6.2.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B-1"><span class="toc-number">6.3.</span> <span class="toc-text">执行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">6.4.</span> <span class="toc-text">入门案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE1"><span class="toc-number">6.4.1.</span> <span class="toc-text">示意图1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE2"><span class="toc-number">6.4.2.</span> <span class="toc-text">示意图2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%A1%88%E4%BE%8B"><span class="toc-number">6.5.</span> <span class="toc-text">其他案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">6.6.</span> <span class="toc-text">使用位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD"><span class="toc-number">6.7.</span> <span class="toc-text">如何判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A0"><span class="toc-number">6.8.</span> <span class="toc-text">课堂练习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-number">7.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-3"><span class="toc-number">7.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">7.2.</span> <span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8"><span class="toc-number">7.3.</span> <span class="toc-text">为什么要用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-number">7.4.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9"><span class="toc-number">7.5.</span> <span class="toc-text">选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">7.6.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">7.7.</span> <span class="toc-text">案例二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89"><span class="toc-number">7.8.</span> <span class="toc-text">案例三</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E5%9B%9B"><span class="toc-number">7.9.</span> <span class="toc-text">案例四</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90"><span class="toc-number">8.</span> <span class="toc-text">权限</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-4"><span class="toc-number">8.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E8%A1%A8"><span class="toc-number">8.2.</span> <span class="toc-text">相关表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">8.3.</span> <span class="toc-text">执行示意图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">9.</span> <span class="toc-text">用户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-number">9.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-number">9.2.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-number">10.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-number">10.2.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%AE%9E%E6%AD%A5%E9%AA%A4"><span class="toc-number">10.3.</span> <span class="toc-text">核实步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">11.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-5"><span class="toc-number">11.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-number">11.2.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-number">11.3.</span> <span class="toc-text">组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E7%BB%93%E6%9D%9F"><span class="toc-number">11.4.</span> <span class="toc-text">手动结束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80-1"><span class="toc-number">11.4.1.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C-1"><span class="toc-number">11.4.2.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%BB%93%E6%9D%9F"><span class="toc-number">11.5.</span> <span class="toc-text">自动结束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4"><span class="toc-number">11.5.1.</span> <span class="toc-text">自动提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%9B%9E%E6%BB%9A"><span class="toc-number">11.5.2.</span> <span class="toc-text">自动回滚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E5%8E%9F%E7%82%B9"><span class="toc-number">11.6.</span> <span class="toc-text">还原点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E7%89%A9%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">11.7.</span> <span class="toc-text">事物隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A"><span class="toc-number">11.7.1.</span> <span class="toc-text">解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">11.7.2.</span> <span class="toc-text">查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-number">11.7.3.</span> <span class="toc-text">修改</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="ANY"><a href="#ANY" class="headerlink" title="ANY"></a>ANY</h1><h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><p>任意,也可以理解为只要满足一个就好了。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>&#x3D; ANY   相当于in</p>
+<p>&lt;ANY    相当于小于最大值</p>
+<p>&gt;ANY    相当于大于最小值</p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询是经理的员工姓名，工资</span></span><br><span class="line"><span class="keyword">select</span> ename,sal <span class="keyword">from</span> emp <span class="keyword">where</span> empno <span class="keyword">in</span> (<span class="keyword">select</span> mgr <span class="keyword">from</span> emp);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询部门编号不为10，且工资比10部门任意一名员工工资高的员工编号，姓名，职位，工资。</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">10</span> <span class="keyword">and</span> sal <span class="operator">&gt;</span> <span class="keyword">any</span> (<span class="keyword">select</span> sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">--因为&gt;ANY代表大于最小,所以如下和上面等价</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">10</span> <span class="keyword">and</span> sal <span class="operator">&gt;</span> (<span class="keyword">select</span> <span class="built_in">min</span>(sal) <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询部门编号不为10，且工资比10部门任意一名工资低的员工编号，姓名，职位，工资。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">10</span> <span class="keyword">and</span> sal <span class="operator">&lt;</span> <span class="keyword">any</span> (<span class="keyword">select</span> sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">--因为&lt;ANY代表小于最大,所以如下和上面等价</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">10</span> <span class="keyword">and</span> sal <span class="operator">&lt;</span> (<span class="keyword">select</span> <span class="built_in">max</span>(sal) <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="ALL"><a href="#ALL" class="headerlink" title="ALL"></a>ALL</h1><h2 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h2><p>满足全部</p>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p>&#x3D; ALL      等于全部,没有任何意义</p>
+<p>&lt; ALL      小于最小值</p>
+<p>&gt;ALL       大于最大值</p>
+<h2 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询部门编号不为20，  且工资比 20部门所有员工工资高 的     员工编号，姓名，职位，工资。</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">20</span> <span class="keyword">and</span> sal <span class="operator">&gt;</span> <span class="keyword">ALL</span> (<span class="keyword">select</span> sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 因为 &gt; ALL 含义是大于最大值所以如下和上面等价</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">20</span> <span class="keyword">and</span> sal <span class="operator">&gt;</span> (<span class="keyword">select</span> <span class="built_in">max</span>(sal) <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询部门编号不为20，  且工资比 20部门所有员工工资低 的     员工编号，姓名，职位，工资。</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">20</span> <span class="keyword">and</span> sal <span class="operator">&lt;</span> <span class="keyword">ALL</span> (<span class="keyword">select</span> sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 因为 &gt; ALL 含义是小于最小值所以如下和上面等价</span></span><br><span class="line"><span class="keyword">select</span> empno,ename,job,sal <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">!=</span><span class="number">20</span> <span class="keyword">and</span> sal <span class="operator">&lt;</span> (<span class="keyword">select</span> <span class="built_in">min</span>(sal) <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="not-in"><a href="#not-in" class="headerlink" title="not in"></a>not in</h1><h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>只要空值有可能成为子查询结果集合中的一部分，就不能使用NOT IN 运算符</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><p>子查询中将null值排除掉</p>
+<h2 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查找是经理的员工信息</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp <span class="keyword">where</span> empno <span class="keyword">in</span> (<span class="keyword">select</span> mgr <span class="keyword">from</span> emp)</span><br><span class="line">	 </span><br><span class="line"><span class="comment">-- 查询不是经理的员工姓名</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp <span class="keyword">where</span> empno <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> mgr <span class="keyword">from</span> emp)    <span class="comment">-- not in 不可以放在有null的地方</span></span><br><span class="line">	 </span><br><span class="line"><span class="comment">-- 优化后方案	 </span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp <span class="keyword">where</span> empno <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> mgr <span class="keyword">from</span> emp <span class="keyword">where</span> mgr <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span>) </span><br></pre></td></tr></table></figure>
+
+<h1 id="表之间的关系"><a href="#表之间的关系" class="headerlink" title="表之间的关系"></a>表之间的关系</h1><h2 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h2><ul>
+<li>one to many 【many to one】<ul>
+<li>dept和emp</li>
+<li>customer和book</li>
+<li>user和car</li>
+</ul>
+</li>
+<li>many to many <ul>
+<li>stu和teacher</li>
+<li>user和role</li>
+</ul>
+</li>
+<li>one to one<ul>
+<li>qq和zone</li>
+<li>user和card</li>
+</ul>
+</li>
+</ul>
+<h2 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h2><p>oneToMany</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for dept</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `dept`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `dept`  (</span><br><span class="line">  `deptno` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `dname` <span class="type">varchar</span>(<span class="number">14</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `loc` <span class="type">varchar</span>(<span class="number">13</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`deptno`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of dept</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `dept` <span class="keyword">VALUES</span> (<span class="number">10</span>, <span class="string">&#x27;ACCOUNTING&#x27;</span>, <span class="string">&#x27;NEW YORK&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `dept` <span class="keyword">VALUES</span> (<span class="number">20</span>, <span class="string">&#x27;RESEARCH&#x27;</span>, <span class="string">&#x27;DALLAS&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `dept` <span class="keyword">VALUES</span> (<span class="number">30</span>, <span class="string">&#x27;SALES&#x27;</span>, <span class="string">&#x27;CHICAGO&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `dept` <span class="keyword">VALUES</span> (<span class="number">40</span>, <span class="string">&#x27;OPERATIONS&#x27;</span>, <span class="string">&#x27;BOSTON&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for emp</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `emp`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `emp`  (</span><br><span class="line">  `empno` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `ename` <span class="type">varchar</span>(<span class="number">10</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `job` <span class="type">varchar</span>(<span class="number">9</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `mgr` <span class="type">int</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `hiredate` <span class="type">date</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `sal` <span class="type">decimal</span>(<span class="number">7</span>, <span class="number">2</span>) <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `comm` <span class="type">decimal</span>(<span class="number">7</span>, <span class="number">2</span>) <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `deptno` <span class="type">int</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`empno`) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  INDEX `fk_deptno`(`deptno` <span class="keyword">ASC</span>) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  <span class="keyword">CONSTRAINT</span> `fk_deptno` <span class="keyword">FOREIGN</span> KEY (`deptno`) <span class="keyword">REFERENCES</span> `dept` (`deptno`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> RESTRICT <span class="keyword">ON</span> <span class="keyword">UPDATE</span> RESTRICT</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br></pre></td></tr></table></figure>
+
+<p>manyToMany</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for student</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `student`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `student`  (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">40</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB AUTO_INCREMENT <span class="operator">=</span> <span class="number">1</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of student</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `student` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;小红&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `student` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;小明&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for teacher</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `teacher`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `teacher`  (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">40</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of teacher</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `teacher` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;王老师&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `teacher` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;李老师&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for middle_teacher_student</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `middle_teacher_student`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `middle_teacher_student`  (</span><br><span class="line">  `teacher_id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `student_id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`teacher_id`, `student_id`) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  INDEX `student_id`(`student_id` <span class="keyword">ASC</span>) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  <span class="keyword">CONSTRAINT</span> `middle_teacher_student_ibfk_1` <span class="keyword">FOREIGN</span> KEY (`teacher_id`) <span class="keyword">REFERENCES</span> `teacher` (`id`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> RESTRICT <span class="keyword">ON</span> <span class="keyword">UPDATE</span> RESTRICT,</span><br><span class="line">  <span class="keyword">CONSTRAINT</span> `middle_teacher_student_ibfk_2` <span class="keyword">FOREIGN</span> KEY (`student_id`) <span class="keyword">REFERENCES</span> `student` (`id`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> RESTRICT <span class="keyword">ON</span> <span class="keyword">UPDATE</span> RESTRICT</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of middle_teacher_student</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `middle_teacher_student` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `middle_teacher_student` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `middle_teacher_student` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>oneToOne</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for qq</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `qq`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `qq`  (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `num` <span class="type">varchar</span>(<span class="number">255</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of qq</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `qq` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;110&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `qq` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;120&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for zone</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `zone`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `zone`  (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `space` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `site` <span class="type">varchar</span>(<span class="number">255</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_0900_ai_ci <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `qq_id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  <span class="keyword">UNIQUE</span> INDEX `qq_id`(`qq_id` <span class="keyword">ASC</span>) <span class="keyword">USING</span> BTREE,</span><br><span class="line">  <span class="keyword">CONSTRAINT</span> `zone_ibfk_1` <span class="keyword">FOREIGN</span> KEY (`qq_id`) <span class="keyword">REFERENCES</span> `qq` (`id`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> RESTRICT <span class="keyword">ON</span> <span class="keyword">UPDATE</span> RESTRICT</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8mb4 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8mb4_0900_ai_ci ROW_FORMAT <span class="operator">=</span> <span class="keyword">Dynamic</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of zone</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `zone` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="number">100</span>, <span class="string">&#x27;www...&#x27;</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="嵌套子查询"><a href="#嵌套子查询" class="headerlink" title="嵌套子查询"></a>嵌套子查询</h1><h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><ul>
+<li>from</li>
+<li>where</li>
+<li>having</li>
+</ul>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ul>
+<li>条件<ul>
+<li>where</li>
+<li>having</li>
+</ul>
+</li>
+<li>表<ul>
+<li>from</li>
+</ul>
+</li>
+</ul>
+<h2 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h2><ul>
+<li>子查询首先执行一次<ul>
+<li>给主查询作为查询参数</li>
+<li>作为一张临时表</li>
+</ul>
+</li>
+</ul>
+<h1 id="相关子查询"><a href="#相关子查询" class="headerlink" title="相关子查询"></a>相关子查询</h1><h2 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h2><p>当子查询中引用了父查询表中的一个列时,此时数据库服务器就执行相关子查询。</p>
+<p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1658113510385.png" alt="1658113510385"></p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>主查询有N条记录,子查询就要执行N次</li>
+</ul>
+<h2 id="执行过程-1"><a href="#执行过程-1" class="headerlink" title="执行过程"></a>执行过程</h2><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1658072098970.png" alt="1658072098970"></p>
+<h2 id="入门案例"><a href="#入门案例" class="headerlink" title="入门案例"></a>入门案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 比本部门平均薪水高的  员工姓名，薪水,分别使用嵌套子查询、相关子查询</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 嵌套子查询方式</span></span><br><span class="line"><span class="keyword">select</span> e.ename,e.sal <span class="keyword">from</span> emp e,(<span class="keyword">select</span> <span class="built_in">avg</span>(sal) avgSal,deptno <span class="keyword">from</span> emp <span class="keyword">GROUP</span> <span class="keyword">BY</span> deptno) t </span><br><span class="line">   <span class="keyword">where</span> e.deptno <span class="operator">=</span> t.deptno <span class="keyword">and</span> e.sal <span class="operator">&gt;</span> t.avgSal</span><br><span class="line">	 </span><br><span class="line"><span class="comment">-- 相关子查询方式</span></span><br><span class="line">   <span class="keyword">select</span> e.ename,e.sal <span class="keyword">from</span> emp e <span class="keyword">where</span> e.sal <span class="operator">&gt;</span> (<span class="keyword">select</span> <span class="built_in">avg</span>(sal) <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span>   e.deptno)</span><br></pre></td></tr></table></figure>
+
+<h3 id="示意图1"><a href="#示意图1" class="headerlink" title="示意图1"></a>示意图1</h3><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1658070918009.png" alt="1658070918009"></p>
+<h3 id="示意图2"><a href="#示意图2" class="headerlink" title="示意图2"></a>示意图2</h3><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1658070881729.png" alt="1658070881729"></p>
+<h2 id="其他案例"><a href="#其他案例" class="headerlink" title="其他案例"></a>其他案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询所有部门名称  和  人数,使用相关子查询</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(e.empno),e.deptno,(<span class="keyword">select</span> dname <span class="keyword">from</span> dept <span class="keyword">where</span> deptno <span class="operator">=</span> e.deptno ) <span class="keyword">from</span> emp e <span class="keyword">group</span> <span class="keyword">by</span> deptno</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 查询哪些员工是经理,分别使用嵌套子查询、相关子查询</span></span><br><span class="line"><span class="comment">-- 嵌套子查询</span></span><br><span class="line"><span class="keyword">select</span> e.<span class="operator">*</span> <span class="keyword">from</span> emp e <span class="keyword">where</span> e.empno <span class="keyword">in</span> (<span class="keyword">select</span> mgr <span class="keyword">from</span> emp)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 相关子查询  (管理了员工的并且管理的数量&gt;0)</span></span><br><span class="line"><span class="keyword">select</span> e.<span class="operator">*</span> <span class="keyword">from</span> emp e <span class="keyword">where</span> (<span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> emp <span class="keyword">where</span> mgr <span class="operator">=</span> e.empno)<span class="operator">&gt;</span><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用位置"><a href="#使用位置" class="headerlink" title="使用位置"></a>使用位置</h2><ul>
+<li>select</li>
+<li>where</li>
+</ul>
+<h2 id="如何判断"><a href="#如何判断" class="headerlink" title="如何判断"></a>如何判断</h2><p>根据子查询是否使用主查询的参数来判断</p>
+<h2 id="课堂练习"><a href="#课堂练习" class="headerlink" title="课堂练习"></a>课堂练习</h2><ul>
+<li>查询所有雇员编号、名字、部门名字</li>
+<li>查询哪些员工是经理</li>
+<li>查询哪些员工不是经理</li>
+<li>查询每个部门工资最低的两个员工编号、姓名、工资</li>
+</ul>
+<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h2 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h2><ul>
+<li>是sql语句的封装</li>
+<li>本身不保存数据</li>
+<li>数据来自基础表或者其他视图</li>
+</ul>
+<h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1652941537152.png" alt="1652941537152"></p>
+<h2 id="为什么要用"><a href="#为什么要用" class="headerlink" title="为什么要用"></a>为什么要用</h2><ul>
+<li>避免重复编写sql语句</li>
+<li>封装复杂的sql语句</li>
+<li>显示部分列数据</li>
+</ul>
+<h2 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h2><p>创建或修改</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] </span><br><span class="line"><span class="keyword">VIEW</span> view_name [(column_list)] </span><br><span class="line"><span class="keyword">AS</span> select_statement</span><br><span class="line">[<span class="keyword">WITH</span> [<span class="keyword">CASCADED</span> <span class="operator">|</span> <span class="keyword">LOCAL</span>] <span class="keyword">CHECK</span> OPTION</span><br></pre></td></tr></table></figure>
+
+<p>删除</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> 视图名;</span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> 视图名;</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> 视图名 [<span class="keyword">where</span> 条件]</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> [<span class="keyword">cascaded</span> <span class="operator">|</span> <span class="keyword">local</span>] <span class="keyword">check</span> option <span class="comment">-- 对DML操作起到约束作用</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cascaded 这是默认的,代表检查选项会级联传递</li>
+<li>local 代表选项不会级联传递</li>
+</ul>
+<h2 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建一个视图v_emp10，通过该视图只能查看10号部门的员工编号，员工姓名，职位</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_emp10 <span class="keyword">as</span> <span class="keyword">select</span> empno,ename,job <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_emp10 <span class="keyword">as</span> <span class="keyword">select</span> empno <span class="keyword">as</span> xx,ename,job <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_emp10 (xx,yy,zz) <span class="keyword">as</span> <span class="keyword">select</span> empno <span class="keyword">as</span> xx ,ename,job <span class="keyword">from</span> emp <span class="keyword">where</span> deptno <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用视图</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_emp10;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看视图</span></span><br><span class="line"><span class="keyword">desc</span> v_emp10;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建一个视图，通过该视图可以   查看每个部门的编号，最低工资，最高工资，平均工资</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_empinfo <span class="keyword">as</span> <span class="keyword">select</span> deptno,<span class="built_in">min</span>(sal),<span class="built_in">max</span>(sal),<span class="built_in">avg</span>(sal) <span class="keyword">from</span> emp <span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用视图</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_empinfo <span class="keyword">where</span> deptno<span class="operator">=</span><span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除视图</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> v_empinfo;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- WITH [CASCADED | LOCAL] CHECK OPTION</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `<span class="keyword">user</span>` (</span><br><span class="line">  `id` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `age` <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">13</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb4 <span class="keyword">COLLATE</span><span class="operator">=</span>utf8mb4_0900_ai_ci</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 这种视图上可以执行DML操作,因为使用的是简单视图并且没有添加任何检查选项</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> v_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_user;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 这种视图上不可以执行DML操作</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span>  v_user_count <span class="keyword">as</span> <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_user_count;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 视图上执行DML操作</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> v_user (name,age) <span class="keyword">values</span>(<span class="string">&#x27;ls&#x27;</span>,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> v_user <span class="keyword">set</span> age <span class="operator">=</span> <span class="number">20</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> v_user <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_user;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 如下视图上可以执行DML操作,但是操作的id必须满足&gt;10,否则DML操作无法执行成功</span></span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">&gt;</span><span class="number">10</span> <span class="keyword">WITH</span> <span class="keyword">CHECK</span> OPTION;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">-- 成功</span></span><br><span class="line"> <span class="keyword">insert</span> <span class="keyword">into</span> v_user (id,name,age) <span class="keyword">values</span>(<span class="number">11</span>,<span class="string">&#x27;ls&#x27;</span>,<span class="number">10</span>);</span><br><span class="line"> <span class="comment">-- 不成功</span></span><br><span class="line"> <span class="keyword">insert</span> <span class="keyword">into</span> v_user (id,name,age) <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;ls&#x27;</span>,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 成功</span></span><br><span class="line"> <span class="keyword">delete</span> <span class="keyword">from</span> v_user <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">11</span>;</span><br><span class="line"> <span class="comment">-- 不成功</span></span><br><span class="line"> <span class="keyword">delete</span> <span class="keyword">from</span> v_user <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 成功</span></span><br><span class="line"> <span class="keyword">update</span> v_user <span class="keyword">set</span> id <span class="operator">=</span> <span class="number">12</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">11</span>;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 不成功</span></span><br><span class="line"> <span class="keyword">update</span> v_user <span class="keyword">set</span> id <span class="operator">=</span> <span class="number">12</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"> <span class="comment">-- 不成功</span></span><br><span class="line"> <span class="keyword">update</span> v_user <span class="keyword">set</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例三"><a href="#案例三" class="headerlink" title="案例三"></a>案例三</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">&gt;</span><span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_view_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_user <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">20</span> <span class="keyword">with</span> <span class="keyword">CASCADED</span> <span class="keyword">CHECK</span> OPTION; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- insert </span></span><br><span class="line"><span class="comment">-- 不成功</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> v_view_user(id,name,age) <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;xx&#x27;</span>,<span class="number">10</span>);</span><br><span class="line"><span class="comment">-- 成功</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> v_view_user(id,name,age) <span class="keyword">values</span>(<span class="number">14</span>,<span class="string">&#x27;xx&#x27;</span>,<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- update</span></span><br><span class="line"><span class="comment">-- delete</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">&gt;</span><span class="number">10</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> v_local_user <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> v_user <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">20</span> <span class="keyword">with</span> <span class="keyword">local</span> <span class="keyword">CHECK</span> OPTION; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 成功</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> v_local_user(id,name,age) <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;xx&#x27;</span>,<span class="number">20</span>); </span><br><span class="line"><span class="comment">-- update</span></span><br><span class="line"><span class="comment">-- delete</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="案例四"><a href="#案例四" class="headerlink" title="案例四"></a>案例四</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> xx <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line"><span class="comment">-- 请问对上面的视图能否进行DML操作,为什么?</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h1><h2 id="含义-4"><a href="#含义-4" class="headerlink" title="含义"></a>含义</h2><p>对于资源只有有权限的用户才能操作</p>
+<h2 id="相关表"><a href="#相关表" class="headerlink" title="相关表"></a>相关表</h2><ul>
+<li>user</li>
+<li>db</li>
+<li>tables_priv</li>
+<li>columns_priv</li>
+<li>procs_priv</li>
+</ul>
+<h2 id="执行示意图"><a href="#执行示意图" class="headerlink" title="执行示意图"></a>执行示意图</h2><p> <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/01mysql/Day04/%E7%AC%94%E8%AE%B0/assets/1652951635462.png" alt="1652951635462"></p>
+<h1 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h1><h2 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h2><p>创建用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="keyword">user</span> [IDENTIFIED <span class="keyword">BY</span> [PASSWORD] <span class="string">&#x27;password&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>修改名字</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RENAME <span class="keyword">USER</span> old_user <span class="keyword">TO</span> new_user;</span><br></pre></td></tr></table></figure>
+
+<p>修改密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> userIDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>删除用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> user_name</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例-4"><a href="#案例-4" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建用户</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;xx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;xx&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改用户名字</span></span><br><span class="line">RENAME <span class="keyword">USER</span> <span class="string">&#x27;xx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">TO</span> <span class="string">&#x27;xxxx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改用户密码</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;xxxx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;xxxx&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改root的密码</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除用户</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">user</span> <span class="string">&#x27;xxxx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h1><h2 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 授权</span></span><br><span class="line"><span class="keyword">grant</span> 指定权限 <span class="keyword">on</span> 指定库.指定表 <span class="keyword">to</span> 用户 [<span class="keyword">with</span> <span class="keyword">grant</span> option];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 回收权限</span></span><br><span class="line"><span class="keyword">revoke</span> 指定权限,[<span class="keyword">grant</span> optioin] <span class="keyword">on</span> 指定库.指定表 <span class="keyword">from</span> 用户;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看权限</span></span><br><span class="line"><span class="keyword">show</span> grants <span class="keyword">for</span> 用户;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例-5"><a href="#案例-5" class="headerlink" title="案例"></a>案例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 给zs授予所有库中所有表的select权限</span></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">on</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">to</span> <span class="string">&#x27;zs&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 给yy授予所有库中所有表的全部权限,并且yy用户可以将全部权限授予其他用户</span></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">to</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">with</span> <span class="keyword">grant</span> option;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 给yy用户授予xx数据库中user表的删除、更新id列的权限</span></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">delete</span>,<span class="keyword">update</span>(id) <span class="keyword">on</span> xx.user <span class="keyword">to</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 收回yy用户在所有库中的所有表的所有权限</span></span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">from</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="核实步骤"><a href="#核实步骤" class="headerlink" title="核实步骤"></a>核实步骤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span>,<span class="keyword">update</span>  <span class="keyword">on</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">to</span> <span class="string">&#x27;zs&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 授予全局的查询、更新权限</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">&#x27;xx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">by</span> <span class="string">&#x27;xx&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">on</span> xx.<span class="operator">*</span> <span class="keyword">to</span> <span class="string">&#x27;xx&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- xx 登录进去了</span></span><br><span class="line">    use xx;</span><br><span class="line">		  <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp; <span class="comment">-- 权限核实是如何的？</span></span><br><span class="line">			                    <span class="comment">--user表中select 是否Y?</span></span><br><span class="line">									 <span class="comment">-- 不是Y</span></span><br><span class="line">											<span class="comment">-- db 表中的 select 是否 Y?   【数据库级别的权限】</span></span><br><span class="line">												<span class="comment">-- 是Y 直接访问</span></span><br><span class="line">																							</span><br><span class="line">																							</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">by</span> <span class="string">&#x27;yy&#x27;</span>;	</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">on</span> xx.emp <span class="keyword">to</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;		</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">delete</span> <span class="keyword">on</span> xx.emp <span class="keyword">to</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;		</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">update</span>(ename) <span class="keyword">on</span> xx.emp <span class="keyword">to</span> <span class="string">&#x27;yy&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;	</span><br><span class="line"><span class="comment">-- yy 登录进入了</span></span><br><span class="line">   use xx; </span><br><span class="line">	    <span class="keyword">select</span> <span class="operator">*</span><span class="keyword">from</span> emp;  <span class="comment">-- 权限核实是如何的？</span></span><br><span class="line">			                   <span class="comment">-- user表中select 是否为Y</span></span><br><span class="line">									<span class="comment">-- 不是的</span></span><br><span class="line">										<span class="comment">-- db表中的select 是否为Y</span></span><br><span class="line">											<span class="comment">-- 不是的</span></span><br><span class="line">													<span class="comment">-- table_priv表中select是否为Y</span></span><br><span class="line">															<span class="comment">-- 是Y 直接访问</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><h2 id="含义-5"><a href="#含义-5" class="headerlink" title="含义"></a>含义</h2><p>对数据库的一组操作要不同时成功,要不同时失败。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原子性</td>
+<td>不可分割的最小单位</td>
+</tr>
+<tr>
+<td>一致性</td>
+<td>事务结束后数据保持不变</td>
+</tr>
+<tr>
+<td>隔离性</td>
+<td>事务之间互不影响【隔离级别有关系】</td>
+</tr>
+<tr>
+<td>持久性</td>
+<td>事务结束之后断电重启后事务不会回滚</td>
+</tr>
+</tbody></table>
+<h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><ul>
+<li>DML+TPL</li>
+<li>DML+DDL</li>
+<li>DML+DCL</li>
+</ul>
+<h2 id="手动结束"><a href="#手动结束" class="headerlink" title="手动结束"></a>手动结束</h2><h3 id="案例一-1"><a href="#案例一-1" class="headerlink" title="案例一"></a>案例一</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 不自动提交[遇到dml不会自动提交事务需要手动来处理,commit|rollback]</span></span><br><span class="line"><span class="keyword">set</span> @<span class="variable">@autocommit</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> money <span class="operator">=</span> money <span class="operator">-</span> <span class="number">500</span> <span class="keyword">where</span> id  <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> money <span class="operator">=</span> money <span class="operator">+</span> <span class="number">500</span> <span class="keyword">where</span> id  <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">rollback</span>;  <span class="comment">-- commit;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二-1"><a href="#案例二-1" class="headerlink" title="案例二"></a>案例二</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @<span class="variable">@autocommit</span><span class="operator">=</span><span class="number">1</span>; <span class="comment">-- 恢复默认</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> money <span class="operator">=</span> money <span class="operator">-</span> <span class="number">500</span> <span class="keyword">where</span> id  <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> money <span class="operator">=</span> money <span class="operator">+</span> <span class="number">500</span> <span class="keyword">where</span> id  <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">rollback</span>;  <span class="comment">-- commit;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动结束"><a href="#自动结束" class="headerlink" title="自动结束"></a>自动结束</h2><p>自行验证,了解即可</p>
+<h3 id="自动提交"><a href="#自动提交" class="headerlink" title="自动提交"></a>自动提交</h3><ul>
+<li>执行一个DDL(CREATE、ALTER、DROP、TRUNCATE、RENAME）语句；</li>
+<li>执行一个DCL(GRANT、REVOKE)语句；</li>
+</ul>
+<h3 id="自动回滚"><a href="#自动回滚" class="headerlink" title="自动回滚"></a>自动回滚</h3><ul>
+<li>客户端强行退出</li>
+<li>客户端连接到服务器端异常中断</li>
+<li>系统崩溃</li>
+</ul>
+<h2 id="还原点"><a href="#还原点" class="headerlink" title="还原点"></a>还原点</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;                      <span class="comment">-- 开始事务操作</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> test ;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;                        <span class="comment">-- 撤消DELETE操作</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">BEGIN</span>;  <span class="comment">-- 等价于  start transaction;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test <span class="keyword">VALUES</span>(<span class="string">&#x27;A&#x27;</span>);</span><br><span class="line"><span class="keyword">SAVEPOINT</span> insert_a;            <span class="comment">-- 定义insert_a保存点</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test <span class="keyword">VALUES</span>(<span class="string">&#x27;B&#x27;</span>);</span><br><span class="line"><span class="keyword">SAVEPOINT</span> insert_b;             <span class="comment">-- 定义insert_b保存点</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test <span class="keyword">VALUES</span>(<span class="string">&#x27;C&#x27;</span>);</span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> insert_b;    <span class="comment">-- 撤消操作到insert_b保存点,事务没有结束</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> test <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="keyword">COMMIT</span>;                          <span class="comment">-- 将所有修改写入数据库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ROLLBACK</span>;    <span class="comment">-- 所有操作已经COMMIT提交，不能回滚</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="事物隔离级别"><a href="#事物隔离级别" class="headerlink" title="事物隔离级别"></a>事物隔离级别</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>READ UNCOMMITTED</th>
+<th>READ COMMITTED</th>
+<th>REPEATABLE READ【默认】</th>
+<th>SERIALIZABLE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>脏读</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr>
+<td>不可重复读</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr>
+<td>幻读(虚读)</td>
+<td>y</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+</tr>
+</tbody></table>
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p>脏读: 一个事务读取到另一个事务未提交的数据</p>
+<p>不可重复读:一个相同的事务多次读取的数据不一样</p>
+<p>幻读:强调在于某一个范围内的数据行变多或者是变少了，侧重说明的是数据集不一样导致了产生了幻读。</p>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> @<span class="variable">@TRANSACTION</span>_ISOLATION;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> [SESSION<span class="operator">|</span><span class="keyword">GLOBAL</span>] TRANSACTION ISOLATION LEVEL &#123;READ UNCOMMITTED<span class="operator">|</span>READ COMMITTED<span class="operator">|</span>REPEATABLE READ<span class="operator">|</span>SERIALIZABLE&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>SESSION 代表只会对当前会话有效</p>
+<p>GLOBAL 代表会对所有会话有效</p>
+</blockquote>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/MySQL/" rel="tag">MySQL</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-07-18</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" day03" href="/2022/07/18/day03/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" day02" href="/2022/07/18/day02/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/07/18/day04/',
+                path: '/2022/07/18/day04/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                72
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                22
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                17
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ANY"><span class="toc-text">ANY</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ALL"><span class="toc-text">ALL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#not-in"><span class="toc-text">not in</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88"><span class="toc-text">方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">表之间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB"><span class="toc-text">种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">嵌套子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE"><span class="toc-text">位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-text">执行过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">相关子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B-1"><span class="toc-text">执行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="toc-text">入门案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE1"><span class="toc-text">示意图1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE2"><span class="toc-text">示意图2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%A1%88%E4%BE%8B"><span class="toc-text">其他案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE"><span class="toc-text">使用位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD"><span class="toc-text">如何判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E5%A0%82%E7%BB%83%E4%B9%A0"><span class="toc-text">课堂练习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-3"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8"><span class="toc-text">为什么要用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9"><span class="toc-text">选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-text">案例二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89"><span class="toc-text">案例三</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E5%9B%9B"><span class="toc-text">案例四</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90"><span class="toc-text">权限</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-4"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E8%A1%A8"><span class="toc-text">相关表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">执行示意图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-text">用户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-text">权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%AE%9E%E6%AD%A5%E9%AA%A4"><span class="toc-text">核实步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-5"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-text">特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-text">组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E7%BB%93%E6%9D%9F"><span class="toc-text">手动结束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80-1"><span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C-1"><span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%BB%93%E6%9D%9F"><span class="toc-text">自动结束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4"><span class="toc-text">自动提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%9B%9E%E6%BB%9A"><span class="toc-text">自动回滚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E5%8E%9F%E7%82%B9"><span class="toc-text">还原点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E7%89%A9%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">事物隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A"><span class="toc-text">解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-text">查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-text">修改</span></a></li></ol></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">13</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/MySQL/" style="font-size: 0.76em;">MySQL</a> <a href="/tags/Spring/" style="font-size: 0.68em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.68em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.68em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.72em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.68em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/javaweb/" style="font-size: 0.64em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/vue3/" style="font-size: 0.6em;">vue3</a> <a href="/tags/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/" style="font-size: 0.6em;">报错信息</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/day02/"><i class="fa  fa-book"></i> day02</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/day04/"><i class="fa  fa-book"></i> day04</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/day03/"><i class="fa  fa-book"></i> day03</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/18/MySQL%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/"><i class="fa  fa-book"></i> MySQL事务面试宝典</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/16/Props%E7%B1%BB%E5%9E%8B%E4%BC%A0%E5%80%BC/"><i class="fa  fa-book"></i> Props类型传值</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 随笔记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
