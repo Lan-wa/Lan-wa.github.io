@@ -1238,8 +1238,8 @@ body.scroll-down.nav-up #kratos-desktop-topnav {
 }
 
 .kratos-cover.kratos-cover-2 {
-    height: 470px;
-    background-position: top
+    height: 584px;
+    background-position: center
 }
 
 .kratos-cover .desc {
@@ -1291,7 +1291,7 @@ body.scroll-down.nav-up #kratos-desktop-topnav {
 
 #kratos-blog-post {
     padding: 20px 0;
-    margin-top: 148px
+    margin-top: 267px
 }
 
 #kratos-blog-post p {
