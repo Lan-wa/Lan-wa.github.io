@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>java04 | 随笔记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java" />
+  
+  <meta name="description" content="变量含义分类 局部变量 成员变量 实例变量【对象级别】 类变量    【类级别】    static含义修饰成员变量、方法代表类级别  可以直接通过类名.调用  语法 修饰符成员变量  多个对象共享一个变量   修饰方法  一般作为工具类,方便调用    注意点 static修饰的方法可以访问 static修饰的成员变量 static修饰的方法   static修饰的方法可以不可以访问 非stat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java04">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/27/java04/index.html">
+<meta property="og:site_name" content="随笔记录">
+<meta property="og:description" content="变量含义分类 局部变量 成员变量 实例变量【对象级别】 类变量    【类级别】    static含义修饰成员变量、方法代表类级别  可以直接通过类名.调用  语法 修饰符成员变量  多个对象共享一个变量   修饰方法  一般作为工具类,方便调用    注意点 static修饰的方法可以访问 static修饰的成员变量 static修饰的方法   static修饰的方法可以不可以访问 非stat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-07-27T01:45:42.000Z">
+<meta property="article:modified_time" content="2022-07-27T01:49:22.008Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/project/"><i class="fa fa-link"></i>项目链接</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">随笔记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>随笔记录</h2> <br />
+                        <span>一入编程深似海，从此萧郎为卷王</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">java04</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-07-27</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.04K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1658886562008"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#static"><span class="toc-number">2.</span> <span class="toc-text">static</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-number">2.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">2.4.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">2.5.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GC"><span class="toc-number">3.</span> <span class="toc-text">GC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-number">3.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-1"><span class="toc-number">3.3.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">3.4.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%AF%94%E8%BE%83"><span class="toc-number">4.</span> <span class="toc-text">对象比较</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">4.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-3"><span class="toc-number">5.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number">5.2.</span> <span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E6%97%A0%E5%8F%82%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text">默认的无参构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-4"><span class="toc-number">6.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-number">6.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">6.3.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C"><span class="toc-number">6.4.</span> <span class="toc-text">工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-number">6.5.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#package"><span class="toc-number">7.</span> <span class="toc-text">package</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-5"><span class="toc-number">7.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-number">7.2.</span> <span class="toc-text">用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-number">7.3.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83"><span class="toc-number">7.4.</span> <span class="toc-text">规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E7%BA%A7%E6%98%BE%E7%A4%BA"><span class="toc-number">7.5.</span> <span class="toc-text">层级显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%8C%85%E5%90%8D"><span class="toc-number">7.6.</span> <span class="toc-text">常见包名</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Import"><span class="toc-number">8.</span> <span class="toc-text">Import</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-6"><span class="toc-number">8.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95"><span class="toc-number">8.2.</span> <span class="toc-text">常见语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">9.</span> <span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-7"><span class="toc-number">9.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-number">9.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">9.3.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-2"><span class="toc-number">9.4.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A4%84"><span class="toc-number">9.5.</span> <span class="toc-text">好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-number">9.6.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">10.</span> <span class="toc-text">数据类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-number">10.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-number">11.</span> <span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-8"><span class="toc-number">11.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">11.2.</span> <span class="toc-text">如何实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB"><span class="toc-number">11.3.</span> <span class="toc-text">种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E5%B8%B8%E5%81%9A%E6%B3%95"><span class="toc-number">11.4.</span> <span class="toc-text">通常做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-number">11.5.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#super"><span class="toc-number">12.</span> <span class="toc-text">super</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-9"><span class="toc-number">12.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="toc-number">12.2.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-6"><span class="toc-number">12.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99"><span class="toc-number">13.</span> <span class="toc-text">方法重写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-10"><span class="toc-number">13.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-number">13.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-3"><span class="toc-number">13.3.</span> <span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-7"><span class="toc-number">13.4.</span> <span class="toc-text">案例</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>局部变量</li>
+<li>成员变量<ul>
+<li>实例变量【对象级别】</li>
+<li>类变量    【类级别】</li>
+</ul>
+</li>
+</ul>
+<h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h2 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h2><p>修饰成员变量、方法代表类级别</p>
+<blockquote>
+<p>可以直接通过类名.调用</p>
+</blockquote>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li><p>修饰符成员变量</p>
+<blockquote>
+<p>多个对象共享一个变量</p>
+</blockquote>
+</li>
+<li><p>修饰方法</p>
+<blockquote>
+<p>一般作为工具类,方便调用</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>static修饰的方法可以访问<ul>
+<li>static修饰的成员变量</li>
+<li>static修饰的方法</li>
+</ul>
+</li>
+<li>static修饰的方法可以不可以访问<ul>
+<li>非static修饰的成员变量</li>
+<li>非static修饰的方法</li>
+</ul>
+</li>
+<li>非static修饰的方法可以访问<ul>
+<li>static修饰的成员变量</li>
+<li>static修饰的方法</li>
+<li>非static修饰的成员变量</li>
+<li>非static修饰的方法</li>
+</ul>
+</li>
+<li>static方法里面不可以使用this关键字</li>
+</ul>
+<blockquote>
+<p>总结:静态只能访问静态的</p>
+</blockquote>
+<h2 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h2><p>static修饰成员变量</p>
+<p>_01staticDemo.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_01staticDemo</span> &#123;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">zs</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">10</span>,<span class="string">&quot;zs&quot;</span>);</span><br><span class="line">		<span class="type">User</span> <span class="variable">ls</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">20</span>,<span class="string">&quot;ls&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//static</span></span><br><span class="line">		   <span class="comment">//含义:类级别</span></span><br><span class="line">		   <span class="comment">//修饰</span></span><br><span class="line">		       <span class="comment">//成员变量</span></span><br><span class="line">		           <span class="comment">//含义:类级别的成员变量</span></span><br><span class="line">		           <span class="comment">//特点</span></span><br><span class="line">		              <span class="comment">//多个对象共享一份(只有一份)</span></span><br><span class="line">		              <span class="comment">//类点.调用 || 对象.调用(不建议)</span></span><br><span class="line">		       <span class="comment">//方法</span></span><br><span class="line">		   <span class="comment">//注意事项??</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		User.blood=<span class="string">&quot;red&quot;</span>;</span><br><span class="line">		System.out.println(User.blood);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		System.out.println(zs.blood);</span><br><span class="line">		System.out.println(ls.blood);</span><br><span class="line">		</span><br><span class="line">		zs.blood=<span class="string">&quot;blue&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		System.out.println(zs.blood);</span><br><span class="line">		System.out.println(ls.blood);</span><br><span class="line">		</span><br><span class="line">		System.out.println(User.blood);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">static</span> String blood;</span><br><span class="line">	   <span class="comment">//类级别 </span></span><br><span class="line">	   <span class="comment">//特点</span></span><br><span class="line">	       <span class="comment">//所有该类创建的对象共享一份【只有一份】</span></span><br><span class="line">	       <span class="comment">//类.即可</span></span><br><span class="line">	       </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">User</span><span class="params">(<span class="type">int</span> age,String name)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h2><p>static修饰方法</p>
+<p>CommonUtil.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 工具类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CommonUtil</span>&#123;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 冒泡排序</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">sort</span><span class="params">(<span class="type">int</span> [] data)</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;data.length;i++)&#123;</span><br><span class="line">			System.out.println(i);</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;data.length-i;j++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(data[j]&gt;data[j+<span class="number">1</span>])&#123;</span><br><span class="line">					 <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> data[j];</span><br><span class="line">					 data[j] = data[j+<span class="number">1</span>];</span><br><span class="line">					 data[j+<span class="number">1</span>] = temp;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>_02staticMethod.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_02staticMethod</span> &#123;</span><br><span class="line">	<span class="comment">//static</span></span><br><span class="line">	   <span class="comment">//修饰</span></span><br><span class="line">	       <span class="comment">//成员变量</span></span><br><span class="line">	       <span class="comment">//方法</span></span><br><span class="line">	           <span class="comment">//目的:一般作为工具类</span></span><br><span class="line">	           <span class="comment">//调用方式:类名.static修饰的方法   || 对象.static修饰的方法[不建议]</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		 </span><br><span class="line">		<span class="type">int</span> [] xx = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">5</span>&#125;;</span><br><span class="line">		 </span><br><span class="line">		CommonUtil.sort(xx);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//CommonUtil util = new CommonUtil();</span></span><br><span class="line">		<span class="comment">//util.sort(xx);</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(Arrays.toString(xx));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h2><p>Grabage Collection,是后台运行级别比较低的线程,定时释放堆内存。</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ul>
+<li>回收没有被引用、超过作用范围的对象</li>
+</ul>
+<h2 id="注意点-1"><a href="#注意点-1" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>当一个对象被回收的时候会先执行它的finalize方法</li>
+<li>调用System.gc()方法可以触发GC执行一次工作</li>
+</ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_03GC</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		 </span><br><span class="line">        <span class="comment">//没有被引用</span></span><br><span class="line">		<span class="comment">//Teacher teacher = new Teacher(&quot;ZS&quot;);</span></span><br><span class="line">		<span class="comment">//teacher=null;</span></span><br><span class="line">		<span class="comment">//System.gc();</span></span><br><span class="line">		</span><br><span class="line">        <span class="comment">//理解对象,使用完之后就变成孤立对象</span></span><br><span class="line">		<span class="comment">//new Teacher(&quot;ZS&quot;);</span></span><br><span class="line">		<span class="comment">//System.gc();</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">        <span class="comment">//超出对应的作用范围也会被回收</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">			<span class="type">Teacher</span> <span class="variable">teacher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;zs&quot;</span>+i);</span><br><span class="line">		&#125;</span><br><span class="line">	  </span><br><span class="line">        <span class="comment">//手动执行一次回收工作</span></span><br><span class="line">		System.gc();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>&#123; </span><br><span class="line">	 </span><br><span class="line">	String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">(String name)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">		 System.out.println(name+<span class="string">&quot;被回收了&quot;</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="对象比较"><a href="#对象比较" class="headerlink" title="对象比较"></a>对象比较</h1><ul>
+<li><p>&#x3D;&#x3D;</p>
+</li>
+<li><p>equals</p>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+</li>
+<li><p>instanceOf</p>
+</li>
+</ul>
+<h2 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_04ObjectComparate</span> &#123;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="type">Car</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>(<span class="number">110</span>);</span><br><span class="line">		<span class="type">Car</span> <span class="variable">two</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>(<span class="number">110</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(one == two);</span><br><span class="line">		 </span><br><span class="line">		<span class="comment">//instanceOf</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(one <span class="keyword">instanceof</span> Car);</span><br><span class="line">		System.out.println(two <span class="keyword">instanceof</span> Car);</span><br><span class="line">		</span><br><span class="line">		System.out.println(two <span class="keyword">instanceof</span> Object);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> num;</span><br><span class="line">	Car(<span class="type">int</span> num)&#123;</span><br><span class="line">		<span class="built_in">this</span>.num = num;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h1><h2 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h2><p>用来创建并返回对象的</p>
+<p>在创建对象的时候可以初始化对象的成员变量信息</p>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">范围修饰符 类名([数据类型 参数<span class="number">1</span>,...,数据类型 参数N])&#123;</span><br><span class="line">    [调用其他构造器]</span><br><span class="line">    初始化成员变量;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="默认的无参构造器"><a href="#默认的无参构造器" class="headerlink" title="默认的无参构造器"></a>默认的无参构造器</h1><h2 id="含义-4"><a href="#含义-4" class="headerlink" title="含义"></a>含义</h2><p>当一个类没有显示指定构造器的时候默认会有一个无参构造器</p>
+<h2 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">当前类的范围修饰符 类名()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>没有参数</li>
+<li>范围修饰符和类的一样【TODO】</li>
+<li>如果显示给了默认的则无效</li>
+</ul>
+<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><ul>
+<li>如果给了有参构造器后,一般都会显示的给个无参构造器</li>
+</ul>
+<h2 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_05DefaultConstructor</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Dog</span> <span class="variable">dog</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dog</span>(<span class="string">&quot;xx&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">Dog</span> &#123;</span><br><span class="line">	String name;</span><br><span class="line">	Dog(String name)&#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="package"><a href="#package" class="headerlink" title="package"></a>package</h1><h2 id="含义-5"><a href="#含义-5" class="headerlink" title="含义"></a>含义</h2><p>包,在磁盘中其实就是文件夹</p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><ul>
+<li>java源文件的归类【或者说划分类,将功能同类的类放到相同包下】</li>
+<li>避免java文件名冲突</li>
+</ul>
+<h2 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>在文件系统中其实就是文件夹</li>
+<li>在java源文件的第一行出现package 所在包名;</li>
+<li>在java源文件只能存在一个package 语句</li>
+</ul>
+<h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h2><ul>
+<li>公司域名倒写.项目名.模块名</li>
+<li>全部小写</li>
+<li>如果数字开头需要添加_</li>
+</ul>
+<h2 id="层级显示"><a href="#层级显示" class="headerlink" title="层级显示"></a>层级显示</h2><p>  <img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/02javase/Day04/%E7%AC%94%E8%AE%B0/assets/1626960159049.png" alt="1626960159049"></p>
+<h2 id="常见包名"><a href="#常见包名" class="headerlink" title="常见包名"></a>常见包名</h2><ul>
+<li><p>java.util</p>
+<blockquote>
+<p>JDK提供的工具类</p>
+</blockquote>
+</li>
+<li><p>java.awt</p>
+<blockquote>
+<p>GUI</p>
+</blockquote>
+</li>
+<li><p>java.lang  比如:String、Math、Exception</p>
+<blockquote>
+<p>不用去导入的,自动导入了</p>
+</blockquote>
+</li>
+<li><p>java.sql</p>
+<blockquote>
+<p>数据库相关的</p>
+</blockquote>
+</li>
+<li><p>java.net</p>
+<blockquote>
+<p>网络相关的</p>
+</blockquote>
+</li>
+<li><p>java.io</p>
+<blockquote>
+<p>IO相关的</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h1><h2 id="含义-6"><a href="#含义-6" class="headerlink" title="含义"></a>含义</h2><p>导入【用来引用在哪个包中的类】</p>
+<blockquote>
+<p>ctrl + shift + o   &#x2F;&#x2F;导入需要的，删除不需要的</p>
+</blockquote>
+<h2 id="常见语法"><a href="#常见语法" class="headerlink" title="常见语法"></a>常见语法</h2><ul>
+<li><p>import 包名.类名;</p>
+<blockquote>
+<p>引用指定包名下的类</p>
+</blockquote>
+</li>
+<li><p>import 包名.*;</p>
+<blockquote>
+<p>引用指定包下的所有类</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="含义-7"><a href="#含义-7" class="headerlink" title="含义"></a>含义</h2><ul>
+<li>子类拥有父类的属性、方法</li>
+<li>子类根据需求扩展<ul>
+<li>可以对继承下来的方法进行重写[TODO]</li>
+<li>增加其他字段和方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//子类(派生类) extends 父类&#123;</span></span><br><span class="line">    <span class="comment">//0-N个扩展属性</span></span><br><span class="line">    <span class="comment">//0-N个扩展方法</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>提取共性到父类,再使用继承</p>
+<h2 id="注意点-2"><a href="#注意点-2" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>java中的类属于单继承</li>
+</ul>
+<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><ul>
+<li>使编码更高效</li>
+<li>易维护</li>
+<li>方便扩展</li>
+<li>代码的重用、避免重复编写代码</li>
+<li>…..</li>
+</ul>
+<h2 id="案例-3"><a href="#案例-3" class="headerlink" title="案例"></a>案例</h2><p>Animal.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">	</span><br><span class="line">	String name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;吃东西&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Cat.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	String color;</span><br><span class="line">	 </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">catchFish</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;捕鱼&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dog.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><ul>
+<li><p>基本数据类型转换</p>
+<blockquote>
+<p>自行回顾</p>
+</blockquote>
+</li>
+<li><p>引用数据类型转换</p>
+<ul>
+<li><p>自动转换  [子赋值父]</p>
+</li>
+<li><p>强制转换 </p>
+<ul>
+<li><p>什么情况使用:父类型的对象 赋值 给子类型对象的时候</p>
+</li>
+<li><p>语法:(目标类型) 待强转对象</p>
+</li>
+<li><p>常见错误</p>
+<p>ClassCastException</p>
+<blockquote>
+<p>如何避免:使用instanceof先判断</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="案例-4"><a href="#案例-4" class="headerlink" title="案例"></a>案例</h2><p>Animal.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">	</span><br><span class="line">	String name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;吃东西&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Cat.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	String color;</span><br><span class="line">	 </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">catchFish</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;捕鱼&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dog.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.neu.day04._02extends;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Dog</span> <span class="variable">dog</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">		dog.name = <span class="string">&quot;土狗&quot;</span>;</span><br><span class="line">		dog.age = <span class="number">10</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Cat</span> <span class="variable">cat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">		cat.name=<span class="string">&quot;小猫&quot;</span>;</span><br><span class="line">		cat.age = <span class="number">20</span>;</span><br><span class="line">		cat.color=<span class="string">&quot;白色&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		dog.eat();</span><br><span class="line">		</span><br><span class="line">		 </span><br><span class="line">		<span class="comment">//dog 是   animal </span></span><br><span class="line">		<span class="type">Animal</span> <span class="variable">animal</span> <span class="operator">=</span> cat;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(animal <span class="keyword">instanceof</span> Dog)&#123;</span><br><span class="line">			 <span class="type">Dog</span> <span class="variable">otherDog</span> <span class="operator">=</span>  (Dog) animal;</span><br><span class="line">			 System.out.println(<span class="string">&quot;dog...&quot;</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(animal <span class="keyword">instanceof</span> Cat)&#123;</span><br><span class="line">			<span class="type">Cat</span> <span class="variable">otherCat</span> <span class="operator">=</span>(Cat) animal; <span class="comment">//ClassCastException</span></span><br><span class="line">			System.out.println(<span class="string">&quot;cat...&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><h2 id="含义-8"><a href="#含义-8" class="headerlink" title="含义"></a>含义</h2><ul>
+<li>隐藏字段、方法实现细节</li>
+<li>根据需求对外提供方法字段的方法<ul>
+<li>setter</li>
+<li>getter</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><p>范围修饰符做到的</p>
+<h2 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h2><p>各位同学自行编写代码去测试</p>
+<table>
+<thead>
+<tr>
+<th>种类</th>
+<th>当前类</th>
+<th>相同包</th>
+<th>子类不同包</th>
+<th>非子类不同包</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr>
+<td>默认</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>y</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+</tr>
+<tr>
+<td>public</td>
+<td>y</td>
+<td>y</td>
+<td>y</td>
+<td>y</td>
+</tr>
+</tbody></table>
+<h2 id="通常做法"><a href="#通常做法" class="headerlink" title="通常做法"></a>通常做法</h2><ul>
+<li><p>全部字段私有,根据情况对外提供setter和getter</p>
+<p><img src="C:/Users/lsy509/Desktop/%E5%AE%9E%E8%AE%AD%E4%B8%89/test/02javase/Day04/%E7%AC%94%E8%AE%B0/assets/1658741636352.png" alt="1658741636352"></p>
+</li>
+<li><p>如果方法只能在当前类中使用的,就把该方法设置私有【通俗点就是能满足要求情况下范围修饰符越小越好】</p>
+</li>
+</ul>
+<h2 id="案例-5"><a href="#案例-5" class="headerlink" title="案例"></a>案例</h2><p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">		</span><br><span class="line">		user.setAge(<span class="number">10</span>);</span><br><span class="line">		user.setName(<span class="string">&quot;xx&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		user.sayInfo();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>User.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//一般做法</span></span><br><span class="line">	   <span class="comment">//字段</span></span><br><span class="line">	      <span class="comment">//全部private</span></span><br><span class="line">	      <span class="comment">//对外提供setter || getter的方法 【eclipse生成】</span></span><br><span class="line">       <span class="comment">//方法</span></span><br><span class="line">          <span class="comment">//如果方法确定只在本类中使用,直接使用private即可【总结:作用范围越小越好】</span></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayInfo</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;我的年龄是&quot;</span>+age+<span class="string">&quot;名字是&quot;</span>+name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="super"><a href="#super" class="headerlink" title="super"></a>super</h1><h2 id="含义-9"><a href="#含义-9" class="headerlink" title="含义"></a>含义</h2><p>父对象</p>
+<h2 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
+<li><p>子类调用父类的构造器</p>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+</li>
+<li><p>子类调用父对象的方法</p>
+</li>
+<li><p>子类调用父对象的字段</p>
+</li>
+</ul>
+<h2 id="案例-6"><a href="#案例-6" class="headerlink" title="案例"></a>案例</h2><p>User.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">protected</span> String name=<span class="string">&quot;xx&quot;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">int</span> age;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">say</span><span class="params">()</span>&#123;</span><br><span class="line">    	System.out.println(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Work.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Worker</span> <span class="keyword">extends</span> <span class="title class_">User</span>&#123;</span><br><span class="line">	</span><br><span class="line">	String name=<span class="string">&quot;yy&quot;</span>;</span><br><span class="line">	 </span><br><span class="line">	<span class="comment">//supper</span></span><br><span class="line">	   <span class="comment">//含义:父对象</span></span><br><span class="line">	   <span class="comment">//使用场景</span></span><br><span class="line">	       <span class="comment">//调用父类的构造器[TODO]</span></span><br><span class="line">	</span><br><span class="line">	       <span class="comment">//调用父对象的字段</span></span><br><span class="line">	       <span class="comment">//调用父对象的方法</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">print</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="comment">//System.out.println(name);</span></span><br><span class="line">		System.out.println(<span class="built_in">super</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">	 </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">say</span><span class="params">()</span>&#123;</span><br><span class="line">	    System.out.println(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	 </span><br><span class="line">	 <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sayInfo</span><span class="params">()</span>&#123;</span><br><span class="line">		 <span class="comment">//say();</span></span><br><span class="line">		 <span class="built_in">super</span>.say();</span><br><span class="line">	 &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">Worker</span> <span class="variable">worker</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Worker</span>();</span><br><span class="line">		<span class="comment">//worker.print();</span></span><br><span class="line">		worker.sayInfo();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="方法重写"><a href="#方法重写" class="headerlink" title="方法重写"></a>方法重写</h1><h2 id="含义-10"><a href="#含义-10" class="headerlink" title="含义"></a>含义</h2><p>当父类的方法不满足子类要求的时候可以重写方法</p>
+<h2 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Overried</span></span><br><span class="line">修饰符 方法返回类型 方法名([参数<span class="number">1</span>,参数<span class="number">2</span>,参数<span class="number">3</span>…])&#123; <span class="comment">//[]:代表可有可无</span></span><br><span class="line">    <span class="comment">//新的实现过程…… </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以这样理解,复制父类需要重写的方法到子类中,然后在方法上面添加@Override关键字</p>
+</blockquote>
+<h2 id="注意点-3"><a href="#注意点-3" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li><p>返回的范围修饰符要大于等于父类方法的</p>
+</li>
+<li><p>不能抛出比父类更大的异常</p>
+<blockquote>
+<p>不理解没关系,后面学习异常之后会重写写案例的</p>
+</blockquote>
+</li>
+<li><p>static是不能重写</p>
+</li>
+</ul>
+<h2 id="案例-7"><a href="#案例-7" class="headerlink" title="案例"></a>案例</h2><p>Animal.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">protected</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;脚....&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Bird.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Bird</span> <span class="keyword">extends</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//重写父类的方法</span></span><br><span class="line">	   </span><br><span class="line">	<span class="comment">//语法</span></span><br><span class="line">	    <span class="comment">//@Override</span></span><br><span class="line">	    <span class="comment">//就是一个和父类一样的方法,只是方法体不一样</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//@Override 注解</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//注意点</span></span><br><span class="line">	   <span class="comment">//返回的范围修饰符要大于等于父类方法的</span></span><br><span class="line">	   <span class="comment">//不能抛出比父类更大的异常</span></span><br><span class="line">	   <span class="comment">//static是不能重写</span></span><br><span class="line">	   </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Bird</span> <span class="variable">bird</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bird</span>();</span><br><span class="line">		bird.name=<span class="string">&quot;小鸟&quot;</span>;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//bird.move();</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//代表该方法是重写父类的[强烈建议]</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;翅膀飞行&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-07-27</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 新闻头条案例" href="/2022/07/27/新闻头条案例/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/07/27/java04/',
+                path: '/2022/07/27/java04/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                86
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                27
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                19
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#static"><span class="toc-text">static</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GC"><span class="toc-text">GC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-1"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%AF%94%E8%BE%83"><span class="toc-text">对象比较</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-text">构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-3"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E6%97%A0%E5%8F%82%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-text">默认的无参构造器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-4"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C"><span class="toc-text">工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#package"><span class="toc-text">package</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-5"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-text">用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E8%8C%83"><span class="toc-text">规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E7%BA%A7%E6%98%BE%E7%A4%BA"><span class="toc-text">层级显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%8C%85%E5%90%8D"><span class="toc-text">常见包名</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Import"><span class="toc-text">Import</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-6"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95"><span class="toc-text">常见语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-text">继承</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-7"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-2"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A4%84"><span class="toc-text">好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">数据类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-8"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">如何实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB"><span class="toc-text">种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E5%B8%B8%E5%81%9A%E6%B3%95"><span class="toc-text">通常做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#super"><span class="toc-text">super</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-9"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-6"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99"><span class="toc-text">方法重写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-10"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9-3"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-7"><span class="toc-text">案例</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">15</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/MySQL/" style="font-size: 0.8em;">MySQL</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.68em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.72em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.68em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.76em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.68em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/java/" style="font-size: 0.72em;">java</a> <a href="/tags/javaweb/" style="font-size: 0.64em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/vue3/" style="font-size: 0.6em;">vue3</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/27/java04/"><i class="fa  fa-book"></i> java04</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/27/%E6%96%B0%E9%97%BB%E5%A4%B4%E6%9D%A1%E6%A1%88%E4%BE%8B/"><i class="fa  fa-book"></i> 新闻头条案例</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/26/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><i class="fa  fa-book"></i> java多线程</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/25/%E5%A4%A9%E8%A1%8C%E6%95%B0%E6%8D%AEAPI%E8%B0%83%E7%94%A8/"><i class="fa  fa-book"></i> 天行数据API调用</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/25/Vuex%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Vuex使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 随笔记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
