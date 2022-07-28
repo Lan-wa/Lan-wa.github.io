@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>SQL分类 | 随笔记录</title>
+  <title>字符串-Date-UUID-BigDecimal | 随笔记录</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="MySQL" />
+    <meta name="keywords" content="" />
   
-  <meta name="description" content="一、SQL分类　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。 　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括inse">
+  <meta name="description" content="-  蓝顺远">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL分类">
-<meta property="og:url" content="https://lan-wa.github.io/2022/07/14/SQL%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:title" content="字符串-Date-UUID-BigDecimal">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/28/%E5%AD%97%E7%AC%A6%E4%B8%B2-Date-UUID-BigDecimal/index.html">
 <meta property="og:site_name" content="随笔记录">
-<meta property="og:description" content="一、SQL分类　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。 　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括inse">
+<meta property="og:description" content="-  蓝顺远">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-07-14T01:33:59.000Z">
-<meta property="article:modified_time" content="2022-07-14T07:04:48.174Z">
+<meta property="article:published_time" content="2022-07-28T11:17:39.000Z">
+<meta property="article:modified_time" content="2022-07-28T11:17:39.267Z">
 <meta property="article:author" content="我爱小小蝶">
-<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -154,17 +153,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">SQL分类</h1>
+                <h1 class="kratos-entry-title text-center">字符串-Date-UUID-BigDecimal</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-07-14</li>
+                <li><i class="fa fa-calendar"></i> 2022-07-28</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~2.72K
+                        0
                     
                     字
                 </li>
@@ -174,200 +173,11 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1657782288174"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1659007059267"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
-                <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81SQL%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">一、SQL分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DDL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 DDL语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DQL%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 DQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 列别名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-2-%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E8%A1%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2  消除重复行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-3-%E6%AF%94%E8%BE%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 比较操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-4-%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 特殊比较运算符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-5-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.2.5.</span> <span class="toc-text">1.2.5 运算符的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-6-ORDER-BY%E5%AD%90%E5%8F%A5"><span class="toc-number">1.2.6.</span> <span class="toc-text">1.2.6 ORDER BY子句</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-DML"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 DML</span></a></li></ol></li></ol>
-                </div>
-            
             <hr />
-            <h3 id="一、SQL分类"><a href="#一、SQL分类" class="headerlink" title="一、SQL分类"></a>一、SQL分类</h3><p>　　DDL(Data Definition Languages)语句：数据定义语言，这些语句定义了不同的数据段、数据库、表、列、索引等数据库对象。常用的语句关键字主要包括create、drop、alter等。</p>
-<p>　　DML(Data Manipulation Languages)语句：数据操纵语句，用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用的语句关键字主要包括insert、delete、update和select等。</p>
-<p>　    DCL（Data Control Language）语句：数据控制语句，用于控制不同数据段直接的许可和访问级别的语句，这些语句定义了数据库、表、字段、用户的访问权限和安全级别，主要的语句关键字包括grant、revoke等。</p>
-<p>​        DQL：数据查询语言。select……</p>
-<h4 id="1-1-DDL语句"><a href="#1-1-DDL语句" class="headerlink" title="1.1 DDL语句"></a>1.1 DDL语句</h4><p>　　DDL是数据定于语言的缩写，简单来说，就是对数据库内部的对象进行创建、删除、修改等操作的语言。它和DML语言的最大区别是DML只是对表内部数据操作，而不涉及表的定义，结构的修改，更不会涉及其他对象。DDL语句更多的由数据库管理员（DBA）使用，开发人员一般很少使用。</p>
-<h4 id="1-2-DQL语句"><a href="#1-2-DQL语句" class="headerlink" title="1.2 DQL语句"></a>1.2 DQL语句</h4><p>语法：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  [<span class="keyword">DISTINCT</span>]&#123;<span class="operator">*</span><span class="operator">|</span> <span class="keyword">column</span><span class="operator">|</span> expression [alias],...&#125;</span><br><span class="line"><span class="keyword">FROM</span>    <span class="keyword">table</span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="1-2-1-列别名"><a href="#1-2-1-列别名" class="headerlink" title="1.2.1 列别名"></a>1.2.1 列别名</h5><ul>
-<li><p>列别名 用来重新命名列的显示标题 如果SELECT语句中包含计算列，通常使用列别名来重新定义列标题。</p>
-</li>
-<li><p>使用列别名的方法</p>
-</li>
-<li><p>方式1：列名 列别名</p>
-</li>
-</ul>
-<p>方式2：列名 AS 列别名</p>
-<ul>
-<li>以下三种情况列别名两侧需要添加双引号<br>列别名中包含有空格<br>列别名中要求区分大小写(ORACLE中)<br>列别名中包含有特殊字符</li>
-<li>列别名使用</li>
-</ul>
-<p>例如：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename <span class="keyword">AS</span> name, sal salary</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>查询员工年薪，并给新的列起别名yearSal（不会改变原来的表数据）</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ename, <span class="number">12</span><span class="operator">*</span>sal<span class="operator">+</span>comm <span class="keyword">as</span> <span class="string">&#x27;yearSal&#x27;</span> <span class="keyword">from</span> emp;</span><br></pre></td></tr></table></figure>
-
-<p><strong>(as 可以省略)</strong></p>
-<h5 id="1-2-2-消除重复行"><a href="#1-2-2-消除重复行" class="headerlink" title="1.2.2  消除重复行"></a>1.2.2  消除重复行</h5><ul>
-<li>重复行 以下查询的结果默认输出所有行，其中包含了重复行</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>消除重复行 在SELECT字句中使用关键字DISTINCT可消除重复行。</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp;</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="1-2-3-比较操作符"><a href="#1-2-3-比较操作符" class="headerlink" title="1.2.3 比较操作符"></a>1.2.3 比较操作符</h5><p>​    （不等于符号是 ‘&lt;&gt;’）</p>
-<ul>
-<li><strong>比较字符型数据</strong></li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, job, deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp</span><br><span class="line"><span class="keyword">WHERE</span>  job<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>字符型数据作为被比较的值时，必须用单引号引起来</p>
-</li>
-<li><p>字符型数值区分大小写(MySQL不区分，Oracle区分)</p>
-</li>
-<li><p><strong>比较日期型数据</strong></p>
-</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, hiredate, deptno</span><br><span class="line"><span class="keyword">FROM</span>   emp</span><br><span class="line"><span class="keyword">WHERE</span>  hiredate <span class="operator">&gt;</span> <span class="string">&#x27;1985-01-01&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>日期型数值作为被比较的值时，必须用单引号引起来。</li>
-</ul>
-<h5 id="1-2-4-特殊比较运算符"><a href="#1-2-4-特殊比较运算符" class="headerlink" title="1.2.4 特殊比较运算符"></a>1.2.4 特殊比较运算符</h5><table>
-<thead>
-<tr>
-<th align="center">运算符</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">BETWEEN…AND…</td>
-<td>判断要比较的值是否在某个范围内。</td>
-</tr>
-<tr>
-<td align="center">IN（ 集合列表）</td>
-<td>判断要比较的值是否和集合列表中的任何一个值相等。</td>
-</tr>
-<tr>
-<td align="center">LIKE</td>
-<td>判断要比较的值是否满足部分匹配</td>
-</tr>
-<tr>
-<td align="center">IS NUL</td>
-<td>判断要比较的值是否为空值NULL</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>BETWEEN..AND..</p>
-</li>
-<li><p>使用BETWEEN .. AND.. 运算符来判断要比较的值是否在某个范围内。</p>
-</li>
-</ul>
-<p>查询薪水在1000-1500<strong>（包含1000、1500）</strong>范围内的员工的姓名跟薪水</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename, sal</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    sal <span class="keyword">BETWEEN</span> <span class="number">1000</span> <span class="keyword">AND</span> <span class="number">1500</span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li><p>IN运算符</p>
-</li>
-<li><p>使用IN运算符判断要比较的值是否和集合列表中的任何一个值相等。</p>
-</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    empno, ename, sal, mgr</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    mgr <span class="keyword">IN</span> (<span class="number">7902</span>, <span class="number">7566</span>, <span class="number">7788</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li><p>LIKE运算符</p>
-</li>
-<li><p>使用LIKE运算符判断要比较的值是否满足部分匹配，也叫<strong>模糊查询</strong>。模糊查询中两个通配符：</p>
-</li>
-<li><p>% 代表零或任意更多的字符</p>
-<p>_ 代表一个字符</p>
-</li>
-</ul>
-<p>查询S开头的名字：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    ename <span class="keyword">LIKE</span> <span class="string">&#x27;S%&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>MySQL中ESCAPE关键字</strong>:</p>
-<div style="color:red">ESCAPE 关键字的主要作用就是指定一个字符替代转义字符“\”的作用。</div>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>    ename,job</span><br><span class="line"><span class="keyword">FROM</span>     emp</span><br><span class="line"><span class="keyword">WHERE</span>    job <span class="keyword">LIKE</span> <span class="string">&#x27;MAN@_%&#x27;</span> <span class="keyword">ESCAPE</span> <span class="string">&#x27;@&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>转义</strong>即表示转义字符原来的语义，一个转义字符的目的是开始一个字符序列，使得转义字符开头的该字符序列具有不同于该字符序列单独出现时的语义。</p>
-<h5 id="1-2-5-运算符的优先级"><a href="#1-2-5-运算符的优先级" class="headerlink" title="1.2.5 运算符的优先级"></a>1.2.5 运算符的优先级</h5><ul>
-<li>括号’()’优先于其他操作符。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>优先级</th>
-<th>运算分类</th>
-<th>运算符举例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>算术运算符</td>
-<td>*, , +, -</td>
-</tr>
-<tr>
-<td>2</td>
-<td>比较运算符</td>
-<td>&#x3D;, &lt;&gt;, &lt;, &gt;, &lt;&#x3D;, &gt;&#x3D;</td>
-</tr>
-<tr>
-<td>3</td>
-<td>特殊比较运算符</td>
-<td>BETWEEN..AND.. ,IN,LIKE,IS NULL</td>
-</tr>
-<tr>
-<td>4</td>
-<td>逻辑非</td>
-<td>NOT</td>
-</tr>
-<tr>
-<td>5</td>
-<td>逻辑与</td>
-<td>AND</td>
-</tr>
-<tr>
-<td>6</td>
-<td>逻辑或</td>
-<td>OR</td>
-</tr>
-</tbody></table>
-<h5 id="1-2-6-ORDER-BY子句"><a href="#1-2-6-ORDER-BY子句" class="headerlink" title="1.2.6 ORDER BY子句"></a>1.2.6 ORDER BY子句</h5><ul>
-<li>使用ORDER BY子句能对查询结果集进行排序,语法结构如下：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  [<span class="keyword">DISTINCT</span>] &#123; <span class="operator">*</span><span class="operator">|</span> 列名 <span class="operator">|</span> 表达式 [别名][,...] &#125;</span><br><span class="line"><span class="keyword">FROM</span>    表名</span><br><span class="line">[<span class="keyword">WHERE</span>  条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span>  &#123;列名<span class="operator">|</span> 表达式<span class="operator">|</span> 列别名<span class="operator">|</span> 列序号&#125; [<span class="keyword">ASC</span><span class="operator">|</span> <span class="keyword">DESC</span>],…];</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>其中：</p>
-</li>
-<li><ul>
-<li>可以按照列名、表达式、列别名、结果集的列序号排序</li>
-<li>ASC: 升序(默认值), DESC: 降序</li>
-<li>ORDER BY 子句必须写在SELECT语句的最后</li>
-</ul>
-</li>
-</ul>
-<h4 id="1-3-DML"><a href="#1-3-DML" class="headerlink" title="1.3 DML"></a>1.3 DML</h4><p>一些基础操作在<a href="https://lan-wa.github.io/2022/07/13/Mysql%E7%BB%83%E4%B9%A0/">Mysql练习-01</a></p>
-
+            
         </div>
         
         <footer class="kratos-entry-footer clearfix">
@@ -375,10 +185,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/MySQL/" rel="tag">MySQL</a>
+                    
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-07-14</span>
+                <span>最后编辑：2022-07-28</span>
                 </div>
             </div>
         </footer>
@@ -387,13 +197,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" Data、Vue方法、计算属性及监听器" href="/2022/07/13/Data-Property-和方法/">&lt; 上一篇</a>
+                <a title=" springboot全局异常处理" href="/2022/07/27/springboot全局异常处理/">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" day-01" href="/2022/07/14/day-01/">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
@@ -405,8 +211,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/07/14/SQL%E5%88%86%E7%B1%BB/',
-                path: '/2022/07/14/SQL%E5%88%86%E7%B1%BB/'
+                id: '/2022/07/28/%E5%AD%97%E7%AC%A6%E4%B8%B2-Date-UUID-BigDecimal/',
+                path: '/2022/07/28/%E5%AD%97%E7%AC%A6%E4%B8%B2-Date-UUID-BigDecimal/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -475,18 +281,6 @@
 </aside>
             
                     <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81SQL%E5%88%86%E7%B1%BB"><span class="toc-text">一、SQL分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-DDL%E8%AF%AD%E5%8F%A5"><span class="toc-text">1.1 DDL语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-DQL%E8%AF%AD%E5%8F%A5"><span class="toc-text">1.2 DQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-1-%E5%88%97%E5%88%AB%E5%90%8D"><span class="toc-text">1.2.1 列别名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-2-%E6%B6%88%E9%99%A4%E9%87%8D%E5%A4%8D%E8%A1%8C"><span class="toc-text">1.2.2  消除重复行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-3-%E6%AF%94%E8%BE%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-text">1.2.3 比较操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-4-%E7%89%B9%E6%AE%8A%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">1.2.4 特殊比较运算符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-5-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">1.2.5 运算符的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2-6-ORDER-BY%E5%AD%90%E5%8F%A5"><span class="toc-text">1.2.6 ORDER BY子句</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-DML"><span class="toc-text">1.3 DML</span></a></li></ol></li></ol>
-    </div>
-</aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
