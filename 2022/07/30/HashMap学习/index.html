@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>HashMap学习 | 随笔记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java" />
+  
+  <meta name="description" content="HashMap 示意代码MyHashMap.java  模拟实现源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061public class MyHashMap&lt;K,V&gt; &amp;#123;		private fi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap学习">
+<meta property="og:url" content="https://lan-wa.github.io/2022/07/30/HashMap%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="随笔记录">
+<meta property="og:description" content="HashMap 示意代码MyHashMap.java  模拟实现源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061public class MyHashMap&lt;K,V&gt; &amp;#123;		private fi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-07-30T06:43:20.000Z">
+<meta property="article:modified_time" content="2022-07-30T07:06:34.280Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/project/"><i class="fa fa-link"></i>项目链接</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">随笔记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>随笔记录</h2> <br />
+                        <span>一入编程深似海，从此萧郎为卷王</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">HashMap学习</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-07-30</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.24K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1659164794280"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap-%E7%A4%BA%E6%84%8F%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">HashMap 示意代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">1.0.1.</span> <span class="toc-text">过程：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">HashMap底层实现原理及面试问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap"><span class="toc-number">3.</span> <span class="toc-text">HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E5%B1%82"><span class="toc-number">3.2.</span> <span class="toc-text">底层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">3.3.</span> <span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">3.4.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-number">3.6.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-number">3.7.</span> <span class="toc-text">案例二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89"><span class="toc-number">3.8.</span> <span class="toc-text">案例三</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LinkedHashMap"><span class="toc-number">4.</span> <span class="toc-text">LinkedHashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-number">4.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-1"><span class="toc-number">4.2.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">4.3.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hashtable"><span class="toc-number">5.</span> <span class="toc-text">Hashtable</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-number">5.1.</span> <span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-2"><span class="toc-number">5.2.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8CHashMap%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.3.</span> <span class="toc-text">和HashMap的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">5.4.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">面试题：</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="HashMap-示意代码"><a href="#HashMap-示意代码" class="headerlink" title="HashMap 示意代码"></a>HashMap 示意代码</h1><p>MyHashMap.java  模拟实现源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyHashMap</span>&lt;K,V&gt; &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> INIT_CAPACITY=<span class="number">1000</span>;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Node&lt;K,V&gt; [] container = <span class="keyword">new</span> <span class="title class_">Node</span>[INIT_CAPACITY];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">MyHashMap</span><span class="params">()</span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(K key,V value)</span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//以key的hascode作为下标 </span></span><br><span class="line">		<span class="type">int</span> <span class="variable">code</span> <span class="operator">=</span> key.hashCode()&gt;&gt;<span class="number">2</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//根据hashcode从数组中查询</span></span><br><span class="line">		Node&lt;K,V&gt; oldNode = container[code];</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//没有构建一个节点并且放入到数组中</span></span><br><span class="line">		<span class="keyword">if</span>(oldNode == <span class="literal">null</span>)&#123;</span><br><span class="line">			Node&lt;K,V&gt; node = <span class="keyword">new</span> <span class="title class_">Node</span>&lt;K,V&gt;();</span><br><span class="line">			node.hashCode = code;</span><br><span class="line">			node.key=key;</span><br><span class="line">			node.value = value;</span><br><span class="line">			container[code] = node;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">//hash冲突？？</span></span><br><span class="line">			</span><br><span class="line">			<span class="type">K</span> <span class="variable">oldKey</span> <span class="operator">=</span> oldNode.key;</span><br><span class="line">			<span class="keyword">if</span>(oldKey.equals(key))&#123;</span><br><span class="line">				<span class="comment">//替换</span></span><br><span class="line">				oldNode.value=value;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				</span><br><span class="line">				Node&lt;K,V&gt; node = <span class="keyword">new</span> <span class="title class_">Node</span>&lt;K,V&gt;();</span><br><span class="line">				node.hashCode = code;</span><br><span class="line">				node.key=key;</span><br><span class="line">				node.value = value;</span><br><span class="line">				</span><br><span class="line">				oldNode.next=node;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> Object <span class="title function_">get</span><span class="params">(K key)</span>&#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">code</span> <span class="operator">=</span> (key.hashCode()&gt;&gt;<span class="number">2</span>);</span><br><span class="line">		<span class="keyword">return</span> container[code].value;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>&lt;K,V&gt;&#123;</span><br><span class="line">	 <span class="type">int</span> hashCode;</span><br><span class="line">	 K key;</span><br><span class="line">	 V value;</span><br><span class="line">	 </span><br><span class="line">	 Node&lt;K,V&gt; next;	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.neu.day08._06map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//HashMap</span></span><br><span class="line">	   <span class="comment">//底层:数组 + 单向链表</span></span><br><span class="line">	   <span class="comment">//特点</span></span><br><span class="line">	       <span class="comment">//查找速度快</span></span><br><span class="line">	</span><br><span class="line">   <span class="comment">//1000</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//[null,&#123;one,xx,next=&#123;two,yy&#125;&#125;,null,,,,,,,,,,,,,,]</span></span><br><span class="line">		         </span><br><span class="line">		MyHashMap&lt;User, String&gt; data = <span class="keyword">new</span> <span class="title class_">MyHashMap</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">100</span>);</span><br><span class="line">		 </span><br><span class="line">		data.put(one, <span class="string">&quot;xx&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="type">User</span> <span class="variable">two</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">100</span>);</span><br><span class="line">		</span><br><span class="line">		data.put(two, <span class="string">&quot;yy&quot;</span>);</span><br><span class="line">		 </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>&#123;</span><br><span class="line">	<span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">User</span><span class="params">(<span class="type">int</span> num)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.num = num;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">final</span> <span class="type">int</span> <span class="variable">prime</span> <span class="operator">=</span> <span class="number">31</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">		result = prime * result + num;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="过程："><a href="#过程：" class="headerlink" title="过程："></a>过程：</h3><ol>
+<li>计算key的哈希code值，就能确定存放在数组中的位置。</li>
+<li>然后判断这个位置是否有数据。</li>
+<li>有两种情况：其一是没有数据，直接放入[value, key, ,hash]; 其二：有，将当前的key和原来位置的key调用equal方法比较，为true就使用newValue替换，为false就作为原来位置数据的next节点。</li>
+</ol>
+<h1 id="HashMap底层实现原理及面试问题"><a href="#HashMap底层实现原理及面试问题" class="headerlink" title="HashMap底层实现原理及面试问题"></a>HashMap底层实现原理及面试问题</h1><p>①HashMap的工作原理</p>
+<p>​        HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。当我们将键值对传递给put()方法时，<div style="color:red">它调用键对象的hashCode()方法来计算hashcode，然后找到bucket位置来储存值对象</div>。当获取对象时，通过键对象的 equals() 方法找到正确的键值对，然后返回值对象。</p>
+<p>​                HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会储存在链表的下一个节点中。 HashMap在每个链表节点中储存键值对对象。</p>
+<p>​        <strong>当两个不同的键对象的hashcode相同时会发生什么？ 它们会储存在同一个bucket位置的链表</strong></p>
+<h1 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h1><p>​    HashMap实现了Map接口，Map接口对键值对进行映射。Map中不允许重复的键。Map接口有两个基本的实现，HashMap和TreeMap。</p>
+<h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><p>key-value形式</p>
+<h2 id="底层"><a href="#底层" class="headerlink" title="底层"></a>底层</h2><p>数组+链表</p>
+<h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p><img src="/../images/java/a7.png"></p>
+<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><ul>
+<li>Map<ul>
+<li>HashMap</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ul>
+<li>size</li>
+<li>put</li>
+<li>putAll</li>
+<li>get</li>
+<li>size</li>
+<li>isEmpty</li>
+<li>clear</li>
+<li>containsKey</li>
+<li>containsValue</li>
+<li>remove</li>
+<li>等等</li>
+</ul>
+<h2 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_01HashMapDemo</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	<span class="comment">//含义:key-value形式？？</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//体系结构</span></span><br><span class="line">	    <span class="comment">//Map</span></span><br><span class="line">	       <span class="comment">//HashMap</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//常用方法</span></span><br><span class="line">	    <span class="comment">//size</span></span><br><span class="line">	    <span class="comment">//put</span></span><br><span class="line">	    <span class="comment">//get</span></span><br><span class="line">	    <span class="comment">//isEmpty</span></span><br><span class="line">	    <span class="comment">//.... </span></span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		HashMap&lt;String,String&gt; data = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		data.put(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zs&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;age&quot;</span>,<span class="string">&quot;10&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;address&quot;</span>,<span class="string">&quot;guangzhou&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data.get(<span class="string">&quot;name&quot;</span>)); <span class="comment">//zs</span></span><br><span class="line">		</span><br><span class="line">		data.remove(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">		System.out.println(data);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data.containsKey(<span class="string">&quot;name&quot;</span>));<span class="comment">//true</span></span><br><span class="line">		System.out.println(data.containsValue(<span class="string">&quot;zs&quot;</span>));<span class="comment">//true</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//data.clear();</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(data);</span><br><span class="line">		</span><br><span class="line">		Map&lt;String,String&gt; temp = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		temp.put(<span class="string">&quot;color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">		temp.put(<span class="string">&quot;size&quot;</span>, <span class="string">&quot;xl&quot;</span>);</span><br><span class="line">		data.putAll(temp);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data.size());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//遍历</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_02HashMapDemo</span> &#123;</span><br><span class="line">	  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		HashMap&lt;String,String&gt; data = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		data.put(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;zs&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;age&quot;</span>,<span class="string">&quot;10&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;address&quot;</span>,<span class="string">&quot;guangzhou&quot;</span>);</span><br><span class="line">		 </span><br><span class="line">		<span class="comment">//遍历</span></span><br><span class="line">		 </span><br><span class="line">		System.out.println(<span class="string">&quot;方式一................&quot;</span>);</span><br><span class="line">		Set&lt;String&gt; keys = data.keySet();</span><br><span class="line">		<span class="keyword">for</span>(String key : keys)&#123;</span><br><span class="line">			System.out.println(key+<span class="string">&quot;=&quot;</span>+data.get(key));</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;方式二................&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		Collection&lt;String&gt; values = data.values();</span><br><span class="line">		<span class="keyword">for</span>(String value : values)&#123;</span><br><span class="line">			System.out.println(value);</span><br><span class="line">		&#125;</span><br><span class="line">		 </span><br><span class="line">		System.out.println(<span class="string">&quot;方式三................&quot;</span>);</span><br><span class="line">		Set&lt;Entry&lt;String, String&gt;&gt; entrySet = data.entrySet();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Entry&lt;String, String&gt; entry : entrySet)&#123;</span><br><span class="line">			System.out.println(entry.getKey()+<span class="string">&quot;=&quot;</span>+entry.getValue());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例三"><a href="#案例三" class="headerlink" title="案例三"></a>案例三</h2><p>验证HashMap是否有序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_03HashMapDemo</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		Map&lt;String,String&gt; data = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		data.put(<span class="string">&quot;33&quot;</span>,<span class="string">&quot;33&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;hhhhhh&quot;</span>,<span class="string">&quot;33&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;aa&quot;</span>,<span class="string">&quot;aaaa&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;xx&quot;</span>,<span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;yy&quot;</span>,<span class="string">&quot;yyyy&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;yy&quot;</span>,<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;11&quot;</span>,<span class="string">&quot;11&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;22&quot;</span>,<span class="string">&quot;22&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h1><h2 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h2><p>有序的hashMap</p>
+<h2 id="体系结构-1"><a href="#体系结构-1" class="headerlink" title="体系结构"></a>体系结构</h2><ul>
+<li>Map<ul>
+<li>HashMap<ul>
+<li>LinkedHashMap</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_04LinkedHashMap</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//LinkedHashMap</span></span><br><span class="line">	   <span class="comment">//含义:有序的hashMap</span></span><br><span class="line">	   <span class="comment">//体系结构</span></span><br><span class="line">	       <span class="comment">//Map</span></span><br><span class="line">	          <span class="comment">//HashMap</span></span><br><span class="line">	             <span class="comment">//LinkedHashMap</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		Map&lt;String,String&gt; data = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		data.put(<span class="string">&quot;33&quot;</span>,<span class="string">&quot;33&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;hhhhhh&quot;</span>,<span class="string">&quot;33&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;aa&quot;</span>,<span class="string">&quot;aaaa&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;xx&quot;</span>,<span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;yy&quot;</span>,<span class="string">&quot;yyyy&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;yy&quot;</span>,<span class="string">&quot;1000&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;11&quot;</span>,<span class="string">&quot;11&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;22&quot;</span>,<span class="string">&quot;22&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(data);	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h1><h2 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h2><p>重量级HashMap,用法和HashMap类似</p>
+<h2 id="体系结构-2"><a href="#体系结构-2" class="headerlink" title="体系结构"></a>体系结构</h2><ul>
+<li>Map<ul>
+<li>Hashtable</li>
+</ul>
+</li>
+</ul>
+<h2 id="和HashMap的区别"><a href="#和HashMap的区别" class="headerlink" title="和HashMap的区别"></a>和HashMap的区别</h2><ul>
+<li>Hashtable的方法几乎都有synchronized【线程安全】</li>
+<li>HashMap的key和value都是可以为null,Hashtable的key和value都不可以为空</li>
+</ul>
+<h2 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_05HashtableDemo</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//含义:</span></span><br><span class="line">	    <span class="comment">//和HashMap类似</span></span><br><span class="line">	<span class="comment">//体系</span></span><br><span class="line">	    <span class="comment">//Map</span></span><br><span class="line">	       <span class="comment">//Hashtable</span></span><br><span class="line">	<span class="comment">//区别</span></span><br><span class="line">	    <span class="comment">//Hashtable的方法几乎都有synchronized【线程安全】</span></span><br><span class="line">	    <span class="comment">//HashMap的key和value都是可以为null,Hashtable的key和value都不可以为空</span></span><br><span class="line">	 </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		Hashtable&lt;String,String&gt; data = <span class="keyword">new</span> <span class="title class_">Hashtable</span>&lt;&gt;();</span><br><span class="line">		</span><br><span class="line">		data.put(<span class="string">&quot;xx&quot;</span>, <span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;yy&quot;</span>, <span class="string">&quot;yyyy&quot;</span>);</span><br><span class="line">		data.put(<span class="string">&quot;zz&quot;</span>, <span class="string">&quot;zzzz&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//data.put(null,null);</span></span><br><span class="line">		System.out.println(data);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		HashMap&lt;String,String&gt; xx = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		xx.put(<span class="literal">null</span>,<span class="literal">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="面试题："><a href="#面试题：" class="headerlink" title="面试题："></a>面试题：</h1><div style="color:red">“你知道HashMap的工作原理吗？” “你知道HashMap的get()方法的工作原理吗？”</div>
+
+
+
+<p>​        但一些面试者可能可以给出答案，“HashMap是基于hashing的原理，我们使用put(key,  value)存储对象到HashMap中，使用get(key)从HashMap中获取对象。</p>
+<p>​        当我们给put()方法传递键和值时，我们先对键调用hashCode()方法，返回的hashCode用于找到bucket位置来储存Entry对象。”这里关键点在于指出，HashMap是在bucket中储存键对象和值对象，作为Map.Entry。</p>
+<p>​        这一点有助于理解获取对象的逻辑。如果你没有意识到这一点，或者错误的认为仅仅只在bucket中存储值的话，你将不会回答如何从HashMap中获取对象的逻辑。这个答案相当的正确，也显示出面试者确实知道hashing以及HashMap的工作原理。</p>
+<div style="color:red">下个问题可能是关于HashMap中的碰撞探测(collision detection)以及碰撞的解决方法：</div>
+
+<p><strong>“当两个对象的hashcode相同会发生什么？”</strong></p>
+<p>答：他们有equals()和hashCode()两个方法，并且两个对象就算hashcode相同，但是它们可能并不相等。因为hashcode相同，所以它们的bucket位置相同，‘碰撞’会发生。因为HashMap使用链表存储对象，这个Entry(包含有键值对的Map.Entry对象)会存储在链表中。</p>
+<p>”这个答案非常的合理，虽然有很多种处理碰撞的方法，这种方法是最简单的，也正是HashMap的处理方法。但故事还没有完结，面试官会继续问：</p>
+<p><strong>“如果两个键的hashcode相同，你如何获取值对象？”</strong> </p>
+<p>​        面试者会回答：当我们调用get()方法，HashMap会使用键对象的hashcode找到bucket位置，然后获取值对象。面试官提醒他如果有两个值对象储存在同一个bucket，他给出答案:将会遍历链表直到找到值对象。面试官会问因为你并没有值对象去比较，你是如何确定确定找到值对象的？除非面试者直到HashMap在链表中存储的是键值对，否则他们不可能回答出这一题。</p>
+<p>其中一些记得这个重要知识点的面试者会说，<strong>找到bucket位置之后，会调用keys.equals()方法去找到链表中正确的节点，最终找到要找的值对象。</strong>完美的答案！</p>
+<p>许多情况下，面试者会在这个环节中出错，因为他们混淆了hashCode()和equals()方法。因为在此之前hashCode()屡屡出现，而equals()方法仅仅在获取值对象的时候才出现。</p>
+<p>​        一些优秀的开发者会指出使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的hashcode，这将提高整个获取对象的速度，使用String，Interger这样的wrapper类作为键是非常好的选择。</p>
+<p>​        如果你认为到这里已经完结了，那么听到下面这个问题的时候，你会大吃一惊。</p>
+<p><strong>“如果HashMap的大小超过了负载因子(load  factor)定义的容量，怎么办？”</strong></p>
+<p>除非你真正知道HashMap的工作原理，否则你将回答不出这道题。默认的负载因子大小为0.75，也就是说，当一个map填满了75%的bucket时候，和其它集合类(如ArrayList等)一样，将会创建原来HashMap大小的两倍的bucket数组，来重新调整map的大小，并将原来的对象放入新的bucket数组中。这个过程叫作rehashing，因为它调用hash方法找到新的bucket位置。</p>
+<p>如果你能够回答这道问题，下面的问题来了：</p>
+<p><strong>“你了解重新调整HashMap大小存在什么问题吗？”</strong></p>
+<p>你可能回答不上来，这时面试官会提醒你当多线程的情况下，可能产生条件竞争(race condition)。</p>
+<p>当重新调整HashMap大小的时候，确实存在条件竞争，因为如果两个线程都发现HashMap需要重新调整大小了，它们会同时试着调整大小。在调整大小的过程中，存储在链表中的元素的次序会反过来，因为移动到新的bucket位置的时候，HashMap并不会将元素放在链表的尾部，而是放在头部，这是为了避免尾部遍历(tail   traversing)。</p>
+<p>如果条件竞争发生了，那么就死循环了。这个时候，你可以质问面试官，为什么这么奇怪，要在多线程的环境下使用HashMap呢？）</p>
+<p>HashMap底层实现原理及面试问题： <a target="_blank" rel="noopener" href="https://blog.csdn.net/suifeng629/article/details/82179996?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-82179996-blog-89480637.pc_relevant_multi_platform_whitelistv3&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-82179996-blog-89480637.pc_relevant_multi_platform_whitelistv3&amp;utm_relevant_index=1">https://blog.csdn.net/suifeng629/article/details/82179996?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-82179996-blog-89480637.pc_relevant_multi_platform_whitelistv3&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-82179996-blog-89480637.pc_relevant_multi_platform_whitelistv3&amp;utm_relevant_index=1</a></p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-07-30</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 字符串-Date-UUID-BigDecimal" href="/2022/07/28/字符串-Date-UUID-BigDecimal/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/07/30/HashMap%E5%AD%A6%E4%B9%A0/',
+                path: '/2022/07/30/HashMap%E5%AD%A6%E4%B9%A0/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                89
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                29
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                19
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap-%E7%A4%BA%E6%84%8F%E4%BB%A3%E7%A0%81"><span class="toc-text">HashMap 示意代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-text">过程：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98"><span class="toc-text">HashMap底层实现原理及面试问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E5%B1%82"><span class="toc-text">底层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80"><span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C"><span class="toc-text">案例二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89"><span class="toc-text">案例三</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LinkedHashMap"><span class="toc-text">LinkedHashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-1"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-1"><span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hashtable"><span class="toc-text">Hashtable</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89-2"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-2"><span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8CHashMap%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">和HashMap的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A"><span class="toc-text">面试题：</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/springboot2/">springboot2</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">15</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/MySQL/" style="font-size: 0.77em;">MySQL</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.66em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.69em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.66em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.74em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.66em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/java/" style="font-size: 0.71em;">java</a> <a href="/tags/javaweb/" style="font-size: 0.63em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/vue3/" style="font-size: 0.6em;">vue3</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/30/HashMap%E5%AD%A6%E4%B9%A0/"><i class="fa  fa-book"></i> HashMap学习</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/28/%E5%AD%97%E7%AC%A6%E4%B8%B2-Date-UUID-BigDecimal/"><i class="fa  fa-book"></i> 字符串-Date-UUID-BigDecimal</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/27/springboot%E5%85%A8%E5%B1%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><i class="fa  fa-book"></i> springboot全局异常处理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/27/java04/"><i class="fa  fa-book"></i> java04</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/27/%E6%96%B0%E9%97%BB%E5%A4%B4%E6%9D%A1%E6%A1%88%E4%BE%8B/"><i class="fa  fa-book"></i> 新闻头条案例</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 随笔记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
