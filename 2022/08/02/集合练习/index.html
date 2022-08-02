@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>集合练习 | 随笔记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java" />
+  
+  <meta name="description" content="1、请使用LinkedList来模拟一个队列(先进先出的特性):1.1　拥有放入对象的方法void　put(Object　o)　 1.2　取出对象的方法Object　get()　 1.3　判断队列当中是否为空的方法boolean　isEmpty()；并且，编写测试代码，验证你的队列是否正确。 12345678910111213141516171819202122232425public class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集合练习">
+<meta property="og:url" content="https://lan-wa.github.io/2022/08/02/%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/index.html">
+<meta property="og:site_name" content="随笔记录">
+<meta property="og:description" content="1、请使用LinkedList来模拟一个队列(先进先出的特性):1.1　拥有放入对象的方法void　put(Object　o)　 1.2　取出对象的方法Object　get()　 1.3　判断队列当中是否为空的方法boolean　isEmpty()；并且，编写测试代码，验证你的队列是否正确。 12345678910111213141516171819202122232425public class">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-08-02T12:21:07.000Z">
+<meta property="article:modified_time" content="2022-08-02T12:22:01.167Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/project/"><i class="fa fa-link"></i>项目链接</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">随笔记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>随笔记录</h2> <br />
+                        <span>一入编程深似海，从此萧郎为卷王</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">集合练习</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-08-02</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~5.02K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1659442921167"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E8%AF%B7%E4%BD%BF%E7%94%A8LinkedList%E6%9D%A5%E6%A8%A1%E6%8B%9F%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97-%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BA%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">1、请使用LinkedList来模拟一个队列(先进先出的特性):</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E4%BB%A5%E4%B8%8B%E5%85%83%E7%B4%A0%EF%BC%9Aapple-grape-banana-pear"><span class="toc-number">2.</span> <span class="toc-text">3、在一个列表中存储以下元素：apple,grape,banana,pear</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%EF%BC%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-HashMap%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%AD%98%E5%82%A8%E9%93%B6%E8%A1%8C%E5%82%A8%E6%88%B7%E7%9A%84%E4%BF%A1%E6%81%AF-%E5%85%B6%E4%B8%AD%E5%82%A8%E6%88%B7%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BF%A1%E6%81%AF%E6%9C%89%E5%82%A8%E6%88%B7%E7%9A%84ID%EF%BC%8C%E5%A7%93%E5%90%8D%E5%92%8C%E4%BD%99%E9%A2%9D-%E3%80%82%E5%8F%A6%E5%A4%96%EF%BC%8C%E8%AE%A1%E7%AE%97%E5%B9%B6%E6%98%BE%E7%A4%BA%E5%85%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%82%A8%E6%88%B7%E7%9A%84%E5%BD%93%E5%89%8D%E4%BD%99%E9%A2%9D%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">4、编写一个程序，创建一个　HashMap对象，用于存储银行储户的信息(其中储户的主要信息有储户的ID，姓名和余额)。另外，计算并显示其中某个储户的当前余额。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81%E4%BB%8E%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%85%A5%E8%8B%A5%E5%B9%B2%E4%B8%AA%E5%8D%95%E8%AF%8D%EF%BC%88%E8%BE%93%E5%85%A5%E5%9B%9E%E8%BD%A6%E7%BB%93%E6%9D%9F%EF%BC%89%E6%94%BE%E5%85%A5%E9%9B%86%E5%90%88%E4%B8%AD%EF%BC%8C%E5%B0%86%E8%BF%99%E4%BA%9B%E5%8D%95%E8%AF%8D%E6%8E%92%E5%BA%8F%E5%90%8E%EF%BC%88%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99%EF%BC%89%E6%89%93%E5%8D%B0%E5%87%BA%E6%9D%A5%E3%80%82"><span class="toc-number">4.</span> <span class="toc-text">5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81-%E5%8D%95%E9%80%89%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">6、[ 单选题 ]</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-%E7%AE%80%E7%AD%94%E9%A2%98%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">7.简答题：</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <h5 id="1、请使用LinkedList来模拟一个队列-先进先出的特性"><a href="#1、请使用LinkedList来模拟一个队列-先进先出的特性" class="headerlink" title="1、请使用LinkedList来模拟一个队列(先进先出的特性):"></a>1、请使用LinkedList来模拟一个队列(先进先出的特性):</h5><p>1.1　拥有放入对象的方法void　put(Object　o)　</p>
+<p>1.2　取出对象的方法Object　get()　</p>
+<p>1.3　判断队列当中是否为空的方法boolean　isEmpty()；并且，编写测试代码，验证你的队列是否正确。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">QueueDemo</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">LinkedList</span> <span class="variable">data</span> <span class="operator">=</span>  <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">(QueueDemo queueDemo)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> queueDemo==<span class="literal">null</span>?<span class="literal">true</span>:<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> data.getFirst();</span><br><span class="line">        data.removeFirst();</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">        data.add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;QueueDemo&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;data=&quot;</span> + data +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">QueueDemo</span> <span class="variable">queue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">QueueDemo</span>();</span><br><span class="line">        queue.put(<span class="number">11</span>);</span><br><span class="line">        queue.put(<span class="number">22</span>);</span><br><span class="line">        queue.put(<span class="number">33</span>);</span><br><span class="line">        queue.put(<span class="number">44</span>);</span><br><span class="line">        System.out.println(queue);</span><br><span class="line">        System.out.println(queue.get());</span><br><span class="line">        System.out.println(queue.isEmpty(queue));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>测试结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QueueDemo&#123;data=[11, 22, 33, 44]&#125;</span><br><span class="line">11</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3、在一个列表中存储以下元素：apple-grape-banana-pear"><a href="#3、在一个列表中存储以下元素：apple-grape-banana-pear" class="headerlink" title="3、在一个列表中存储以下元素：apple,grape,banana,pear"></a>3、在一个列表中存储以下元素：apple,grape,banana,pear</h5><p>3.1、　返回集合中的最大的和最小的元素</p>
+<p>3.2　将集合进行排序，并将排序后的结果打印在控制台上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt;  data = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        data.add(<span class="string">&quot;apple&quot;</span>);</span><br><span class="line">        data.add(<span class="string">&quot;grape&quot;</span>);</span><br><span class="line">        data.add(<span class="string">&quot;banana&quot;</span>);</span><br><span class="line">        data.add(<span class="string">&quot;pear&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;最大元素=&quot;</span>+Collections.max(data));</span><br><span class="line">        System.out.println(<span class="string">&quot;最小元素=&quot;</span>+Collections.min(data));</span><br><span class="line">        <span class="comment">// 方法一： Collections.sort(data);  // 小到大</span></span><br><span class="line">        <span class="comment">// 方法二：</span></span><br><span class="line">        Collections.sort(data, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(String o1, String o2)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> o1.compareTo(o2); <span class="comment">// 反过来顺序改变</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">最大元素=pear</span><br><span class="line">最小元素=apple</span><br><span class="line">[apple, banana, grape, pear]</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4、编写一个程序，创建一个-HashMap对象，用于存储银行储户的信息-其中储户的主要信息有储户的ID，姓名和余额-。另外，计算并显示其中某个储户的当前余额。"><a href="#4、编写一个程序，创建一个-HashMap对象，用于存储银行储户的信息-其中储户的主要信息有储户的ID，姓名和余额-。另外，计算并显示其中某个储户的当前余额。" class="headerlink" title="4、编写一个程序，创建一个　HashMap对象，用于存储银行储户的信息(其中储户的主要信息有储户的ID，姓名和余额)。另外，计算并显示其中某个储户的当前余额。"></a>4、编写一个程序，创建一个　HashMap对象，用于存储银行储户的信息(其中储户的主要信息有储户的ID，姓名和余额)。另外，计算并显示其中某个储户的当前余额。</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Customer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> money;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Customer</span><span class="params">(<span class="type">int</span> id, String name, <span class="type">int</span> money)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.money = money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getMoney</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> money;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Customer&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, money=&quot;</span> + money +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span> == o)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="literal">null</span> || getClass() != o.getClass())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="type">Customer</span> <span class="variable">customer</span> <span class="operator">=</span> (Customer) o;</span><br><span class="line">        <span class="keyword">if</span> (money!=customer.money)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(id, name, money);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Customer</span> <span class="variable">one</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Customer</span>(<span class="number">1</span>,<span class="string">&quot;zhangsan&quot;</span>, <span class="number">100</span>);</span><br><span class="line">        <span class="type">Customer</span> <span class="variable">two</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Customer</span>(<span class="number">2</span>,<span class="string">&quot;lisi&quot;</span>, <span class="number">124</span>);</span><br><span class="line">        <span class="type">Customer</span> <span class="variable">three</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Customer</span>(<span class="number">3</span>,<span class="string">&quot;wangwu&quot;</span>, <span class="number">23</span>);</span><br><span class="line"></span><br><span class="line">        HashMap&lt;String, Customer&gt; otherData = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        otherData.put(<span class="string">&quot;zhangsan&quot;</span>, one);</span><br><span class="line">        otherData.put(<span class="string">&quot;lisi&quot;</span>, two);</span><br><span class="line">        otherData.put(<span class="string">&quot;wangwu&quot;</span>, three);</span><br><span class="line">        </span><br><span class="line">        System.out.println(otherData.get(<span class="string">&quot;lisi&quot;</span>).getMoney());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">124</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。"><a href="#5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。" class="headerlink" title="5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。"></a>5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">scanner</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">String</span>  <span class="variable">str</span> <span class="operator">=</span> scanner.nextLine();</span><br><span class="line">        String [] st=str.split(<span class="string">&quot; &quot;</span>);</span><br><span class="line">        List&lt;String&gt; list= Arrays.asList(st);</span><br><span class="line"></span><br><span class="line">        Collections.sort(list, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(String o1, String o2)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> o1.compareToIgnoreCase(o2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.print(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>测试结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： p a h g b v c</span><br><span class="line">输出： [a, b, c, g, h, p, v]</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="6、-单选题"><a href="#6、-单选题" class="headerlink" title="6、[ 单选题 ]"></a>6、[ 单选题 ]</h5><p>Java 中的集合类包括 ArrayList、LinkedList、HashMap 等类，下列关于集合类描述错误的是( C )</p>
+<p>A: ArrayList 和 LinkedList 均实现了 List 接口</p>
+<p>B ArrayList 的访问速度比 LinkedList 快</p>
+<p>C 添加和删除元素时，ArrayList 的表现更佳</p>
+<p>D HashMap 实现 Map 接口，它允许任何类型的键和值对象，并允许将 null 用作键或值</p>
+<h5 id="7-简答题："><a href="#7-简答题：" class="headerlink" title="7.简答题："></a>7.简答题：</h5><p><strong>简单叙述一下 Arraylist扩容 与 hashmap 扩容机制 ？</strong></p>
+<p>ArrayList是将原数组copy到另一个新扩容的数组里，hashmap是通过单向链表进行扩容的。</p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-08-02</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" IO输入输出流练习" href="/2022/08/02/IO输入输出流练习/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/08/02/%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/',
+                path: '/2022/08/02/%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                94
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                30
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                20
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E8%AF%B7%E4%BD%BF%E7%94%A8LinkedList%E6%9D%A5%E6%A8%A1%E6%8B%9F%E4%B8%80%E4%B8%AA%E9%98%9F%E5%88%97-%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BA%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-text">1、请使用LinkedList来模拟一个队列(先进先出的特性):</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E4%BB%A5%E4%B8%8B%E5%85%83%E7%B4%A0%EF%BC%9Aapple-grape-banana-pear"><span class="toc-text">3、在一个列表中存储以下元素：apple,grape,banana,pear</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%EF%BC%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-HashMap%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%AD%98%E5%82%A8%E9%93%B6%E8%A1%8C%E5%82%A8%E6%88%B7%E7%9A%84%E4%BF%A1%E6%81%AF-%E5%85%B6%E4%B8%AD%E5%82%A8%E6%88%B7%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BF%A1%E6%81%AF%E6%9C%89%E5%82%A8%E6%88%B7%E7%9A%84ID%EF%BC%8C%E5%A7%93%E5%90%8D%E5%92%8C%E4%BD%99%E9%A2%9D-%E3%80%82%E5%8F%A6%E5%A4%96%EF%BC%8C%E8%AE%A1%E7%AE%97%E5%B9%B6%E6%98%BE%E7%A4%BA%E5%85%B6%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%82%A8%E6%88%B7%E7%9A%84%E5%BD%93%E5%89%8D%E4%BD%99%E9%A2%9D%E3%80%82"><span class="toc-text">4、编写一个程序，创建一个　HashMap对象，用于存储银行储户的信息(其中储户的主要信息有储户的ID，姓名和余额)。另外，计算并显示其中某个储户的当前余额。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81%E4%BB%8E%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%85%A5%E8%8B%A5%E5%B9%B2%E4%B8%AA%E5%8D%95%E8%AF%8D%EF%BC%88%E8%BE%93%E5%85%A5%E5%9B%9E%E8%BD%A6%E7%BB%93%E6%9D%9F%EF%BC%89%E6%94%BE%E5%85%A5%E9%9B%86%E5%90%88%E4%B8%AD%EF%BC%8C%E5%B0%86%E8%BF%99%E4%BA%9B%E5%8D%95%E8%AF%8D%E6%8E%92%E5%BA%8F%E5%90%8E%EF%BC%88%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99%EF%BC%89%E6%89%93%E5%8D%B0%E5%87%BA%E6%9D%A5%E3%80%82"><span class="toc-text">5、从控制台输入若干个单词（输入回车结束）放入集合中，将这些单词排序后（忽略大小写）打印出来。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81-%E5%8D%95%E9%80%89%E9%A2%98"><span class="toc-text">6、[ 单选题 ]</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-%E7%AE%80%E7%AD%94%E9%A2%98%EF%BC%9A"><span class="toc-text">7.简答题：</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/springboot2/">springboot2</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">15</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/MySQL/" style="font-size: 0.77em;">MySQL</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.66em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.69em;">Spring MVC</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.66em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.74em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.66em;">bootstrap-table</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/java/" style="font-size: 0.71em;">java</a> <a href="/tags/javaweb/" style="font-size: 0.63em;">javaweb</a> <a href="/tags/jsp/" style="font-size: 0.6em;">jsp</a> <a href="/tags/mybatis/" style="font-size: 0.6em;">mybatis</a> <a href="/tags/springboot2/" style="font-size: 0.8em;">springboot2</a> <a href="/tags/vue3/" style="font-size: 0.6em;">vue3</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/08/02/%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/"><i class="fa  fa-book"></i> 集合练习</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/08/02/IO%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81%E7%BB%83%E4%B9%A0/"><i class="fa  fa-book"></i> IO输入输出流练习</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/08/02/IO%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/"><i class="fa  fa-book"></i> IO输入输出流</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/08/01/Comparable%E5%92%8CComparator%E5%8C%BA%E5%88%AB/"><i class="fa  fa-book"></i> Comparable和Comparator区别</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/07/30/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"><i class="fa  fa-book"></i> 单例模式</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 随笔记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
