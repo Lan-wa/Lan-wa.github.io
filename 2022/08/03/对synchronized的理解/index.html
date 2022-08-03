@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>v-for遍历 | 随笔记录</title>
+  <title>对synchronized的理解 | 随笔记录</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,19 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="java" />
   
-  <meta name="description" content="​    vue.js 的循环渲染是依赖于 v-for 指令，它能够根据 vue 的实例里面的信息，循环遍历所需数据，然后渲染出相应的内容。 ​    它可以遍历数组类型以及对象类型的数据，js 里面的数组本身实质上也是对象，这里遍历数组和对象的时候，方式相似但又稍有不同。 我们可以用  v-for  指令基于一个数组来渲染一个列表。v-for  指令需要使用  item in items  形式">
+  <meta name="description" content="​        一旦一个包含锁定方法（用synchronized修饰）的线程被CPU调用，其他线程就无法调用相同对象的锁定方法。当一个线程在一个锁定方法内部，所有试图调用该方法的同实例的其他线程必须等待 synchronized：同步锁（互斥锁）：在java语言中，引入了同步锁的概念，每个对象都有一个与之关联的内部锁（排他锁），用以保证共享数据的安全性问题。 关键词synchronized用来给">
 <meta property="og:type" content="article">
-<meta property="og:title" content="v-for遍历">
-<meta property="og:url" content="https://lan-wa.github.io/2022/05/10/v-for%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0/index.html">
+<meta property="og:title" content="对synchronized的理解">
+<meta property="og:url" content="https://lan-wa.github.io/2022/08/03/%E5%AF%B9synchronized%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="随笔记录">
-<meta property="og:description" content="​    vue.js 的循环渲染是依赖于 v-for 指令，它能够根据 vue 的实例里面的信息，循环遍历所需数据，然后渲染出相应的内容。 ​    它可以遍历数组类型以及对象类型的数据，js 里面的数组本身实质上也是对象，这里遍历数组和对象的时候，方式相似但又稍有不同。 我们可以用  v-for  指令基于一个数组来渲染一个列表。v-for  指令需要使用  item in items  形式">
+<meta property="og:description" content="​        一旦一个包含锁定方法（用synchronized修饰）的线程被CPU调用，其他线程就无法调用相同对象的锁定方法。当一个线程在一个锁定方法内部，所有试图调用该方法的同实例的其他线程必须等待 synchronized：同步锁（互斥锁）：在java语言中，引入了同步锁的概念，每个对象都有一个与之关联的内部锁（排他锁），用以保证共享数据的安全性问题。 关键词synchronized用来给">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
-<meta property="article:published_time" content="2022-05-10T14:20:14.000Z">
-<meta property="article:modified_time" content="2022-05-10T15:20:58.840Z">
+<meta property="article:published_time" content="2022-08-03T10:37:52.000Z">
+<meta property="article:modified_time" content="2022-08-03T11:26:58.768Z">
 <meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -153,17 +154,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">v-for遍历</h1>
+                <h1 class="kratos-entry-title text-center">对synchronized的理解</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2022-05-10</li>
+                <li><i class="fa fa-calendar"></i> 2022-08-03</li>
                 <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~3.94K
+                        ~4.27K
                     
                     字
                 </li>
@@ -173,78 +174,60 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1652196058840"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1659526018768"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">一、遍历对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="toc-number">2.</span> <span class="toc-text">二、遍历数组元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81-key-x3D-%E2%80%9Ditem-id%E2%80%9D"><span class="toc-number">3.</span> <span class="toc-text">三、:key&#x3D;”item.id”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%9C%A8template%E4%B8%8A%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">四、 在template上使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81v-for-%E4%B8%8E-v-if-%E4%B8%80%E5%90%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">五、v-for 与 v-if 一同使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8-v-for"><span class="toc-number">6.</span> <span class="toc-text">六、在组件上使用 v-for</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#synchronized%EF%BC%9A%E5%90%8C%E6%AD%A5%E9%94%81%EF%BC%88%E4%BA%92%E6%96%A5%E9%94%81%EF%BC%89%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">synchronized：同步锁（互斥锁）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-synchronized%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">1. synchronized关键字：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-synchronized%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">3.2.</span> <span class="toc-text">2.synchronized代码块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%8ELock%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">3. 与Lock的区别：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-static-synchronized%EF%BC%9A"><span class="toc-number">3.4.</span> <span class="toc-text">4. static synchronized：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">案例：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">举个例子：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">6.</span> <span class="toc-text">结论:</span></a></li></ol>
                 </div>
             
             <hr />
-            <p>​    vue.js 的循环渲染是依赖于 v-for 指令，它能够根据 vue 的实例里面的信息，循环遍历所需数据，然后渲染出相应的内容。</p>
-<p>​    它可以遍历数组类型以及对象类型的数据，js 里面的数组本身实质上也是对象，这里遍历数组和对象的时候，方式相似但又稍有不同。</p>
-<p>我们可以用  <code>v-for</code>  指令基于一个数组来渲染一个列表。<code>v-for </code> 指令需要使用  <code>item in items</code>  形式的特殊语法，其中  <u><code>items </code> 是源数据数组，而  <code>item </code> 则是被迭代的数组元素的<strong>别名</strong>。</u></p>
-<h1 id="一、遍历对象"><a href="#一、遍历对象" class="headerlink" title="一、遍历对象"></a>一、遍历对象</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-for</span>=<span class="string">&quot;(value,key,index) in user&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123;index&#125;&#125;：&#123;&#123;key&#125;&#125;：&#123;&#123;value&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-for</span>=<span class="string">&quot;value in user&quot;</span>&gt;</span>&#123;&#123;value&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">user</span>:&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">userId</span>:<span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">userName</span>:<span class="string">&#x27;张三&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">userSex</span>:<span class="string">&#x27;男&#x27;</span></span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>value 是遍历得到的<strong>属性值</strong></p>
-</li>
-<li><p>key 是遍历得到的<strong>属性名</strong>，</p>
-</li>
-<li><p>index 是遍历<strong>当前项的索引</strong>     </p>
-<p>[ key : value ] 键值对形式</p>
-</li>
+            <p>​        一旦一个包含锁定方法（用synchronized修饰）的线程被CPU调用，其他线程就无法调用相同对象的锁定方法。当一个线程在一个锁定方法内部，所有试图调用该方法的同实例的其他线程必须等待</p>
+<h1 id="synchronized：同步锁（互斥锁）："><a href="#synchronized：同步锁（互斥锁）：" class="headerlink" title="synchronized：同步锁（互斥锁）："></a>synchronized：同步锁（互斥锁）：</h1><p>在java语言中，引入了同步锁的概念，每个对象都有一个与之关联的内部锁（排他锁），用以保证共享数据的安全性问题。</p>
+<p>关键词synchronized用来给某个方法或某段代码加上一个同步锁。</p>
+<p>当调用者调用此方法时，必须获得这把锁才可以调用。</p>
+<p>当某个调用者获得这把锁之后，其他调用者就无法获得了。</p>
+<p>当调用结束后，调用者释放这把锁，此时其他调用者才可以获得。</p>
+<p>这个机制保障了某个同步方法同时只能有一个调用者。</p>
+<p><strong>synchronized 和 static synchronized的区别</strong>：</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>通过分析这两个用法的分析，我们可以理解java中锁的概念。一个是实例锁（锁在某一个实例对象上，如果该类是单例，那么该锁也具有全局锁的概念），一个是全局锁（该锁针对的是类，无论实例多少个对象，那么线程都共享该锁）。实例锁对应的就是synchronized关键字，而类锁（全局锁）对应的就是static<br>synchronized（或者是锁在该类的class或者classloader对象上）。</p>
+<h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1><h2 id="1-synchronized关键字："><a href="#1-synchronized关键字：" class="headerlink" title="1. synchronized关键字："></a>1. synchronized关键字：</h2><p>synchronized作用是对类的当前实例（对象）加锁。可以使用synchronized关键字来标记一个方法或者代码块，当某个线程调用该对象的synchronized方法或者访问synchronized代码块时，这个线程便获得了该对象的锁，其他线程暂时无法访问这个方法，只有等待这个方法执行完毕或者代码块执行完毕，这个线程才会释放该对象的锁（Java  并发编程）。</p>
+<h2 id="2-synchronized代码块"><a href="#2-synchronized代码块" class="headerlink" title="2.synchronized代码块"></a>2.synchronized代码块</h2><p>【synchronized（synObject）】使用起来比synchronized方法要灵活得多。因为也许一个方法中只有一部分代码只需要同步，如果此时对整个方法用synchronized进行同步，会影响程序执行效率。而使用synchronized代码块就可以避免这个问题（同步对象或类属性），synchronized代码块可以实现只对需要同步的地方进行同步。</p>
+<h2 id="3-与Lock的区别："><a href="#3-与Lock的区别：" class="headerlink" title="3. 与Lock的区别："></a>3. 与<strong>Lock</strong>的区别：</h2><ol>
+<li>synchronized是Java语言的关键字，因此是内置特性，Lock是一个类（java.util.concurrent.locks包），通过这个类可以实现同步访问；</li>
+<li>synchronized不需要用户去手动释放锁，当synchronized方法或者synchronized代码块执行完之后，系统会自动让线程释放对锁的占用。Lock则必须要用户去手动释放锁，如果没有主动释放锁，就有可能导致出现死锁现象。</li>
 </ol>
-<p> 这里的 key、index 都是可选参数，如果不需要，这个指令其实可以写成 v-for&#x3D;”value in user”；</p>
+<h2 id="4-static-synchronized："><a href="#4-static-synchronized：" class="headerlink" title="4. static synchronized："></a>4. static synchronized：</h2><p>​        每个类有一个锁，它可以用来控制对static数据成员的并发访问。访问static synchronized方法占用的是类锁，而访问非static synchronized方法占用的是对象锁。</p>
+<p>​        static synchronized控制类的所有实例（对象）的访问（相应代码块）。synchronized相当于 this.synchronized，static synchronized相当于Something.synchronized</p>
+<h1 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h1><p>一个日本作者-结成浩的《java多线程设计模式》有这样的一个列子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pulbic class Something()&#123;</span><br><span class="line"></span><br><span class="line">	public synchronized void isSyncA() &#123;&#125;</span><br><span class="line"></span><br><span class="line">	public synchronized void isSyncB() &#123;&#125;</span><br><span class="line"></span><br><span class="line">	public static synchronized void cSyncA() &#123;&#125;</span><br><span class="line"></span><br><span class="line">	public static synchronized void cSyncB() &#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​    那么，假如有Something类的两个实例x与y，那么下列各组方法被多线程同时访问的情况是怎样的？</p>
+<p>a. x.isSyncA()与x.isSyncB()</p>
+<p>b. x.isSyncA()与y.isSyncA()</p>
+<p>c. x.cSyncA()与y.cSyncB()</p>
+<p>d. x.isSyncA()与Something.cSyncA()</p>
+<p><strong>这里，很清楚的可以判断：</strong></p>
+<p>​        都是对同一个实例（x）的synchronized域访问，因此不能被同时访问。（多线程中访问x的不同synchronized域不能同时访问)</p>
+<p>​        如果在多个线程中访问x.isSyncA()，因为仍然是对同一个实例，且对同一个方法加锁，所以多个线程中也不能同时访问。（多线程中访问x的同一个synchronized域不能同时访问)</p>
+<p>​        是针对不同实例的，因此可以同时被访问（对象锁对于不同的对象实例没有锁的约束）</p>
+<p>​        因为是static synchronized，所以不同实例之间仍然会被限制,相当于Something.isSyncA()与 Something.isSyncB()了，因此不能被同时访问。</p>
+<p>​        书上的答案是可以被同时访问的，答案理由是synchronzied的是实例方法与synchronzied的类方法由于锁（lock）不同的原因。</p>
+<p>​        个人分析也就是synchronized 与static synchronized 相当于两帮派，各自管各自，相互之间就无约束了，可以被同时访问。</p>
+<h1 id="举个例子："><a href="#举个例子：" class="headerlink" title="举个例子："></a>举个例子：</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSynchronized</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">while</span> (i-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot; : &quot;</span> + i);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ie) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">while</span> (i-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot; : &quot;</span> + i);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ie) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">TestSynchronized</span> <span class="variable">myt2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSynchronized</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">test1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                myt2.test1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;test1&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">test2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                TestSynchronized.test2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;test2&quot;</span>);</span><br><span class="line">        test1.start();</span><br><span class="line">        test2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
 <p><strong>测试结果：</strong></p>
-<p>0：userId：1</p>
-<p>1：userName：张三</p>
-<p>2：userSex：男</p>
-<hr>
-<p>1</p>
-<p>张三</p>
-<p>男</p>
-<h1 id="二、遍历数组元素"><a href="#二、遍历数组元素" class="headerlink" title="二、遍历数组元素"></a>二、遍历数组元素</h1><p>value 是遍历得到的元素，<strong>index 是数组下标，这里的index 也是可选参数</strong>，如果不需要，这个指令其实可以写成 v-for&#x3D;”value in userArr”；</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in userArr&quot;</span>&gt;</span></span><br><span class="line">           &#123;&#123;item.userId&#125;&#125;, &#123;&#123;item.userName&#125;&#125;, &#123;&#123;item.userSex&#125;&#125;</span><br><span class="line">           <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;operate(index)&quot;</span>&gt;</span>操作<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">       <span class="keyword">let</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">           <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">           <span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">               <span class="attr">userArr</span>: [&#123;</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userId</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userName</span>: <span class="string">&#x27;张三&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userSex</span>: <span class="string">&#x27;男&#x27;</span></span></span><br><span class="line"><span class="language-javascript">               &#125;, &#123;</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userId</span>: <span class="number">2</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userName</span>: <span class="string">&#x27;李四&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userSex</span>: <span class="string">&#x27;女&#x27;</span></span></span><br><span class="line"><span class="language-javascript">               &#125;, &#123;</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userId</span>: <span class="number">3</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userName</span>: <span class="string">&#x27;王五&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                   <span class="attr">userSex</span>: <span class="string">&#x27;男&#x27;</span></span></span><br><span class="line"><span class="language-javascript">               &#125;]</span></span><br><span class="line"><span class="language-javascript">           &#125;,</span></span><br><span class="line"><span class="language-javascript">           <span class="attr">methods</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">               <span class="title function_">operate</span>(<span class="params">index</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                   <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">userArr</span>[index]);</span></span><br><span class="line"><span class="language-javascript">               &#125;</span></span><br><span class="line"><span class="language-javascript">           &#125;</span></span><br><span class="line"><span class="language-javascript">       &#125;);</span></span><br><span class="line"><span class="language-javascript">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">test1 : 4</span><br><span class="line"></span><br><span class="line">test2 : 4</span><br><span class="line"></span><br><span class="line">test1 : 3</span><br><span class="line"></span><br><span class="line">test2 : 3</span><br><span class="line"></span><br><span class="line">test2 : 2</span><br><span class="line"></span><br><span class="line">test1 : 2</span><br><span class="line"></span><br><span class="line">test2 : 1</span><br><span class="line"></span><br><span class="line">test1 : 1</span><br><span class="line"></span><br><span class="line">test1 : 0</span><br><span class="line"></span><br><span class="line">test2 : 0</span><br></pre></td></tr></table></figure>
 
-
-
-<p><strong>测试结果：</strong></p>
-<p>1, 张三, 男 操作</p>
-<p>2, 李四, 女 操作</p>
-<p>3, 王五, 男 操作</p>
-<p>注： 你也可以用 <code>of</code> 替代 <code>in</code> 作为分隔符，因为它更接近 JavaScript 迭代器的语法 如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">&quot;item of items&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="三、-key-x3D-”item-id”"><a href="#三、-key-x3D-”item-id”" class="headerlink" title="三、:key&#x3D;”item.id”"></a>三、:key&#x3D;”item.id”</h1><p>​    为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 <code>key</code> 属性：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">&quot;item in items&quot;</span> <span class="attr">v-bind:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 内容 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​    建议尽可能在使用 <code>v-for</code> 时提供 <code>key</code> 属性，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。</p>
-<p><strong>注意：</strong>不要使用对象或数组之类的非基本类型值作为 <code>v-for</code> 的 <code>key</code>键。请用字符串或数值类型的值。</p>
-<h1 id="四、-在template上使用"><a href="#四、-在template上使用" class="headerlink" title="四、 在template上使用"></a>四、 在template上使用</h1><p>可以利用带有 <code>v-for</code> 的 <code>&lt;template&gt;</code> 来循环渲染一段包含多个元素的内容。比如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-for</span>=<span class="string">&quot;item in items&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; item.msg &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;divider&quot;</span> <span class="attr">role</span>=<span class="string">&quot;presentation&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="五、v-for-与-v-if-一同使用"><a href="#五、v-for-与-v-if-一同使用" class="headerlink" title="五、v-for 与 v-if 一同使用"></a>五、v-for 与 v-if 一同使用</h1><p>不推荐在同一元素上使用 v-if 和 v-for。</p>
-<p>当它们处于同一节点，<code>v-for</code> 的优先级比 <code>v-if</code> 更高，这意味着 <code>v-if</code> 将分别重复运行于每个 <code>v-for</code> 循环中。当你只想为<em>部分</em>项渲染节点时，这种优先级的机制会十分有用，如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;todo in todos&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;!todo.isComplete&quot;</span>&gt;</span></span><br><span class="line">  &#123;&#123; todo &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面的代码将只渲染未完成的 todo。</p>
-<p>而如果你的目的是有条件地跳过循环的执行，那么可以将 v-if 置于外层元素 (或 template标签上。如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">v-if</span>=<span class="string">&quot;todos.length&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;todo in todos&quot;</span>&gt;</span></span><br><span class="line">    &#123;&#123; todo &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">v-else</span>&gt;</span>No todos left!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="六、在组件上使用-v-for"><a href="#六、在组件上使用-v-for" class="headerlink" title="六、在组件上使用 v-for"></a>六、在组件上使用 v-for</h1><p>在自定义组件上，你可以像在任何普通元素上一样使用 v-for。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">my-component</span> <span class="attr">v-for</span>=<span class="string">&quot;item in items&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">my-component</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.2.0+ 的版本里，当在组件上使用 <code>v-for</code> 时，<code>key</code> 现在是必须的。</p>
-<p>然而，任何数据都不会被自动传递到组件里，因为组件有自己独立的作用域。为了把迭代数据传递到组件里，我们要使用 prop</p>
+<p>上面代码synchronized同时修饰静态方法和实例方法，但是运行结果是交替进行的，这证明了类锁和对象锁是两个不一样的锁，控制着不同的区域，它们是互不干扰的。同样，线程获得对象锁的同时，也可以获得该类锁，即同时获得两个锁，这是允许的。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论:"></a>结论:</h1><p>A: synchronized static是某个类的范围，synchronized static cSync{}防止多个线程中多个实例同时访问这个类中的synchronized static 方法。它可以对类的所有对象实例起作用。</p>
+<p>B: synchronized 是某实例的范围，synchronized isSync(){}防止多个线程中这一个实例同时访问这个类的synchronized 方法。</p>
+<p>其实总结起来很简单。</p>
+<p>一个锁的是类对象，一个锁的是实例对象。</p>
+<p>若类对象被lock，则类对象的所有同步方法全被lock；</p>
+<p>若实例对象被lock，则该实例对象的所有同步方法全被lock。</p>
 
         </div>
         
@@ -253,10 +236,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-05-10</span>
+                <span>最后编辑：2022-08-03</span>
                 </div>
             </div>
         </footer>
@@ -265,13 +248,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" v-if 与 v-show" href="/2022/05/10/v-if-与-v-show/">&lt; 上一篇</a>
+                <a title=" 集合练习" href="/2022/08/02/集合练习/">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" 侦听数组的变更方法（触发视图更新）" href="/2022/05/10/侦听数组的变更方法（触发视图更新）/">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
@@ -283,8 +262,8 @@
         const init = () => {
             console.log('Gitalk loading...');
             const gitalk = new Gitalk(Object.assign({
-                id: '/2022/05/10/v-for%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0/',
-                path: '/2022/05/10/v-for%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0/'
+                id: '/2022/08/03/%E5%AF%B9synchronized%E7%9A%84%E7%90%86%E8%A7%A3/',
+                path: '/2022/08/03/%E5%AF%B9synchronized%E7%9A%84%E7%90%86%E8%A7%A3/'
             }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
             gitalk.render('gitalk-container');
@@ -362,7 +341,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1"><span class="toc-text">一、遍历对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="toc-text">二、遍历数组元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81-key-x3D-%E2%80%9Ditem-id%E2%80%9D"><span class="toc-text">三、:key&#x3D;”item.id”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%9C%A8template%E4%B8%8A%E4%BD%BF%E7%94%A8"><span class="toc-text">四、 在template上使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81v-for-%E4%B8%8E-v-if-%E4%B8%80%E5%90%8C%E4%BD%BF%E7%94%A8"><span class="toc-text">五、v-for 与 v-if 一同使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8-v-for"><span class="toc-text">六、在组件上使用 v-for</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#synchronized%EF%BC%9A%E5%90%8C%E6%AD%A5%E9%94%81%EF%BC%88%E4%BA%92%E6%96%A5%E9%94%81%EF%BC%89%EF%BC%9A"><span class="toc-text">synchronized：同步锁（互斥锁）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-text">区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-synchronized%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-text">1. synchronized关键字：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-synchronized%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-text">2.synchronized代码块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%8ELock%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-text">3. 与Lock的区别：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-static-synchronized%EF%BC%9A"><span class="toc-text">4. static synchronized：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-text">案例：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="toc-text">举个例子：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论:</span></a></li></ol>
     </div>
 </aside>
                 
