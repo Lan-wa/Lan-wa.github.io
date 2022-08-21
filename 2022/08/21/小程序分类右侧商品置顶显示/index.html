@@ -15,16 +15,16 @@
   
     <meta name="keywords" content="" />
   
-  <meta name="description" content="-  蓝顺远">
+  <meta name="description" content="问题分析看滚动条的位置 一、先点击左侧一个选项，并划到最低处 二、切换另一个选项我们可以看到，商品显示也是在最下面  三、解决方法scroll-view标签里有个属性： ​    scroll-top ： 设置竖向滚动条位置 wxml: 123&lt;scroll-view scroll-y scroll-top&#x3D;&quot;&amp;#123;&amp;#123;scrollTop&amp;#125;&amp;#125;&amp;qu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小程序分类右侧商品置顶显示">
 <meta property="og:url" content="https://lan-wa.github.io/2022/08/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%86%E7%B1%BB%E5%8F%B3%E4%BE%A7%E5%95%86%E5%93%81%E7%BD%AE%E9%A1%B6%E6%98%BE%E7%A4%BA/index.html">
 <meta property="og:site_name" content="随笔记录">
-<meta property="og:description" content="-  蓝顺远">
+<meta property="og:description" content="问题分析看滚动条的位置 一、先点击左侧一个选项，并划到最低处 二、切换另一个选项我们可以看到，商品显示也是在最下面  三、解决方法scroll-view标签里有个属性： ​    scroll-top ： 设置竖向滚动条位置 wxml: 123&lt;scroll-view scroll-y scroll-top&#x3D;&quot;&amp;#123;&amp;#123;scrollTop&amp;#125;&amp;#125;&amp;qu">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-08-21T09:09:13.000Z">
-<meta property="article:modified_time" content="2022-08-21T09:09:13.786Z">
+<meta property="article:modified_time" content="2022-08-21T09:23:48.744Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
@@ -163,7 +163,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        0
+                        750
                     
                     字
                 </li>
@@ -173,11 +173,31 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1661072953786"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1661073828744"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
-            <hr />
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">问题分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%82%B9%E5%87%BB%E5%B7%A6%E4%BE%A7%E4%B8%80%E4%B8%AA%E9%80%89%E9%A1%B9%EF%BC%8C%E5%B9%B6%E5%88%92%E5%88%B0%E6%9C%80%E4%BD%8E%E5%A4%84"><span class="toc-number">1.1.</span> <span class="toc-text">一、先点击左侧一个选项，并划到最低处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%87%E6%8D%A2%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.</span> <span class="toc-text">二、切换另一个选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、解决方法</span></a></li></ol></li></ol>
+                </div>
             
+            <hr />
+            <h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p><strong>看滚动条的位置</strong></p>
+<h2 id="一、先点击左侧一个选项，并划到最低处"><a href="#一、先点击左侧一个选项，并划到最低处" class="headerlink" title="一、先点击左侧一个选项，并划到最低处"></a>一、先点击左侧一个选项，并划到最低处</h2><p><img src="/../images/xcx/x2.png"></p>
+<h2 id="二、切换另一个选项"><a href="#二、切换另一个选项" class="headerlink" title="二、切换另一个选项"></a>二、切换另一个选项</h2><p><strong>我们可以看到，商品显示也是在最下面</strong></p>
+<p><img src="/../images/xcx/x3.png"></p>
+<h2 id="三、解决方法"><a href="#三、解决方法" class="headerlink" title="三、解决方法"></a>三、解决方法</h2><p>scroll-view标签里有个属性：</p>
+<p>​    <strong>scroll-top ： 设置竖向滚动条位置</strong></p>
+<p>wxml:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scroll-view</span> <span class="attr">scroll-y</span> <span class="attr">scroll-top</span>=<span class="string">&quot;&#123;&#123;scrollTop&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">	........</span><br><span class="line"><span class="tag">&lt;/<span class="name">scroll-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>js:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">data</span>: &#123;</span><br><span class="line">  <span class="comment">// 左侧的菜单数据</span></span><br><span class="line">  <span class="attr">leftMenuList</span>: [],</span><br><span class="line">  <span class="comment">// 右侧的商品数据</span></span><br><span class="line">  <span class="attr">rightContent</span>: [],</span><br><span class="line">   <span class="comment">//当前被选中</span></span><br><span class="line">   <span class="attr">currentIndex</span>:<span class="number">0</span>,</span><br><span class="line">   <span class="comment">//右侧内容的滚动条距离顶部的距离</span></span><br><span class="line">   <span class="attr">scrollTop</span>: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">&#125;,</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">// 左侧菜单的点击事件</span></span><br><span class="line"><span class="title function_">handleItemTap</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="comment">// console.log(e);</span></span><br><span class="line">  <span class="keyword">const</span> &#123;index&#125; = e.<span class="property">currentTarget</span>.<span class="property">dataset</span>;</span><br><span class="line">  <span class="keyword">let</span> rightContent = <span class="variable language_">this</span>.<span class="property">Cates</span>[index].<span class="property">children</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">    <span class="attr">currentIndex</span>: index,</span><br><span class="line">    rightContent,</span><br><span class="line">    <span class="comment">// 重新设置  右侧内容的滚动条距离顶部的距离</span></span><br><span class="line">    <span class="attr">scrollTop</span>: <span class="number">0</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">&#125;,      </span><br></pre></td></tr></table></figure>
+
+<p>点击事件给他一个初始值0即可，</p>
+<p>到此问题解决！</p>
+
         </div>
         
         <footer class="kratos-entry-footer clearfix">
@@ -281,6 +301,18 @@
 </aside>
             
                     <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-text">问题分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%82%B9%E5%87%BB%E5%B7%A6%E4%BE%A7%E4%B8%80%E4%B8%AA%E9%80%89%E9%A1%B9%EF%BC%8C%E5%B9%B6%E5%88%92%E5%88%B0%E6%9C%80%E4%BD%8E%E5%A4%84"><span class="toc-text">一、先点击左侧一个选项，并划到最低处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%87%E6%8D%A2%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%80%89%E9%A1%B9"><span class="toc-text">二、切换另一个选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-text">三、解决方法</span></a></li></ol></li></ol>
+    </div>
+</aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
