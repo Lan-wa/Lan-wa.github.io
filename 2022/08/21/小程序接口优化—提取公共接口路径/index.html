@@ -15,16 +15,16 @@
   
     <meta name="keywords" content="小程序" />
   
-  <meta name="description" content="调用接口时，url可以不用麻烦的写一大串了 request文件夹中的index.js：1234567891011121314151617export const request&#x3D;(params)&#x3D;&gt;&amp;#123;  &#x2F;&#x2F; 定义公共的url  const baseUrl &#x3D; &quot;https:&#x2F;&#x2F;api-hmugo-web.itheima.net&#x2F;api&#x2F;public&#x2F;v1&quot;;">
+  <meta name="description" content="调用接口时，url可以不用麻烦的写一大串了 request文件夹中的index.js：12345678910111213141516171819202122232425262728293031323334353637&#x2F;&#x2F; 同时发送异步代码的次数let ajaxTimes&#x3D;0;export const request&#x3D;(params)&#x3D;&gt;&amp;#123;  ajaxTimes++;  wx.sho">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小程序接口优化—提取公共接口路径">
 <meta property="og:url" content="https://lan-wa.github.io/2022/08/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3%E4%BC%98%E5%8C%96%E2%80%94%E6%8F%90%E5%8F%96%E5%85%AC%E5%85%B1%E6%8E%A5%E5%8F%A3%E8%B7%AF%E5%BE%84/index.html">
 <meta property="og:site_name" content="随笔记录">
-<meta property="og:description" content="调用接口时，url可以不用麻烦的写一大串了 request文件夹中的index.js：1234567891011121314151617export const request&#x3D;(params)&#x3D;&gt;&amp;#123;  &#x2F;&#x2F; 定义公共的url  const baseUrl &#x3D; &quot;https:&#x2F;&#x2F;api-hmugo-web.itheima.net&#x2F;api&#x2F;public&#x2F;v1&quot;;">
+<meta property="og:description" content="调用接口时，url可以不用麻烦的写一大串了 request文件夹中的index.js：12345678910111213141516171819202122232425262728293031323334353637&#x2F;&#x2F; 同时发送异步代码的次数let ajaxTimes&#x3D;0;export const request&#x3D;(params)&#x3D;&gt;&amp;#123;  ajaxTimes++;  wx.sho">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-08-21T09:56:00.000Z">
-<meta property="article:modified_time" content="2022-08-21T09:59:21.886Z">
+<meta property="article:modified_time" content="2022-08-22T05:47:12.549Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="小程序">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        1007
+                        ~1.51K
                     
                     字
                 </li>
@@ -174,7 +174,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1661075961886"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1661147232549"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -183,7 +183,7 @@
             
             <hr />
             <p>调用接口时，url可以不用麻烦的写一大串了</p>
-<h2 id="request文件夹中的index-js："><a href="#request文件夹中的index-js：" class="headerlink" title="request文件夹中的index.js："></a>request文件夹中的index.js：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">request</span>=(<span class="params">params</span>)=&gt;&#123;</span><br><span class="line">  <span class="comment">// 定义公共的url</span></span><br><span class="line">  <span class="keyword">const</span> baseUrl = <span class="string">&quot;https://api-hmugo-web.itheima.net/api/public/v1&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">      wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">          ...params,</span><br><span class="line">          <span class="attr">url</span>: baseUrl+params.<span class="property">url</span>,</span><br><span class="line">          <span class="attr">success</span>: <span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="title function_">resolve</span>(result);</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">fail</span>: <span class="function">(<span class="params">error</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="title function_">reject</span>(error);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="request文件夹中的index-js："><a href="#request文件夹中的index-js：" class="headerlink" title="request文件夹中的index.js："></a>request文件夹中的index.js：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同时发送异步代码的次数</span></span><br><span class="line"><span class="keyword">let</span> ajaxTimes=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">request</span>=(<span class="params">params</span>)=&gt;&#123;</span><br><span class="line">  ajaxTimes++;</span><br><span class="line"></span><br><span class="line">  wx.<span class="title function_">showLoading</span>(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;加载中&#x27;</span>,</span><br><span class="line">    <span class="attr">mask</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">success</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;&#125;,</span><br><span class="line">    <span class="attr">fail</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;&#125;,</span><br><span class="line">    <span class="attr">complete</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;&#125;,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义公共的url</span></span><br><span class="line">  <span class="keyword">const</span> baseUrl = <span class="string">&quot;https://api-hmugo-web.itheima.net/api/public/v1&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">      wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">          ...params,</span><br><span class="line">          <span class="attr">url</span>: baseUrl+params.<span class="property">url</span>,</span><br><span class="line">          <span class="attr">success</span>: <span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="title function_">resolve</span>(result);</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">fail</span>: <span class="function">(<span class="params">error</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="title function_">reject</span>(error);</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="comment">// 对多个请求回来了才执行关闭图标，避免对应不上</span></span><br><span class="line">          <span class="attr">complete</span>: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">            ajaxTimes--;</span><br><span class="line">            <span class="keyword">if</span>(ajaxTimes==<span class="number">0</span>) &#123;</span><br><span class="line">              <span class="comment">// 关闭正在等待的图标</span></span><br><span class="line">              wx.<span class="title function_">hideLoading</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -246,7 +246,7 @@
                     <a class="tag-none-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2022-08-21</span>
+                <span>最后编辑：2022-08-22</span>
                 </div>
             </div>
         </footer>
