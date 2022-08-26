@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>记录</title>
+  <title>his-添加挂号信息到后端及清空挂号信息 | 记录</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,17 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="项目" />
   
-  <meta name="description" content="-  蓝顺远">
-<meta property="og:type" content="website">
-<meta property="og:title" content="记录">
-<meta property="og:url" content="https://lan-wa.github.io/tags/java/page/2/index.html">
+  <meta name="description" content="两个按钮1234&lt;div style&#x3D;&quot;text-align: left&quot;&gt;    &lt;el-button type&#x3D;&quot;primary&quot; @click&#x3D;&quot;addNewRegist&quot;&gt;挂号&lt;&#x2F;el-button&gt;    &lt;el-button type&#x3D;&quot;primary&quot; @clic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="his-添加挂号信息到后端及清空挂号信息">
+<meta property="og:url" content="https://lan-wa.github.io/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/index.html">
 <meta property="og:site_name" content="记录">
-<meta property="og:description" content="-  蓝顺远">
+<meta property="og:description" content="两个按钮1234&lt;div style&#x3D;&quot;text-align: left&quot;&gt;    &lt;el-button type&#x3D;&quot;primary&quot; @click&#x3D;&quot;addNewRegist&quot;&gt;挂号&lt;&#x2F;el-button&gt;    &lt;el-button type&#x3D;&quot;primary&quot; @clic">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-08-26T08:45:25.000Z">
+<meta property="article:modified_time" content="2022-08-26T09:44:44.514Z">
 <meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -147,211 +150,116 @@
 
         
 
-            <!-- Breadcrumb for tag & category page -->
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">his-添加挂号信息到后端及清空挂号信息</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-08-26</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.86K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1661507084514"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%8C%89%E9%92%AE"><span class="toc-number">1.</span> <span class="toc-text">两个按钮</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">2.</span> <span class="toc-text">清空挂号信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">添加挂号信息到后端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E5%88%A4%E6%96%AD%E7%97%85%E5%8E%86%E5%8F%B7%E6%98%AF%E5%90%A6%E6%98%AF%E6%95%B0%E5%AD%97"><span class="toc-number">3.1.</span> <span class="toc-text">1. 先判断病历号是否是数字</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bug"><span class="toc-number">4.</span> <span class="toc-text">bug</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="两个按钮"><a href="#两个按钮" class="headerlink" title="两个按钮"></a>两个按钮</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: left&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;addNewRegist&quot;</span>&gt;</span>挂号<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;clearRegiste&quot;</span>&gt;</span>清空<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-    <article class="kratos-hentry kratos-entry-border-new clearfix">
-        <div class="kratos-breadcrumb">
-            <a href="/">
-                <i class="fa fa-home"></i>
-            </a>
-            <i class="fa fa-angle-right"></i>
-            
-                <a href="/tags/">
-                    标签
-                </a>
-                <i class="fa fa-angle-right"></i>
-                <a href="/tags/java">
-                    java
-                </a>
-            
-            
-                <i class="fa fa-angle-right"></i>
-                <span>
-                    第 2 页
-                </a>
-            
+
+
+<h1 id="清空挂号信息"><a href="#清空挂号信息" class="headerlink" title="清空挂号信息"></a>清空挂号信息</h1><p>这些值都是表单数据的v-model绑定的值，跟后端返回的数据不一样，返回的是存在一个自定义的列表里， 这里绑定的数据是可以提交到后端的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 清空已经填写的挂号信息</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">clearRegiste</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">id</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">case_number</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">real_name</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">gender</span> = <span class="string">&quot;男&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">card_number</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">birthday</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">age</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">age_type</span> = <span class="string">&quot;年&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">home_address</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="title function_">initDateTime</span>();</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">settle_id</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">deptment_id</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">employee_id</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">regist_level_id</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">settle_category_id</span> = <span class="string">&quot;1&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">is_book</span> = <span class="literal">false</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">used_number</span> = <span class="string">&quot;0&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">regist_method</span> = <span class="string">&quot;医保卡&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">regist_money</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  state.<span class="property">register</span>.<span class="property">visit_state</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="添加挂号信息到后端"><a href="#添加挂号信息到后端" class="headerlink" title="添加挂号信息到后端"></a>添加挂号信息到后端</h1><h2 id="1-先判断病历号是否是数字"><a href="#1-先判断病历号是否是数字" class="headerlink" title="1. 先判断病历号是否是数字"></a>1. 先判断病历号是否是数字</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">addNewRegist</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">isNaN</span>(state.<span class="property">register</span>.<span class="property">case_number</span>)) &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;病例号必须为数字&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state.<span class="property">register</span>.<span class="property">case_number</span> == <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;病历号不能为空！&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;warning&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;挂号成功！&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>结果如图：</p>
+<p><img src="/../images/project/p5.png"></p>
+<p>request.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> qs <span class="keyword">from</span> <span class="string">&quot;qs&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加挂号信息到后端</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">addRegister</span>(<span class="params">register</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> http.<span class="title function_">post</span>(<span class="string">&quot;/addRegister&quot;</span>, qs.<span class="title function_">stringify</span>(register));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加挂号信息到后端</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addNewRegist</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">isNaN</span>(state.<span class="property">register</span>.<span class="property">case_number</span>)) &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;病例号必须为数字&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state.<span class="property">register</span>.<span class="property">case_number</span> == <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;病历号不能为空！&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;warning&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&quot;挂号成功！&quot;</span>,</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">addRegister</span>(state.<span class="property">register</span>)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title class_">ElMessage</span>(&#123;</span><br><span class="line">        <span class="attr">message</span>: result,</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&quot;success&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">//   清空</span></span><br><span class="line">      <span class="title function_">clearRegist</span>();</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="bug"><a href="#bug" class="headerlink" title="bug"></a>bug</h1><p>出生日期自动填充</p>
+
         </div>
-    </article>
-
-
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/07/26/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/java/">java</a> <a class="label-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/07/26/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                1.1 进程和线程​        进程process：每个进程都有独立的代码和数据空间，进程间的切换会有较大的开销，一个进程包含1-n个线程。可以把进程简单理解为操作系统中运行的一个程序。
-​        线程thread：同一类...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-07-26
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/07/26/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/07/18/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/java/">java</a> <a class="label-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/07/18/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8/">自定义异常</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                java自定义异常在java语言中允许用户自定义异常类。自定义异常类不是系统监测到的异常，而是由用户自己定义的异常。自定义异常同样需要try-catch-finally语句捕获，但**必须由用户自己抛出异常(throw new MyE...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-07-18
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/07/18/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/07/18/%E5%90%84%E7%A7%8DDate%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/java/">java</a> <a class="label-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/07/18/%E5%90%84%E7%A7%8DDate%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/">各种Date之间的转换方法</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                一、java Date时间的各种转换方式123456789101112131415161718192021222324252627282930313233343536373839404142434445public class Tim...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-07-18
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/07/18/%E5%90%84%E7%A7%8DDate%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-
-
-    <div class='text-center pagination'>
-    <a class="extend prev" rel="prev" href="/tags/java/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/java/">1</a><span class="page-number current">2</span>
-    </div>
-
-
-
-    <div class="hidden">
-        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
         
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-08-26</span>
+                </div>
+            </div>
+        </footer>
     </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" his-根据日期和排班规则得到医生出诊还是休息" href="/2022/08/26/his-根据日期和排班规则得到医生出诊还是休息/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/',
+                path: '/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
-
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
 
         
 
@@ -364,8 +272,6 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -406,6 +312,20 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%8C%89%E9%92%AE"><span class="toc-text">两个按钮</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF"><span class="toc-text">清空挂号信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF"><span class="toc-text">添加挂号信息到后端</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E5%88%A4%E6%96%AD%E7%97%85%E5%8E%86%E5%8F%B7%E6%98%AF%E5%90%A6%E6%98%AF%E6%95%B0%E5%AD%97"><span class="toc-text">1. 先判断病历号是否是数字</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bug"><span class="toc-text">bug</span></a></li></ol>
+    </div>
+</aside>
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
