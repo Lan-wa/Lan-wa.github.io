@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="">
-  <title>记录</title>
+  <title>Redis-短信登录03-隐藏用户敏感信息 | 记录</title>
   <meta name="author" content="我爱小小蝶" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,17 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="Redis" />
   
-  <meta name="description" content="-  蓝顺远">
-<meta property="og:type" content="website">
-<meta property="og:title" content="记录">
-<meta property="og:url" content="https://lan-wa.github.io/categories/%E9%A1%B9%E7%9B%AE/his/index.html">
+  <meta name="description" content="​        我们通过浏览器观察到此时用户的全部信息都在，这样极为不靠谱，所以我们应当在返回用户信息之前，将用户的敏感信息进行隐藏。 ​        采用的核心思路就是：书写一个UserDto对象，这个UserDto对象就没有敏感信息了，我们在返回前，将有用户敏感信息的User对象转化成没有敏感信息的UserDto对象，那么就能够避免这个尴尬的问题了 将返回客户端的user实体类 12345">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis-短信登录03-隐藏用户敏感信息">
+<meta property="og:url" content="https://lan-wa.github.io/2022/09/12/Redis-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%9503-%E9%9A%90%E8%97%8F%E7%94%A8%E6%88%B7%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF/index.html">
 <meta property="og:site_name" content="记录">
-<meta property="og:description" content="-  蓝顺远">
+<meta property="og:description" content="​        我们通过浏览器观察到此时用户的全部信息都在，这样极为不靠谱，所以我们应当在返回用户信息之前，将用户的敏感信息进行隐藏。 ​        采用的核心思路就是：书写一个UserDto对象，这个UserDto对象就没有敏感信息了，我们在返回前，将有用户敏感信息的User对象转化成没有敏感信息的UserDto对象，那么就能够避免这个尴尬的问题了 将返回客户端的user实体类 12345">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-09-12T08:59:29.000Z">
+<meta property="article:modified_time" content="2022-09-12T09:15:38.335Z">
 <meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lan-wa.github.io/null">
 <meta name="twitter:site" content="@null">
@@ -147,215 +150,120 @@
 
         
 
-            <!-- Breadcrumb for tag & category page -->
-
-    <article class="kratos-hentry kratos-entry-border-new clearfix">
-        <div class="kratos-breadcrumb">
-            <a href="/">
-                <i class="fa fa-home"></i>
-            </a>
-            <i class="fa fa-angle-right"></i>
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
             
-
-                <a href="/categories/">
-                    分类
-                </a>
-
-                
-                
-                    <i class="fa fa-angle-right"></i>
-                    <a href="/categories/%E9%A1%B9%E7%9B%AE/">
-                        项目
-                    </a>
-                
-                    <i class="fa fa-angle-right"></i>
-                    <a href="/categories/%E9%A1%B9%E7%9B%AE/his/">
-                        his
-                    </a>
-                
+                <h1 class="kratos-entry-title text-center">Redis-短信登录03-隐藏用户敏感信息</h1>
             
             
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.63K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1662974138335"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            <hr />
+            <p>​        我们通过浏览器观察到此时用户的全部信息都在，这样极为不靠谱，所以我们应当在返回用户信息之前，将用户的敏感信息进行隐藏。</p>
+<p>​        采用的核心思路就是：书写一个UserDto对象，这个UserDto对象就没有敏感信息了，我们在返回前，将有用户敏感信息的User对象转化成没有敏感信息的UserDto对象，那么就能够避免这个尴尬的问题了</p>
+<p><strong>将返回客户端的user实体类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode(callSuper = false)</span></span><br><span class="line"><span class="meta">@Accessors(chain = true)</span></span><br><span class="line"><span class="meta">@TableName(&quot;tb_user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 主键</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@TableId(value = &quot;id&quot;, type = IdType.AUTO)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String nickName;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">icon</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> LocalDateTime createTime;</span><br><span class="line">    <span class="keyword">private</span> LocalDateTime updateTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>转化为UserDTO类型</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDTO</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String nickName;</span><br><span class="line">    <span class="keyword">private</span> String icon;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>UserServiceImpl：</strong></p>
+<p>不过 Hutool工具已经给我们封装好了， 可以自动把User的属性拷贝到UserDTO对象里。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//7.保存用户信息到session中</span></span><br><span class="line">session.setAttribute(<span class="string">&quot;user&quot;</span>, BeanUtils.copyProperties(user,UserDTO.class));</span><br></pre></td></tr></table></figure>
+
+<p><strong>LoginInterceptor拦截器处：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"> <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">     <span class="comment">// 1. 获取session</span></span><br><span class="line">     HttpSession session= request.getSession();</span><br><span class="line">     <span class="comment">// 2. 获取session中的用户</span></span><br><span class="line">     <span class="type">Object</span> <span class="variable">user</span> <span class="operator">=</span> session.getAttribute(<span class="string">&quot;user&quot;</span>);</span><br><span class="line">     <span class="comment">// 3. 判断用户是否存在</span></span><br><span class="line">     <span class="keyword">if</span> (user==<span class="literal">null</span>) &#123;</span><br><span class="line">         <span class="comment">// 4. 不存在，拦截, 返回401状态码</span></span><br><span class="line">         response.setStatus(<span class="number">401</span>);</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">// 5. 存在，保存用户信息到 ThreadLocal</span></span><br><span class="line">     UserHolder.saveUser((UserDTO) user);</span><br><span class="line">     <span class="comment">// 6. 放行</span></span><br><span class="line">     <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-    </article>
-
-
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/08/29/his-%E8%A7%A3%E5%86%B3%E5%B7%B2%E7%94%A8%E5%8F%B7%E9%A2%9D%E9%97%AE%E9%A2%98-%E7%BB%84%E4%BB%B6Date%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84datetime%E6%AF%94%E8%BE%83/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/08/29/his-%E8%A7%A3%E5%86%B3%E5%B7%B2%E7%94%A8%E5%8F%B7%E9%A2%9D%E9%97%AE%E9%A2%98-%E7%BB%84%E4%BB%B6Date%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84datetime%E6%AF%94%E8%BE%83/">his-解决已用号额问题(组件Date类型数据与数据库的datetime比较)</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                一开始因为组件的Date类型与数据库的datetime不一致，导致的查询 list 结果为空。
-这是我们 vue 组件代码 
-1234567891011&lt;el-descriptions-item label=&quot;看诊日期...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-08-29
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/his/" rel="tag">his</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/08/29/his-%E8%A7%A3%E5%86%B3%E5%B7%B2%E7%94%A8%E5%8F%B7%E9%A2%9D%E9%97%AE%E9%A2%98-%E7%BB%84%E4%BB%B6Date%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84datetime%E6%AF%94%E8%BE%83/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/">his-添加挂号信息到后端及清空挂号信息</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                两个按钮1234&lt;div style=&quot;text-align: left&quot;&gt;    &lt;el-button type=&quot;primary&quot; @click=&quot;addNewR...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-08-26
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/08/26/his-%E6%B7%BB%E5%8A%A0%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF%E5%88%B0%E5%90%8E%E7%AB%AF%E5%8F%8A%E6%B8%85%E7%A9%BA%E6%8C%82%E5%8F%B7%E4%BF%A1%E6%81%AF/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/2022/08/26/his-%E6%A0%B9%E6%8D%AE%E6%97%A5%E6%9C%9F%E5%92%8C%E6%8E%92%E7%8F%AD%E8%A7%84%E5%88%99%E5%BE%97%E5%88%B0%E5%8C%BB%E7%94%9F%E5%87%BA%E8%AF%8A%E8%BF%98%E6%98%AF%E4%BC%91%E6%81%AF/">
-                        
-                            <img class="kratos-entry-thumb-new-img">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a> <a class="label-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a>
-                        <h2 class="kratos-entry-title-new"><a href="/2022/08/26/his-%E6%A0%B9%E6%8D%AE%E6%97%A5%E6%9C%9F%E5%92%8C%E6%8E%92%E7%8F%AD%E8%A7%84%E5%88%99%E5%BE%97%E5%88%B0%E5%8C%BB%E7%94%9F%E5%87%BA%E8%AF%8A%E8%BF%98%E6%98%AF%E4%BC%91%E6%81%AF/">his-根据日期和排班规则得到医生出诊还是休息</a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p>
-                            
-                                一、数据库表1.1 排班表
-1.2 员工表
-二、分析排班规则2.1  DAY_OF_WEEK在java中，可以通过Calendar获取的系统时间，DAY_OF_WEEK是说一周的周几，但这里的1是从星期天开始的，星期一是2，星期二是3...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <a>
-                            <i class="fa fa-calendar"></i>
-                            2022-08-26
-                        </a>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/2022/08/26/his-%E6%A0%B9%E6%8D%AE%E6%97%A5%E6%9C%9F%E5%92%8C%E6%8E%92%E7%8F%AD%E8%A7%84%E5%88%99%E5%BE%97%E5%88%B0%E5%8C%BB%E7%94%9F%E5%87%BA%E8%AF%8A%E8%BF%98%E6%98%AF%E4%BC%91%E6%81%AF/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-
-
-
-
-    <div class="hidden">
-        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
         
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Redis/" rel="tag">Redis</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-09-12</span>
+                </div>
+            </div>
+        </footer>
     </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Redis-短信登录02-实现登录校验拦截器" href="/2022/09/12/Redis-短信登录02-实现登录校验拦截器/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/09/12/Redis-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%9503-%E9%9A%90%E8%97%8F%E7%94%A8%E6%88%B7%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF/',
+                path: '/2022/09/12/Redis-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%9503-%E9%9A%90%E8%97%8F%E7%94%A8%E6%88%B7%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
 
-
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
 
         
 
@@ -368,8 +276,6 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -410,6 +316,8 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
