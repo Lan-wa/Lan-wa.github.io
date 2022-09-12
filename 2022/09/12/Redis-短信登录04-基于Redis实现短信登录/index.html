@@ -15,16 +15,16 @@
   
     <meta name="keywords" content="Redis" />
   
-  <meta name="description" content="​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户；     而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随">
+  <meta name="description" content="​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户, 而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随机tok">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-短信登录04-基于Redis实现短信登录">
 <meta property="og:url" content="https://lan-wa.github.io/2022/09/12/Redis-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%9504-%E5%9F%BA%E4%BA%8ERedis%E5%AE%9E%E7%8E%B0%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95/index.html">
 <meta property="og:site_name" content="记录">
-<meta property="og:description" content="​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户；     而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随">
+<meta property="og:description" content="​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户, 而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随机tok">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lan-wa.github.io/null">
 <meta property="article:published_time" content="2022-09-12T12:21:43.000Z">
-<meta property="article:modified_time" content="2022-09-12T13:13:26.114Z">
+<meta property="article:modified_time" content="2022-09-12T13:32:49.529Z">
 <meta property="article:author" content="我爱小小蝶">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
@@ -174,7 +174,7 @@
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1662988406114"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1662989569529"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
                 <div class="kratos-post-inner-toc">
@@ -182,9 +182,7 @@
                 </div>
             
             <hr />
-            <p>​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户；</p>
-<pre><code>    而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随机token为key来存储用户数据，而不是继续用手机号来作为key）
-</code></pre>
+            <p>​         与之前的对比，session登录校验是由tomcat自动地把sessionID写入cookie里，以后每次请求带着cookie就带了sessionID，根据sessionID找到session继而找到用户, 而现在是以token作为登录令牌，由于没有tomcat的帮助，我们需要手动地把token返回给前端，而后每次请求基于 token 再从 redis 中获取用户（以随机token为key来存储用户数据，而不是继续用手机号来作为key）</p>
 <h1 id="一、session共享问题"><a href="#一、session共享问题" class="headerlink" title="一、session共享问题"></a>一、session共享问题</h1><p><strong>核心思路分析：</strong></p>
 <p>每个tomcat中都有一份属于自己的session,假设用户第一次访问第一台tomcat，并且把自己的信息存放到第一台服务器的session中，但是第二次这个用户访问到了第二台tomcat，那么在第二台服务器上，肯定没有第一台服务器存放的session，所以此时 整个登录拦截功能就会出现问题，我们能如何解决这个问题呢？早期的方案是session拷贝，就是说虽然每个tomcat上都有不同的session，但是每当任意一台服务器的session修改时，都会同步给其他的Tomcat服务器的session，这样的话，就可以实现session的共享了</p>
 <p><strong>但是这种方案具有两个大问题</strong></p>
