@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>java8新特性-Lambda表达式 | 记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java8" />
+  
+  <meta name="description" content="一、Lambda表达式Lambda表达式是一种对接口实现的简洁写法     1.1 示例：在老版本的 Java中是如何排列字符串的： 12345678List&lt;String&gt; list &#x3D; Arrays.asList(&quot;banana&quot;,&quot;apple&quot;, &quot;sun&quot;,&quot;wall&quot;,&quot;applet&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8新特性-Lambda表达式">
+<meta property="og:url" content="https://lan-wa.github.io/2022/11/20/java8%E6%96%B0%E7%89%B9%E6%80%A7-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="记录">
+<meta property="og:description" content="一、Lambda表达式Lambda表达式是一种对接口实现的简洁写法     1.1 示例：在老版本的 Java中是如何排列字符串的： 12345678List&lt;String&gt; list &#x3D; Arrays.asList(&quot;banana&quot;,&quot;apple&quot;, &quot;sun&quot;,&quot;wall&quot;,&quot;applet&amp;q">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2022-11-20T10:11:39.000Z">
+<meta property="article:modified_time" content="2022-11-23T15:36:48.658Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="java8">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>记录</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">java8新特性-Lambda表达式</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2022-11-20</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~3.66K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1669217808658"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、Lambda表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 示例：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%8E%A8%E8%8D%90%E5%86%99%E6%B3%95%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 推荐写法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 总结：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">二、接口的默认方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3-Functional-Interfaces"><span class="toc-number">3.</span> <span class="toc-text">三、函数式接口(Functional Interfaces)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 要求：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 示例：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">3.2 测试：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-number">3.3.1.</span> <span class="toc-text">测试结果：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Function%E6%BA%90%E7%A0%81%EF%BC%9A"><span class="toc-number">3.4.</span> <span class="toc-text">3.3 Function源码：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interface-Function-lt-T-R-gt"><span class="toc-number">3.4.1.</span> <span class="toc-text">Interface Function&lt;T,R&gt;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E2%80%94%E6%89%A9%E5%B1%95%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">3.4 内置函数式接口—扩展：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Optional"><span class="toc-number">4.</span> <span class="toc-text">四、Optional</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">五、方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E9%80%9A%E8%BF%87%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E6%9D%A5%E8%A1%A8%E7%A4%BA"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 通过静态方法引用来表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">5.1.1.</span> <span class="toc-text">语法:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">5.1.2.</span> <span class="toc-text">案例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 构造方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-number">5.2.2.</span> <span class="toc-text">案例:</span></a></li></ol></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="一、Lambda表达式"><a href="#一、Lambda表达式" class="headerlink" title="一、Lambda表达式"></a>一、Lambda表达式</h1><div class="alert alert-primary"><div class="icon"><i class="fa fa-refresh"></i></div><div class="text"><p>Lambda表达式是一种对接口实现的简洁写法</p>
+</div></div>
+
+
+
+<h2 id="1-1-示例："><a href="#1-1-示例：" class="headerlink" title="1.1 示例："></a>1.1 示例：</h2><p>在老版本的 Java中是如何排列字符串的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;banana&quot;</span>,<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;sun&quot;</span>,<span class="string">&quot;wall&quot;</span>,<span class="string">&quot;applet&quot;</span>);</span><br><span class="line">      Collections.sort(list, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;String&gt;() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(String o1, String o2)</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> o2.compareTo(o1);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      System.out.println(list);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>输出：</strong></p>
+<p>[wall, sun, banana, applet, apple]</p>
+<p>​        只需要给静态方法Collections.sort传入一个 List 对象以及一个比较器来按指定顺序排列。通常做法都是创建一个匿名的比较器对象然后将其传递给 sort 方法。</p>
+<p><strong>Java 8提供了更简洁的语法，lambda表达式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(list, (String o1, String o2)-&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> o2.compareTo(o1);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>显然，这样就不用再写传统的匿名对象的方式了，这样代码变得更简短。</p>
+<p><strong>这段代码我们还可以写得再简短些：</strong></p>
+<p>只有一条return语句，将花括号跟return去掉，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(list, (String o1, String o2)-&gt; o2.compareTo(o1));</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>还可以再简短一点：</strong></p>
+<p>将数据类型string删掉。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(list, (o1, o2)-&gt; o2.compareTo(o1));</span><br></pre></td></tr></table></figure>
+
+<div style="color:red">因为List 类本身就有一个 sort方法。并且 Java编译器可以自动推导出参数类型，所以你可以不用再写一次类型。</div>
+
+
+
+<h2 id="1-2-推荐写法："><a href="#1-2-推荐写法：" class="headerlink" title="1.2 推荐写法："></a>1.2 推荐写法：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">([名字<span class="number">1</span>,名字N])-&gt;&#123;</span><br><span class="line">    方法体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>()和{}都不会省略,是为了提高可读性</p>
+<p>只会省略参数类型</p>
+</blockquote>
+<h2 id="1-3-总结："><a href="#1-3-总结：" class="headerlink" title="1.3 总结："></a>1.3 总结：</h2><ul>
+<li><p>如果方法体只有一行的情况,那么{}可以省略</p>
+<blockquote>
+<p>注意了如果该行是return语句,那么return关键字也必须省略</p>
+</blockquote>
+</li>
+<li><p>如果方法只有一个参数的情况,那么()也可以省略</p>
+</li>
+<li><p>对于方法的参数类型,要么全部省略要么全部不省略</p>
+</li>
+</ul>
+<h1 id="二、接口的默认方法"><a href="#二、接口的默认方法" class="headerlink" title="二、接口的默认方法"></a>二、接口的默认方法</h1><p>Java 8使我们能够通过使用 default关键字向接口添加<strong>非抽象方法</strong>实现（含方法体的方法）。</p>
+<p>重写抽象方法时可直接调用默认方法。</p>
+<h1 id="三、函数式接口-Functional-Interfaces"><a href="#三、函数式接口-Functional-Interfaces" class="headerlink" title="三、函数式接口(Functional Interfaces)"></a>三、函数式接口(Functional Interfaces)</h1><p>为了解决如何使现有的函数更友好的支持Lambda表达式的问题。</p>
+<h2 id="3-1-要求："><a href="#3-1-要求：" class="headerlink" title="3.1 要求："></a>3.1 要求：</h2><ul>
+<li><p>接口只有一个抽象方法，但可以有多个非抽象方法；【这种接口一般称为函数式接口】</p>
+<blockquote>
+<p>可以在接口上添加@FunctionalInterface注解来做校验，大于一个抽象方法就会报错。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="3-2-示例："><a href="#3-2-示例：" class="headerlink" title="3.2 示例："></a>3.2 示例：</h2><ol>
+<li>当使用多个抽象方法时（接口里的方法public abstract默认省略）</li>
+</ol>
+<p><img src="/../images/java/e1.png"></p>
+<ol start="2">
+<li>正确写法：</li>
+</ol>
+<p><img src="/../images/java/e2.png"></p>
+<h2 id="3-2-测试："><a href="#3-2-测试：" class="headerlink" title="3.2 测试："></a>3.2 测试：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">       Function&lt;String, Integer&gt; convert = (String s)-&gt; Integer.valueOf(s);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 将数字字符串转换为整数类型</span></span><br><span class="line">       <span class="type">Integer</span> <span class="variable">converted</span> <span class="operator">=</span> convert.apply(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">       System.out.println(converted.getClass());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h3><p><img src="/../images/java/e3.png"></p>
+<h2 id="3-3-Function源码："><a href="#3-3-Function源码：" class="headerlink" title="3.3 Function源码："></a>3.3 Function源码：</h2><p><img src="D:/blog/tto/source/images/java/e4.png"></p>
+<h3 id="Interface-Function-lt-T-R-gt"><a href="#Interface-Function-lt-T-R-gt" class="headerlink" title="Interface Function&lt;T,R&gt;"></a>Interface Function&lt;T,R&gt;</h3><ul>
+<li><p>参数类型  </p>
+<p>T - 函数输入的类型  </p>
+<p>R - 函数的结果类型 </p>
+</li>
+<li><div style="color:red">表示接受一个参数并产生结果的函数。 </div>
+</li>
+<li><p>R apply(T t)方法: 将Function对象应用到输入的参数上，然后返回计算结果。</p>
+</li>
+</ul>
+<h2 id="3-4-内置函数式接口—扩展："><a href="#3-4-内置函数式接口—扩展：" class="headerlink" title="3.4 内置函数式接口—扩展："></a>3.4 内置函数式接口—扩展：</h2><ol>
+<li>Predicate 接口是只有一个参数的返回布尔类型值的 <strong>断言型</strong> 接口。</li>
+<li>Supplier 接口产生给定泛型类型的结果。 与 Function 接口不同，Supplier 接口不接受参数。</li>
+<li>Consumer 接口表示要对单个输入参数执行的操作。</li>
+</ol>
+<h1 id="四、Optional"><a href="#四、Optional" class="headerlink" title="四、Optional"></a>四、Optional</h1><p>Optional不是函数式接口，而是用于防止 NullPointerException 的工具。</p>
+<p>Optional 是一个简单的容器，其值可能是null或者不是null。在Java 8中，你应该返回 Optional 而不是 null。</p>
+<h1 id="五、方法引用"><a href="#五、方法引用" class="headerlink" title="五、方法引用"></a>五、方法引用</h1><p>可以通过 <strong>::</strong> 关键字传递方法或构造函数的引用。</p>
+<h2 id="5-1-通过静态方法引用来表示"><a href="#5-1-通过静态方法引用来表示" class="headerlink" title="5.1 通过静态方法引用来表示"></a>5.1 通过静态方法引用来表示</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法:"></a>语法:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接口类型 名称 = 类名::<span class="keyword">static</span>方法名</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例:"></a>案例:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Function&lt;String, Integer&gt; convert = (String s)-&gt; Integer.valueOf(s);</span></span><br><span class="line">Function&lt;String, Integer&gt; convert = Integer::valueOf;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数字字符串转换为整数类型</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">converted</span> <span class="operator">=</span> convert.apply(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">System.out.println(converted.getClass());  <span class="comment">// class java.lang.Integer</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2-构造方法引用"><a href="#5-2-构造方法引用" class="headerlink" title="5.2 构造方法引用"></a>5.2 构造方法引用</h2><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接口类型 名称 = 类名::<span class="keyword">new</span>;   <span class="comment">//代表引用构造器,至于哪个构造器看接口方法的参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例:"></a>案例:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">_03TestLambdaConstructorRef</span> &#123;</span><br><span class="line">	 </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">One</span> <span class="variable">one</span> <span class="operator">=</span> Dog::<span class="keyword">new</span>;  <span class="comment">// Dog::new 代表构造器[代表无参构造器]</span></span><br><span class="line">		</span><br><span class="line">		<span class="type">Dog</span> <span class="variable">dog</span> <span class="operator">=</span> one.test();<span class="comment">//调用无参构造器</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(dog); <span class="comment">// Dog [name=null, color=null]</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="type">Two</span> <span class="variable">two</span> <span class="operator">=</span> Dog::<span class="keyword">new</span>; <span class="comment">// Dog::new 代表构造器[代表String name,String color构造器]</span></span><br><span class="line">		<span class="type">Dog</span> <span class="variable">otherDog</span> <span class="operator">=</span> two.test(<span class="string">&quot;小狗&quot;</span>, <span class="string">&quot;黑色&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(otherDog); <span class="comment">// Dog [name=小狗, color=黑色]</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String color;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Dog</span><span class="params">()</span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Dog</span><span class="params">(String name, String color)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.color = color;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;Dog [name=&quot;</span> + name + <span class="string">&quot;, color=&quot;</span> + color + <span class="string">&quot;]&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">One</span>&#123;</span><br><span class="line">	Dog <span class="title function_">test</span><span class="params">()</span>;   <span class="comment">//调用无参</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Two</span>&#123;</span><br><span class="line">	Dog <span class="title function_">test</span><span class="params">(String name,String color)</span>;  <span class="comment">//调用有参</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java8/" rel="tag">java8</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2022-11-23</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Feign远程服务无法调用问题解决" href="/2022/10/25/Feign远程服务无法调用问题解决/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" java8新特性-Streams流" href="/2022/11/23/java8新特性-Streams流/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/11/20/java8%E6%96%B0%E7%89%B9%E6%80%A7-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/',
+                path: '/2022/11/20/java8%E6%96%B0%E7%89%B9%E6%80%A7-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                152
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                45
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                31
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">一、Lambda表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-text">1.1 示例：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%8E%A8%E8%8D%90%E5%86%99%E6%B3%95%EF%BC%9A"><span class="toc-text">1.2 推荐写法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">1.3 总结：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-text">二、接口的默认方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3-Functional-Interfaces"><span class="toc-text">三、函数式接口(Functional Interfaces)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%A6%81%E6%B1%82%EF%BC%9A"><span class="toc-text">3.1 要求：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-text">3.2 示例：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="toc-text">3.2 测试：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-text">测试结果：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Function%E6%BA%90%E7%A0%81%EF%BC%9A"><span class="toc-text">3.3 Function源码：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interface-Function-lt-T-R-gt"><span class="toc-text">Interface Function&lt;T,R&gt;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3%E2%80%94%E6%89%A9%E5%B1%95%EF%BC%9A"><span class="toc-text">3.4 内置函数式接口—扩展：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Optional"><span class="toc-text">四、Optional</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-text">五、方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E9%80%9A%E8%BF%87%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E6%9D%A5%E8%A1%A8%E7%A4%BA"><span class="toc-text">5.1 通过静态方法引用来表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-text">5.2 构造方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="toc-text">案例:</span></a></li></ol></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98/">实战</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98%E7%AF%87/">实战篇</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E6%BA%90%E7%A0%81%E7%AF%87/">源码篇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSecurity/">SpringSecurity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/elementplus/">elementplus</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%85%A5%E9%97%A8/">入门</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">16</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a><span class="category-list-count">3</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/LeetCode/" style="font-size: 0.6em;">LeetCode</a> <a href="/tags/Linux/" style="font-size: 0.63em;">Linux</a> <a href="/tags/MySQL/" style="font-size: 0.77em;">MySQL</a> <a href="/tags/Redis/" style="font-size: 0.74em;">Redis</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.69em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.69em;">Spring MVC</a> <a href="/tags/SpringSecurity/" style="font-size: 0.6em;">SpringSecurity</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.66em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.8em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.66em;">bootstrap-table</a> <a href="/tags/elementplus/" style="font-size: 0.71em;">elementplus</a> <a href="/tags/es6/" style="font-size: 0.6em;">es6</a> <a href="/tags/his/" style="font-size: 0.6em;">his</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2022/11/23/java8%E6%96%B0%E7%89%B9%E6%80%A7-Streams%E6%B5%81/"><i class="fa  fa-book"></i> java8新特性-Streams流</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/11/20/java8%E6%96%B0%E7%89%B9%E6%80%A7-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fa  fa-book"></i> java8新特性-Lambda表达式</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/10/25/Feign%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E8%B0%83%E7%94%A8%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"><i class="fa  fa-book"></i> Feign远程服务无法调用问题解决</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/10/25/Spring%E4%BA%8B%E5%8A%A1/"><i class="fa  fa-book"></i> Spring事务</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/10/25/MySQL-%E4%BB%80%E4%B9%88%E6%98%AF%E6%85%A2%E6%9F%A5%E8%AF%A2%E3%80%81%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%EF%BC%9F%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%EF%BC%9F/"><i class="fa  fa-book"></i> MySQL-什么是慢查询、如何监控？如何排查？</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2022 记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
