@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>JUC高并发-JUC概述 | 记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="JUC" />
+  
+  <meta name="description" content="JUC 就是 java.util .concurrent 工具包的简称。这是一个处理线程的工具包，JDK 1.5开始出现的,在此包中增加了在并发编程中很常用的工具类。     一、进程与线程1.1 进程​        一个在内存中运行的应用程序。每个进程都有自己独立的一块内存空间，一个进程可以有多个线程。 1.2 线程​        进程中的一个执行任务（控制单元），负责当前进程中程序的执行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC高并发-JUC概述">
+<meta property="og:url" content="https://lan-wa.github.io/2023/01/18/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-JUC%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="记录">
+<meta property="og:description" content="JUC 就是 java.util .concurrent 工具包的简称。这是一个处理线程的工具包，JDK 1.5开始出现的,在此包中增加了在并发编程中很常用的工具类。     一、进程与线程1.1 进程​        一个在内存中运行的应用程序。每个进程都有自己独立的一块内存空间，一个进程可以有多个线程。 1.2 线程​        进程中的一个执行任务（控制单元），负责当前进程中程序的执行。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2023-01-18T12:23:20.000Z">
+<meta property="article:modified_time" content="2023-01-18T13:20:29.008Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="JUC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>记录</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">JUC高并发-JUC概述</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2023-01-18</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.83K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1674048029008"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一、进程与线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 线程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">二、进程与线程的区别总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">3.</span> <span class="toc-text">三、线程的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 线程状态的枚举类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-Thread-State"><span class="toc-number">3.1.1.</span> <span class="toc-text">3.1.1 Thread.State</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="toc-number">4.</span> <span class="toc-text">四、并发与并行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AE%A1%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">五、管程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">六、用户线程与守护线程</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div class="alert alert-primary"><div class="icon"><i class="fa fa-refresh"></i></div><div class="text"><p>JUC 就是 java.util .concurrent 工具包的简称。这是一个处理线程的工具包，JDK 1.5开始出现的,在此包中增加了在并发编程中很常用的工具类。</p>
+</div></div>
+
+
+
+<h1 id="一、进程与线程"><a href="#一、进程与线程" class="headerlink" title="一、进程与线程"></a>一、进程与线程</h1><h2 id="1-1-进程"><a href="#1-1-进程" class="headerlink" title="1.1 进程"></a>1.1 进程</h2><p>​        一个在内存中运行的应用程序。每个进程都有自己独立的一块内存空间，一个进程可以有多个线程。</p>
+<h2 id="1-2-线程"><a href="#1-2-线程" class="headerlink" title="1.2 线程"></a>1.2 线程</h2><p>​        进程中的一个执行任务（控制单元），负责当前进程中程序的执行。一个进程至少有一个线程，一个进程可以运行多个线程，多个线程可共享数据。</p>
+<p>​        与进程不同的是同类的多个线程共享进程的堆和方法区资源，但每个线程有自己的程序计数器、虚拟机栈和本地方法栈，所以系统在产生一个线程，或是在各个线程之间作切换工作时，负担要比进程小得多，也正因为如此，线程也被称为轻量级进程。</p>
+<h1 id="二、进程与线程的区别总结"><a href="#二、进程与线程的区别总结" class="headerlink" title="二、进程与线程的区别总结"></a>二、进程与线程的区别总结</h1><p><strong>根本区别：</strong>进程是操作系统资源分配的基本单位，而线程是处理器任务调度和执行的基本单位</p>
+<p><strong>资源开销</strong>：每个进程都有独立的代码和数据空间（程序上下文），程序之间的切换会有较大的开销；线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运行栈和程序计数器（PC），线程之间切换的开销小。</p>
+<p><strong>包含关系：</strong>如果一个进程内有多个线程，则执行过程不是一条线的，而是多条线（线程）共同完成的；线程是进程的一部分，所以线程也被称为轻权进程或者轻量级进程。</p>
+<p><strong>内存分配：</strong>同一进程的线程共享本进程的地址空间和资源，而进程之间的地址空间和资源是相互独立的</p>
+<p><strong>影响关系：</strong>一个进程崩溃后，在保护模式下不会对其他进程产生影响，但是一个线程崩溃整个进程都死掉。所以多进程要比多线程健壮。</p>
+<p><strong>执行过程：</strong>每个独立的进程有程序运行的入口、顺序执行序列和程序出口。但是线程不能独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制，两者均可并发执行</p>
+<h1 id="三、线程的状态"><a href="#三、线程的状态" class="headerlink" title="三、线程的状态"></a>三、线程的状态</h1><h2 id="3-1-线程状态的枚举类"><a href="#3-1-线程状态的枚举类" class="headerlink" title="3.1 线程状态的枚举类"></a>3.1 线程状态的枚举类</h2><h3 id="3-1-1-Thread-State"><a href="#3-1-1-Thread-State" class="headerlink" title="3.1.1 Thread.State"></a>3.1.1 Thread.State</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">State</span> &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 尚未启动的线程的线程状态.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,  (新建)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 可运行线程的线程状态。</span></span><br><span class="line"><span class="comment">         * 可运行的线程状态在Java虚拟机中执行，但可能正在等待来自操作系统的其他资源例如处理器。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE, (准备就绪)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 线程的线程状态，该线程被阻止等待监视器锁定。</span></span><br><span class="line"><span class="comment">         * 处于阻塞状态的线程正在等待监视器锁定</span></span><br><span class="line"><span class="comment">         * 输入同步块/方法或</span></span><br><span class="line"><span class="comment">         * 调用后重新输入同步块/方法</span></span><br><span class="line"><span class="comment">         *｛<span class="doctag">@link</span> Object#wait() Object.wait｝。 </span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED, (阻塞)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *等待线程的线程状态。</span></span><br><span class="line"><span class="comment">         *由于调用以下方法：</span></span><br><span class="line"><span class="comment">         *＜ul＞</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;&#123;<span class="doctag">@linkObject</span>#wait() Object.wait&#125;，无超时&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;｛<span class="doctag">@link</span>#join（）Thread.join｝，无超时&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;｛<span class="doctag">@link</span> LockSupport#park（）LockSupport.park｝&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *&lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *＜p＞处于等待状态的线程正在等待另一个线程</span></span><br><span class="line"><span class="comment">         *执行特定动作。</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *例如，调用了&lt;tt&gt;Object.wait（）&lt;/tt&gt;的线程</span></span><br><span class="line"><span class="comment">         *对象正在等待另一个线程调用</span></span><br><span class="line"><span class="comment">         *&lt;tt&gt;Object.notify（）&lt;/tt&gt;或&lt;tt&gt;对象.notifyAll（）&lt;/tt&gt;打开</span></span><br><span class="line"><span class="comment">         *该对象。已调用&lt;tt&gt;thread.jjoin（）&lt;/tt&gt;的线程</span></span><br><span class="line"><span class="comment">         *正在等待指定的线程终止。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        WAITING, (不见不散)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *具有指定等待时间的等待线程的线程状态。</span></span><br><span class="line"><span class="comment">         *由于调用</span></span><br><span class="line"><span class="comment">         *以下方法具有指定的正等待时间：</span></span><br><span class="line"><span class="comment">         *＜ul＞</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;&#123;<span class="doctag">@link</span>#sleepThread.sleep&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;｛<span class="doctag">@link</span> Object#wait（long）Object.wait｝超时&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *&lt;li&gt;｛<span class="doctag">@link</span>#join（long）Thread.join｝超时&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;li&gt;｛<span class="doctag">@link</span> LockSupport#parkNanos LockSupport.parkNanos｝&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;li&gt;｛<span class="doctag">@link</span> LockSupport#parkUntil LockSupport.parkUntil｝&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TIMED_WAITING, (过时不候)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 终止线程的线程状态。</span></span><br><span class="line"><span class="comment">		 * 线程已完成执行。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TERMINATED; (终结)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="四、并发与并行"><a href="#四、并发与并行" class="headerlink" title="四、并发与并行"></a>四、并发与并行</h1><p><strong>并发：</strong>同一时刻多个线程在访问统一资源，多个线程对一个点</p>
+<p>​           例子： 春运抢票、电商秒杀…</p>
+<p><strong>并行：</strong>多项工作一起执行，之后再汇总</p>
+<pre><code>       例如：泡方便面，电水壶烧水，一边撕调料倒入桶中...
+</code></pre>
+<h1 id="五、管程"><a href="#五、管程" class="headerlink" title="五、管程"></a>五、管程</h1><pre><code>     管程叫做Monitor监视器，java中叫做锁，在操作系统中叫做监视器，它是一个同步机制，保证在同一时间内，只有一个线程能去访问被保护的数据或代码。
+</code></pre>
+<h1 id="六、用户线程与守护线程"><a href="#六、用户线程与守护线程" class="headerlink" title="六、用户线程与守护线程"></a>六、用户线程与守护线程</h1><p><strong>用户线程：</strong>我们用的级别上都是用户线程，自定义线程。</p>
+<p><strong>守护线程：</strong>比如垃圾回收</p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/JUC/" rel="tag">JUC</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2023-01-18</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" nginx-性能监控及性能状态参数" href="/2023/01/17/nginx-性能监控及性能状态参数/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2023/01/18/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-JUC%E6%A6%82%E8%BF%B0/',
+                path: '/2023/01/18/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-JUC%E6%A6%82%E8%BF%B0/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                156
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                47
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                33
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-text">一、进程与线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%BF%9B%E7%A8%8B"><span class="toc-text">1.1 进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E7%BA%BF%E7%A8%8B"><span class="toc-text">1.2 线程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="toc-text">二、进程与线程的区别总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-text">三、线程的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%B1%BB"><span class="toc-text">3.1 线程状态的枚举类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-Thread-State"><span class="toc-text">3.1.1 Thread.State</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="toc-text">四、并发与并行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AE%A1%E7%A8%8B"><span class="toc-text">五、管程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B"><span class="toc-text">六、用户线程与守护线程</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">JUC并发编程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98/">实战</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98%E7%AF%87/">实战篇</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E6%BA%90%E7%A0%81%E7%AF%87/">源码篇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSecurity/">SpringSecurity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/elementplus/">elementplus</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%85%A5%E9%97%A8/">入门</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">16</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a><span class="category-list-count">3</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/JUC/" style="font-size: 0.6em;">JUC</a> <a href="/tags/LeetCode/" style="font-size: 0.6em;">LeetCode</a> <a href="/tags/Linux/" style="font-size: 0.63em;">Linux</a> <a href="/tags/MySQL/" style="font-size: 0.77em;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 0.66em;">Nginx</a> <a href="/tags/Redis/" style="font-size: 0.74em;">Redis</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.69em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.69em;">Spring MVC</a> <a href="/tags/SpringSecurity/" style="font-size: 0.6em;">SpringSecurity</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.66em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.8em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.66em;">bootstrap-table</a> <a href="/tags/elementplus/" style="font-size: 0.71em;">elementplus</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/18/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-JUC%E6%A6%82%E8%BF%B0/"><i class="fa  fa-book"></i> JUC高并发-JUC概述</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/17/nginx-%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E6%80%A7%E8%83%BD%E7%8A%B6%E6%80%81%E5%8F%82%E6%95%B0/"><i class="fa  fa-book"></i> nginx-性能监控及性能状态参数</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/17/nginx-%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB/"><i class="fa  fa-book"></i> nginx-动静分离</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/13/%E6%9C%AC%E6%9C%BA%E5%9F%9F%E5%90%8D%E6%98%A0%E5%B0%84/"><i class="fa  fa-book"></i> 本机域名映射</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2022/11/23/java8%E6%96%B0%E7%89%B9%E6%80%A7-Streams%E6%B5%81/"><i class="fa  fa-book"></i> java8新特性-Streams流</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2023 记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
