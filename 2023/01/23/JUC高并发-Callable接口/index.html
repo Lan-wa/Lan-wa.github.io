@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>JUC高并发-Callable接口 | 记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="JUC" />
+  
+  <meta name="description" content="创建线程的方式有多种：  进程Thread类 实现Runnable接口 Callable接口 线程池方式  问题： ​        很多时候我们让多线程去帮我们处理事情，是需要拿到返回值的，有了异常也可以处理，比如某系统，一个页面展示3个块，而每个块展示的信息从后端获取的接口都不一样，那么是让前端调后端3次接口吗？​        这肯定不行，后端可以把3个块的信息，包装成一个接口，全部返回，那">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC高并发-Callable接口">
+<meta property="og:url" content="https://lan-wa.github.io/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Callable%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="记录">
+<meta property="og:description" content="创建线程的方式有多种：  进程Thread类 实现Runnable接口 Callable接口 线程池方式  问题： ​        很多时候我们让多线程去帮我们处理事情，是需要拿到返回值的，有了异常也可以处理，比如某系统，一个页面展示3个块，而每个块展示的信息从后端获取的接口都不一样，那么是让前端调后端3次接口吗？​        这肯定不行，后端可以把3个块的信息，包装成一个接口，全部返回，那">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2023-01-23T10:54:24.000Z">
+<meta property="article:modified_time" content="2023-01-23T13:16:22.127Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="JUC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>记录</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">JUC高并发-Callable接口</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2023-01-23</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~4.76K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1674479782127"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Runnable%E6%8E%A5%E5%8F%A3%E4%B8%8ECallable%E6%8E%A5%E5%8F%A3%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">Runnable接口与Callable接口区别：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Callable%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">1.Callable接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Future%E6%8E%A5%E5%8F%A3"><span class="toc-number">3.</span> <span class="toc-text">2.Future接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-FutureTask%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">3.FutureTask类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0demo"><span class="toc-number">5.</span> <span class="toc-text">代码实现demo</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <p><strong>创建线程的方式有多种：</strong></p>
+<ol>
+<li>进程Thread类</li>
+<li>实现Runnable接口</li>
+<li><strong>Callable接口</strong></li>
+<li>线程池方式</li>
+</ol>
+<p><strong>问题：</strong></p>
+<p>​        很多时候我们让多线程去帮我们处理事情，是需要拿到返回值的，有了异常也可以处理，比如某系统，一个页面展示3个块，而每个块展示的信息从后端获取的接口都不一样，那么是让前端调后端3次接口吗？<br>​        这肯定不行，后端可以把3个块的信息，包装成一个接口，全部返回，那么问题来了，后端调用3个接口，比如第一个接口需要1秒，第二个需要2秒，第三个需要3秒，那么包装的这个接口响应时间最少6秒，怎么解决这个问题呢？</p>
+<p><strong>解决方案：</strong></p>
+<p>​    可以用多线程来帮我们解决。<br>​        启动3个线程，每个线程去调用一个接口，那么3个线程一共执行完的时间就是最慢的那个线程的执行时间，这样接口的响应时间就变成了3秒，一下节省了一半的时间。</p>
+<h1 id="Runnable接口与Callable接口区别："><a href="#Runnable接口与Callable接口区别：" class="headerlink" title="Runnable接口与Callable接口区别："></a>Runnable接口与Callable接口区别：</h1><p>1、Callable规定的方法是call()， Runnable规定的方法是run()</p>
+<p>2、Callable的任务执行后可返回值，而Runnable的任务是不能返回值得</p>
+<p>3、call方法可以抛出异常，run方法不可以</p>
+<p>4、运行Callable任务可以拿到一个Future对象，表示异步计算的结果。它提供了检查计算是否完成的方法，以等待计算的完成，并检索计算的结果。通过Future对象可以了解任务执行情况，可取消任务的执行，还可获取执行结果。</p>
+<h1 id="1-Callable接口"><a href="#1-Callable接口" class="headerlink" title="1.Callable接口"></a>1.Callable<V>接口</h1><p>​        我们先回顾一下java.lang.Runnable接口，就声明了run(),其返回值为void，当然就无法获取结果了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>而Callable的接口定义如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Callable</span>&lt;V&gt; &#123; </span><br><span class="line">   V <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>该接口声明了一个名称为call()的方法，同时这个方法可以有返回值V，也可以抛出异常。</p>
+<h1 id="2-Future接口"><a href="#2-Future接口" class="headerlink" title="2.Future接口"></a>2.Future<V>接口</h1><p>​        Future<V>接口是用来获取异步计算结果的，说白了就是对具体的Runnable或者Callable对象任务执行的结果进行获取(get())，取消(cancel())，判断是否完成等操作。我们看看Future接口的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Future</span>&lt;V&gt; &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">cancel</span><span class="params">(<span class="type">boolean</span> mayInterruptIfRunning)</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isCancelled</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isDone</span><span class="params">()</span>;</span><br><span class="line">    V <span class="title function_">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException;</span><br><span class="line">    V <span class="title function_">get</span><span class="params">(<span class="type">long</span> timeout, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法解析：</strong></p>
+<ol>
+<li>V get() ：获取异步执行的结果，如果没有结果可用，此方法会阻塞直到异步计算完成。</li>
+<li>V get(Long timeout , TimeUnit unit) ：获取异步执行结果，如果没有结果可用，此方法会阻塞，但是会有时间限制，如果阻塞时间超过设定的timeout时间，该方法将抛出异常。</li>
+<li>boolean isDone() ：如果任务执行结束，无论是正常结束或是中途取消还是发生异常，都返回true。</li>
+<li>boolean isCanceller() ：如果任务完成前被取消，则返回true。</li>
+<li>boolean cancel(boolean mayInterruptRunning) ：如果任务还没开始，执行cancel(…)方法将返回false；如果任务已经启动，执行cancel(true)方法将以中断执行此任务线程的方式来试图停止任务，如果停止成功，返回true；当任务已经启动，执行cancel(false)方法将不会对正在执行的任务线程产生影响(让线程正常执行到完成)，此时返回false；当任务已经完成，执行cancel(…)方法将返回false。mayInterruptRunning参数表示是否中断执行中的线程。</li>
+</ol>
+<p><strong>通过方法分析我们也知道实际上Future提供了3种功能</strong>：</p>
+<p>（1）能够中断执行中的任务</p>
+<p>（2）判断任务是否执行完成</p>
+<p>（3）获取任务执行完成后额结果。</p>
+<p>​        但是我们必须明白<strong>Future只是一个接口，我们无法直接创建对象</strong>，因此就需要其实现类FutureTask登场啦。</p>
+<h1 id="3-FutureTask类"><a href="#3-FutureTask类" class="headerlink" title="3.FutureTask类"></a>3.FutureTask类</h1><p>FutureTask类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FutureTask</span>&lt;V&gt; <span class="keyword">implements</span> <span class="title class_">RunnableFuture</span>&lt;V&gt; &#123;</span><br></pre></td></tr></table></figure>
+
+<p>FutureTask类实现了RunnableFuture接口，我们看一下RunnableFuture接口的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">RunnableFuture</span>&lt;V&gt; <span class="keyword">extends</span> <span class="title class_">Runnable</span>, Future&lt;V&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        可以看出FutureTasks 是 RunnableFuture接口的实现类，RunnableFuture继承了Runnable接口和Future接口。所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值。</p>
+<p><strong>FutureTask提供了2个构造器：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">FutureTask</span><span class="params">(Callable&lt;V&gt; callable)</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (callable == <span class="literal">null</span>)</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">       <span class="built_in">this</span>.callable = callable;</span><br><span class="line">       <span class="built_in">this</span>.state = NEW;       <span class="comment">// ensure visibility of callable</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">FutureTask</span><span class="params">(Runnable runnable, V result)</span> &#123;</span><br><span class="line">       <span class="built_in">this</span>.callable = Executors.callable(runnable, result);</span><br><span class="line">       <span class="built_in">this</span>.state = NEW;       <span class="comment">// ensure visibility of callable</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>事实上，FutureTask是Future接口的一个唯一实现类。</strong></p>
+<h1 id="代码实现demo"><a href="#代码实现demo" class="headerlink" title="代码实现demo"></a>代码实现demo</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">callableTest</span><span class="params">()</span> &#123;</span><br><span class="line">       Map&lt;String, Object&gt; returnMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       Callable&lt;List&lt;Film&gt;&gt; callable = ()-&gt; &#123;</span><br><span class="line">           <span class="keyword">return</span> filmService.findAll()</span><br><span class="line">                   .stream()</span><br><span class="line">                   .filter(film -&gt; <span class="string">&quot;内地&quot;</span>.equals(film.getRegion()))</span><br><span class="line">                   .collect(Collectors.toList()); <span class="comment">//去service 查询数据返回</span></span><br><span class="line">       &#125;;</span><br><span class="line"></span><br><span class="line">       Callable&lt;List&lt;User&gt;&gt; callable2 = ()-&gt; userService.findAll(); <span class="comment">//去service 查询数据返回2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       Callable&lt;List&lt;Activity&gt;&gt; listCallable = () -&gt; activityService.findAll();</span><br><span class="line"></span><br><span class="line">       FutureTask&lt;List&lt;Film&gt;&gt; futureTask = <span class="keyword">new</span> <span class="title class_">FutureTask</span>&lt;&gt;(callable);</span><br><span class="line">       FutureTask&lt;List&lt;User&gt;&gt; futureTask2= <span class="keyword">new</span> <span class="title class_">FutureTask</span>&lt;&gt;(callable2);</span><br><span class="line">       FutureTask&lt;List&lt;Activity&gt;&gt; listFutureTask = <span class="keyword">new</span> <span class="title class_">FutureTask</span>&lt;&gt;(listCallable);</span><br><span class="line">       <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(futureTask); <span class="comment">//声明线程</span></span><br><span class="line">       <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(futureTask2);</span><br><span class="line">       <span class="type">Thread</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(listFutureTask);</span><br><span class="line">       t1.start(); <span class="comment">//开始线程</span></span><br><span class="line">       t2.start();</span><br><span class="line">       t3.start();</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           List&lt;Film&gt; list1 = futureTask.get(); <span class="comment">//得到结果</span></span><br><span class="line">           List&lt;User&gt; list2 = futureTask2.get();</span><br><span class="line">           List&lt;Activity&gt; list3 = listFutureTask.get();</span><br><span class="line">           returnMap.put(<span class="string">&quot;list1&quot;</span>,list1); <span class="comment">//将结果放入map中返回</span></span><br><span class="line">           returnMap.put(<span class="string">&quot;list2&quot;</span>,list2);</span><br><span class="line">           returnMap.put(<span class="string">&quot;list3&quot;</span>,list3);</span><br><span class="line">           System.out.println(returnMap);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">           t1.interrupt(); <span class="comment">//关闭线程</span></span><br><span class="line">           t2.interrupt();</span><br><span class="line">           t3.interrupt();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//返回  returnMap</span></span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>具体用在一个service 查询多个集合 返回 开启多个线程 节省查询时间</p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/JUC/" rel="tag">JUC</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2023-01-23</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" JUC高并发-公平锁与非公平锁" href="/2023/01/23/JUC高并发-公平锁与非公平锁/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Callable%E6%8E%A5%E5%8F%A3/',
+                path: '/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Callable%E6%8E%A5%E5%8F%A3/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                161
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                47
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                33
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Runnable%E6%8E%A5%E5%8F%A3%E4%B8%8ECallable%E6%8E%A5%E5%8F%A3%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-text">Runnable接口与Callable接口区别：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Callable%E6%8E%A5%E5%8F%A3"><span class="toc-text">1.Callable接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Future%E6%8E%A5%E5%8F%A3"><span class="toc-text">2.Future接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-FutureTask%E7%B1%BB"><span class="toc-text">3.FutureTask类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0demo"><span class="toc-text">代码实现demo</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">JUC并发编程</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98/">实战</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98%E7%AF%87/">实战篇</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E6%BA%90%E7%A0%81%E7%AF%87/">源码篇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSecurity/">SpringSecurity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/elementplus/">elementplus</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%85%A5%E9%97%A8/">入门</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">16</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a><span class="category-list-count">3</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/JUC/" style="font-size: 0.73em;">JUC</a> <a href="/tags/LeetCode/" style="font-size: 0.6em;">LeetCode</a> <a href="/tags/Linux/" style="font-size: 0.63em;">Linux</a> <a href="/tags/MySQL/" style="font-size: 0.78em;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 0.65em;">Nginx</a> <a href="/tags/Redis/" style="font-size: 0.75em;">Redis</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.68em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.68em;">Spring MVC</a> <a href="/tags/SpringSecurity/" style="font-size: 0.6em;">SpringSecurity</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.65em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.8em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.65em;">bootstrap-table</a> <a href="/tags/elementplus/" style="font-size: 0.7em;">elementplus</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Callable%E6%8E%A5%E5%8F%A3/"><i class="fa  fa-book"></i> JUC高并发-Callable接口</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/"><i class="fa  fa-book"></i> JUC高并发-公平锁与非公平锁</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/20/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E9%9B%86%E5%90%88%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"><i class="fa  fa-book"></i> JUC高并发-集合线程安全问题与解决方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/20/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Condition%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> JUC高并发-Condition的使用</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/20/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Lock%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%BF%B0%E4%B8%8E%E5%AE%9E%E7%8E%B0/"><i class="fa  fa-book"></i> JUC高并发-Lock接口概述与实现</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2023 记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
