@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="">
+  <title>JUC高并发-辅助类 | 记录</title>
+  <meta name="author" content="我爱小小蝶" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="JUC" />
+  
+  <meta name="description" content="一、Semaphore辅助类​        Semaphore 通常我们叫它信号量， 可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。 ​        可以把它简单的理解成我们停车场入口立着的那个显示屏，每有一辆车进入停车场显示屏就会显示剩余车位减1，每有一辆车从停车场出去，显示屏上显示的剩余车辆就会加1，当显示屏上的剩余车位为0时，停车场入口的栏杆就不会再打开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC高并发-辅助类">
+<meta property="og:url" content="https://lan-wa.github.io/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E8%BE%85%E5%8A%A9%E7%B1%BB/index.html">
+<meta property="og:site_name" content="记录">
+<meta property="og:description" content="一、Semaphore辅助类​        Semaphore 通常我们叫它信号量， 可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。 ​        可以把它简单的理解成我们停车场入口立着的那个显示屏，每有一辆车进入停车场显示屏就会显示剩余车位减1，每有一辆车从停车场出去，显示屏上显示的剩余车辆就会加1，当显示屏上的剩余车位为0时，停车场入口的栏杆就不会再打开">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lan-wa.github.io/null">
+<meta property="article:published_time" content="2023-01-23T15:37:13.000Z">
+<meta property="article:modified_time" content="2023-01-23T16:03:23.057Z">
+<meta property="article:author" content="我爱小小蝶">
+<meta property="article:tag" content="JUC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lan-wa.github.io/null">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/star1.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/aboutMe/"><i class="fa fa-user-circle"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/favorite/"><i class="fa fa-star"></i>收藏夹</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">记录</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>记录</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">JUC高并发-辅助类</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2023-01-23</li>
+                <li><i class="fa fa-user"></i> 作者 我爱小小蝶</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.99K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1674489803057"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Semaphore%E8%BE%85%E5%8A%A9%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">一、Semaphore辅助类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95demo%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">测试demo：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E6%88%AA%E5%9B%BE%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">测试结果截图：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Semaphore%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.</span> <span class="toc-text">Semaphore常用方法说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">实现原理：</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="一、Semaphore辅助类"><a href="#一、Semaphore辅助类" class="headerlink" title="一、Semaphore辅助类"></a>一、Semaphore辅助类</h1><p>​        Semaphore 通常我们叫它信号量， 可以用来控制同时访问特定资源的线程数量，通过协调各个线程，以保证合理的使用资源。</p>
+<p>​        可以把它简单的理解成我们停车场入口立着的那个显示屏，每有一辆车进入停车场显示屏就会显示剩余车位减1，每有一辆车从停车场出去，显示屏上显示的剩余车辆就会加1，当显示屏上的剩余车位为0时，停车场入口的栏杆就不会再打开，车辆就无法进入停车场了，直到有一辆车从停车场出去为止。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p><strong>通常用于那些资源有明确访问数量限制的场景，常用于限流 。</strong></p>
+<p>比如：数据库连接池，同时进行连接的线程有数量限制，连接不能超过一定的数量，当连接达到了限制数量后，后面的线程只能排队等前面的线程释放了数据库连接才能获得数据库连接。</p>
+<p>比如：停车场场景，车位数量有限，同时只能容纳多少台车，车位满了之后只有等里面的车离开停车场外面的车才可以进入。</p>
+<h2 id="测试demo："><a href="#测试demo：" class="headerlink" title="测试demo："></a>测试demo：</h2><p>场景： 6部汽车，3个停车位。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SemaphoreDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建SemaphoreDemo，设置许可数量</span></span><br><span class="line">        <span class="type">Semaphore</span> <span class="variable">semaphore</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Semaphore</span>(<span class="number">3</span>);</span><br><span class="line">        <span class="comment">// 模拟六辆车</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= <span class="number">6</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Thread</span>(()-&gt; &#123;</span><br><span class="line">               <span class="comment">// 抢占</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    semaphore.acquire();</span><br><span class="line">                    System.out.println(Thread.currentThread().getName()+<span class="string">&quot; 抢到了车位&quot;</span>);</span><br><span class="line">                    <span class="comment">// 设置随机5s内的停车时间</span></span><br><span class="line">                    TimeUnit.SECONDS.sleep(<span class="keyword">new</span> <span class="title class_">Random</span>().nextInt(<span class="number">5</span>));</span><br><span class="line">                    System.out.println(Thread.currentThread().getName()+<span class="string">&quot; -------离开了车位&quot;</span>);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// 释放</span></span><br><span class="line">                    semaphore.release();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试结果截图："><a href="#测试结果截图：" class="headerlink" title="测试结果截图："></a>测试结果截图：</h2><p><img src="/../images/java/a28.png"></p>
+<h2 id="Semaphore常用方法说明"><a href="#Semaphore常用方法说明" class="headerlink" title="Semaphore常用方法说明"></a>Semaphore常用方法说明</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">acquire()  </span><br><span class="line">获取一个令牌，在获取到令牌、或者被其他线程调用中断之前线程一直处于阻塞状态。</span><br><span class="line"></span><br><span class="line">acquire(<span class="type">int</span> permits)  </span><br><span class="line">获取一个令牌，在获取到令牌、或者被其他线程调用中断、或超时之前线程一直处于阻塞状态。</span><br><span class="line">    </span><br><span class="line">acquireUninterruptibly() </span><br><span class="line">获取一个令牌，在获取到令牌之前线程一直处于阻塞状态（忽略中断）。</span><br><span class="line">    </span><br><span class="line">tryAcquire()</span><br><span class="line">尝试获得令牌，返回获取令牌成功或失败，不阻塞线程。</span><br><span class="line"></span><br><span class="line">tryAcquire(<span class="type">long</span> timeout, TimeUnit unit)</span><br><span class="line">尝试获得令牌，在超时时间内循环尝试获取，直到尝试获取成功或超时返回，不阻塞线程。</span><br><span class="line"></span><br><span class="line">release()</span><br><span class="line">释放一个令牌，唤醒一个获取令牌不成功的阻塞线程。</span><br><span class="line"></span><br><span class="line">hasQueuedThreads()</span><br><span class="line">等待队列里是否还存在等待线程。</span><br><span class="line"></span><br><span class="line">getQueueLength()</span><br><span class="line">获取等待队列里阻塞的线程数。</span><br><span class="line"></span><br><span class="line">drainPermits()</span><br><span class="line">清空令牌把可用令牌数置为<span class="number">0</span>，返回清空令牌的数量。</span><br><span class="line"></span><br><span class="line">availablePermits()</span><br><span class="line">返回可用的令牌数量。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="实现原理："><a href="#实现原理：" class="headerlink" title="实现原理："></a>实现原理：</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/98593407">https://zhuanlan.zhihu.com/p/98593407</a></p>
+
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/JUC/" rel="tag">JUC</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2023-01-24</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" JUC高并发-Callable接口" href="/2023/01/23/JUC高并发-Callable接口/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="https://unpkg.com/gitalk@1/dist/gitalk.css">
+<div id="gitalk-container" class="post-comments lazy-load"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E8%BE%85%E5%8A%A9%E7%B1%BB/',
+                path: '/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E8%BE%85%E5%8A%A9%E7%B1%BB/'
+            }, JSON.parse('{"clientID":"GitHub Application Client ID","clientSecret":"GitHub Application Client Secret","repo":"Lan-wa.github.io","owner":"Lan-wa","admin":["Lan-wa"],"distractionFreeMode":false}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = 'https://unpkg.com/gitalk@1/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+        
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201807%2F30%2F20180730132331_zgvrt.thumb.1000_0.jpg&amp;refer=http%3A%2F%2Fc-ssl.duitang.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1650119296&amp;t=eb7d7504aaf57b56b82481455c140c2f" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">-  蓝顺远</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                162
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                47
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                33
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Semaphore%E8%BE%85%E5%8A%A9%E7%B1%BB"><span class="toc-text">一、Semaphore辅助类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95demo%EF%BC%9A"><span class="toc-text">测试demo：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E6%88%AA%E5%9B%BE%EF%BC%9A"><span class="toc-text">测试结果截图：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Semaphore%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-text">Semaphore常用方法说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-text">实现原理：</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">JUC并发编程</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98/">实战</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/%E5%AE%9E%E6%88%98%E7%AF%87/">实战篇</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/">SSM</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/SSM/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring-MVC%E5%AD%A6%E4%B9%A0/">Spring MVC学习</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/">Spring注解驱动学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E6%BA%90%E7%A0%81%E7%AF%87/">源码篇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/%E7%90%86%E8%AE%BA%E7%90%86%E8%A7%A3/">理论理解</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringSecurity/">SpringSecurity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E9%9A%8F%E7%AC%94/">随笔</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/javaweb/">javaweb</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mybatis/">mybatis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/">springboot2</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/springboot2%E5%85%A5%E9%97%A8/">springboot2入门</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E8%BF%9B%E9%98%B6/">进阶</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot2/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/">面试宝典</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue/">Vue</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/Vue3/">Vue3</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/ajax/">ajax</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/axios/">axios</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/es6/">es6</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/jsp/">jsp</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/SweetAlert2/">SweetAlert2</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/bootstrap-table/">bootstrap-table</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/elementplus/">elementplus</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">微信小程序</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/%E5%85%A5%E9%97%A8/">入门</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E5%90%88%E9%9B%86/">报错信息合集</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a><span class="category-list-count">16</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/his/">his</a><span class="category-list-count">3</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/500/" style="font-size: 0.6em;">500</a> <a href="/tags/Git%E6%8A%A5%E9%94%99/" style="font-size: 0.6em;">Git报错</a> <a href="/tags/JUC/" style="font-size: 0.73em;">JUC</a> <a href="/tags/LeetCode/" style="font-size: 0.6em;">LeetCode</a> <a href="/tags/Linux/" style="font-size: 0.63em;">Linux</a> <a href="/tags/MySQL/" style="font-size: 0.78em;">MySQL</a> <a href="/tags/Nginx/" style="font-size: 0.65em;">Nginx</a> <a href="/tags/Redis/" style="font-size: 0.75em;">Redis</a> <a href="/tags/SSM/" style="font-size: 0.6em;">SSM</a> <a href="/tags/Spring/" style="font-size: 0.68em;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 0.68em;">Spring MVC</a> <a href="/tags/SpringSecurity/" style="font-size: 0.6em;">SpringSecurity</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3/" style="font-size: 0.65em;">Spring注解</a> <a href="/tags/Spring%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8/" style="font-size: 0.6em;">Spring注解驱动</a> <a href="/tags/Vue3/" style="font-size: 0.8em;">Vue3</a> <a href="/tags/axios/" style="font-size: 0.6em;">axios</a> <a href="/tags/bootstrap-table/" style="font-size: 0.65em;">bootstrap-table</a> <a href="/tags/elementplus/" style="font-size: 0.7em;">elementplus</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E8%BE%85%E5%8A%A9%E7%B1%BB/"><i class="fa  fa-book"></i> JUC高并发-辅助类</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Callable%E6%8E%A5%E5%8F%A3/"><i class="fa  fa-book"></i> JUC高并发-Callable接口</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/23/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E5%85%AC%E5%B9%B3%E9%94%81%E4%B8%8E%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81/"><i class="fa  fa-book"></i> JUC高并发-公平锁与非公平锁</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/20/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-%E9%9B%86%E5%90%88%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"><i class="fa  fa-book"></i> JUC高并发-集合线程安全问题与解决方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/01/20/JUC%E9%AB%98%E5%B9%B6%E5%8F%91-Condition%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> JUC高并发-Condition的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+        </div>
+        </div>
+        <footer>
+            <div id="footer"  class="ap-lrc" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                            <ul class="kratos-social-icons">
+                                
+                                <li><a href="mailto:1584476784@qq.com"><i
+                                            class="fa fa-envelope"></i></a></li>
+                                
+                                
+                                
+                                
+                                
+                                <li><a target="_blank" rel="nofollow"
+                                        href="https://github.com/Lan-wa"><i
+                                            class="fa fa-github"></i></a></li>
+                                
+                            </ul>
+                            <ul class="kratos-copyright">
+                                <!-- <div>
+                                    <li>&copy; 2023 记录
+                                        版权所有.</li>
+                                    <li>本站已运行<span id="span_dt">Loading...</span></li>
+                                </div> -->
+                                <div>
+                                    <li>&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by
+                                        我爱小小蝶.</li>
+                                </div>
+                                <div>
+                                    <li>作者QQ：1584476784</li>
+                                    
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="kr-tool text-center">
+                    <div class="tool">
+                        
+                        <div class="box search-box">
+                            <a href="/search/">
+                                <span class="fa fa-search"></span>
+                            </a>
+                        </div>
+                        
+                        
+                        <div class="box theme-box" id="darkmode-switch">
+                            <span class="fa fa-adjust"></span>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="box gotop-box">
+                        <span class="fa fa-chevron-up"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        </div>
+        </div>
+        <script defer src="https://unpkg.com/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://unpkg.com/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://unpkg.com/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
